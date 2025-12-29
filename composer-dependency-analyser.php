@@ -23,9 +23,8 @@ return (new Configuration)
     )
     ->addPathsToExclude([
         __DIR__.'/src/Support/ComposerScripts.php',
-        __DIR__.'/src/Support/Rector/',
+        // __DIR__.'/src/Rector/',
         __DIR__.'/tests/',
-        __DIR__.'/vendor/friendsofphp/php-cs-fixer/tests/',
     ])
     ->ignoreUnknownClasses([
         // \SensitiveParameter::class,
@@ -33,30 +32,33 @@ return (new Configuration)
     /** @see \ShipMonk\ComposerDependencyAnalyser\Analyser::CORE_EXTENSIONS */
     ->ignoreErrorsOnExtensions(
         [
-            // 'ext-mbstring',
-            // 'ext-tokenizer',
+            'ext-ctype',
+            'ext-mbstring',
         ],
         [ErrorType::SHADOW_DEPENDENCY],
     )
-    // ->ignoreErrorsOnPackageAndPaths(
-    //     'phpmyadmin/sql-parser',
-    //     [
-    //         __DIR__.'/src/Fixer/InlineHtml/SqlOfPhpmyadminSqlParserFixer.php',
-    //     ],
-    //     [ErrorType::DEV_DEPENDENCY_IN_PROD]
-    // )
+    ->ignoreErrorsOnPackageAndPaths(
+        'ergebnis/php-cs-fixer-config',
+        [
+            __DIR__.'/src/Rector/Cases/Rule/FuncCallRule.php',
+        ],
+        [ErrorType::DEV_DEPENDENCY_IN_PROD]
+    )
     ->ignoreErrorsOnPackages(
         [
-            'illuminate/support',
-            'rector/rector',
+            // 'illuminate/support',
+            // 'rector/rector',
         ],
         [ErrorType::UNUSED_DEPENDENCY]
     )
     ->ignoreErrorsOnPackages(
         [
+            'nikic/php-parser',
             'illuminate/collections',
             // 'symfony/console',
-            // 'symfony/polyfill-php80',
+            'webmozart/assert',
+            'symfony/polyfill-php80',
+            'symfony/polyfill-php81',
         ],
         [ErrorType::SHADOW_DEPENDENCY]
     );

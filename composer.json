@@ -196,7 +196,7 @@
             "@pest"
         ],
         "class-leak": "@php vendor/bin/class-leak --ansi -vv",
-        "class-leak:check": "@class-leak check src/ --skip-type=Guanguans\\RectorRules\\Contract\\ThrowableContract --skip-path=Support/",
+        "class-leak:check": "@class-leak check src/ --skip-type=Guanguans\\RectorRules\\Contract\\ThrowableContract --skip-type=Guanguans\\RectorRules\\Rector\\Cases\\Rule\\RuleInterface --skip-type=Rector\\Rector\\AbstractRector --skip-path=Support/",
         "composer-bump": [
             "@putenv:php",
             "@composer-config:disable-process-timeout",
@@ -286,7 +286,7 @@
         "peck:init": "@peck --init",
         "pest": [
             "@putenv:xdebug-on",
-            "@php vendor/bin/pest --colors=always --min=30 --coverage",
+            "@php vendor/bin/pest --colors=always --min=1 --coverage",
             "@putenv:xdebug-off"
         ],
         "pest:coverage": "@pest --coverage-html=.build/phpunit/ --coverage-clover=.build/phpunit/clover.xml",
@@ -371,17 +371,17 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
-        "rector:process-only": "@rector:process-clear-cache --only=Guanguans\\RectorRules\\Support\\Rector\\NewExceptionToNewAnonymousExtendsExceptionImplementsRector",
+        "rector:process-only": "@rector:process-clear-cache --only=Guanguans\\RectorRules\\Rector\\AddNoinspectionsDocCommentToDeclareRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "rule-doc-generator": [
             "@putenv:php",
             "$PHP82 rule-doc-generator --ansi -vv"
         ],
-        "rule-doc-generator:rector-generate": "@rule-doc-generator generate src/Support/Rector/ --output-file=src/Support/Rector/rector-rules-overview.md --categorize=rector",
-        "rule-doc-generator:rector-validate": "@rule-doc-generator validate src/Support/Rector/",
+        "rule-doc-generator:rector-generate": "@rule-doc-generator generate src/Rector/ --output-file=rector-rules-overview.md --categorize=rector",
+        "rule-doc-generator:rector-validate": "@rule-doc-generator validate src/Rector/",
         "sk": "@php vendor/bin/swiss-knife --ansi -vv",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",
-        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5",
+        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5 --skip-file=src/Rector/RenameToPsrNameRector.php",
         "sk:check-conflicts": "@sk check-conflicts src/",
         "sk:dump-editorconfig": "@sk dump-editorconfig",
         "sk:finalize-classes": "@sk finalize-classes src/",

@@ -1,6 +1,5 @@
 <?php
 
-/** @noinspection EfferentObjectCouplingInspection */
 /** @noinspection PhpUnusedAliasInspection */
 
 declare(strict_types=1);
@@ -14,8 +13,10 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-namespace Guanguans\RectorRules\Support\Rector;
+namespace Guanguans\RectorRules\Rector\New_;
 
+use Guanguans\RectorRules\Contract\ThrowableContract;
+use Guanguans\RectorRules\Rector\AbstractRector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpParser\Node;
@@ -23,11 +24,9 @@ use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Class_;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Rector\AbstractRector;
 use Rector\ValueObject\PhpVersion;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
-use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
@@ -36,7 +35,7 @@ use function Guanguans\RectorRules\Support\classes;
 /**
  * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
  */
-final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface, DocumentedRuleInterface, MinPhpVersionInterface
+final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface, MinPhpVersionInterface
 {
     /** @var list<class-string> */
     private array $implements = [];
@@ -100,12 +99,12 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
                         new \Exception('Testing');
                         CODE_SAMPLE,
                     <<<'CODE_SAMPLE'
-                        new class('Testing') extends \Exception implements \Guanguans\MonorepoBuilderWorker\Contracts\ThrowableContract
+                        new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
                         {
                         };
                         CODE_SAMPLE,
                     [
-                        'Guanguans\MonorepoBuilderWorker\Contracts\ThrowableContract',
+                        ThrowableContract::class,
                     ],
                 ),
             ],
@@ -129,19 +128,21 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
 
     public function classes(): Collection
     {
-        return classes(static fn (string $class): bool => Str::of($class)->startsWith('Rector\\')
-            && Str::of($class)->endsWith([
-                'Factory',
-                'Resolver',
-                // 'er',
-            ])
-            && !Str::of($class)->contains([
-                '\\SwissKnife\\',
-                '\\TypePerfect\\',
-            ]))
-            ->sort()
+        return classes(
+            static fn (string $class): bool => Str::of($class)->startsWith('Rector\\')
+                && Str::of($class)->endsWith([
+                    'Factory',
+                    'Resolver',
+                    // 'er',
+                ])
+                && !Str::of($class)->contains([
+                    '\\SwissKnife\\',
+                    '\\TypePerfect\\',
+                ])
+        )
+            ->sortKeys()
             // ->groupBy(fn (string $class) => str($class)->explode('\\')->get(1))
-            ->values();
+            ->keys();
     }
 
     /**

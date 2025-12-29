@@ -18,10 +18,10 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\RemoveNamespaceRector;
 use Guanguans\RectorRules\Contract\ThrowableContract;
-use Guanguans\RectorRules\Support\Rector\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
+use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector;
+use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
+use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
 use Illuminate\Support\Str;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -122,6 +122,10 @@ return RectorConfig::configure()
         SetList::INSTANCEOF,
         SetList::EARLY_RETURN,
         // SetList::CARBON,
+
+        SetList::ASSERT,
+        SetList::PHP_POLYFILLS,
+        SetList::RECTOR_PRESET,
     ])
     ->withRules([
         SortAssociativeArrayByKeyRector::class,
@@ -246,7 +250,7 @@ return RectorConfig::configure()
             __DIR__.'/src/Support/helpers.php',
         ],
         NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
-            __DIR__.'/src/Support/Rector/',
+            __DIR__.'/src/Rector/',
             __DIR__.'/tests/Feature/AbstractSpecificFixerTestCase.php',
         ],
         RemoveAlwaysTrueIfConditionRector::class => [

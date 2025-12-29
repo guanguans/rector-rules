@@ -1,0 +1,114 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Copyright (c) 2025 guanguans<ityaozm@gmail.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ *
+ * @see https://github.com/guanguans/rector-rules
+ */
+
+namespace Guanguans\RectorRules\Rector\Array_;
+
+use Guanguans\RectorRules\Rector\AbstractRector;
+use Illuminate\Support\Collection;
+use PhpParser\Node;
+use PhpParser\Node\Expr;
+use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Scalar\Int_;
+use Rector\PhpParser\Node\Value\ValueResolver;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
+use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+
+final class SimplifyListIndexRector extends AbstractRector
+{
+    private ValueResolver $valueResolver;
+
+    public function __construct(ValueResolver $valueResolver)
+    {
+        $this->valueResolver = $valueResolver;
+    }
+
+    public function getNodeTypes(): array
+    {
+        return [
+            Array_::class,
+        ];
+    }
+
+    /**
+     * @param \PhpParser\Node\Expr\Array_ $node
+     */
+    public function refactor(Node $node): ?Node
+    {
+        $keys = collect($node->items)
+            ->pluck('key')
+            ->map(fn (?Expr $expr) => $expr instanceof Expr ? $this->valueResolver->getValue($expr) : null);
+
+        /** @noinspection NullPointerExceptionInspection */
+        if (
+            $keys->filter(static fn ($key): bool => null !== $key && !\is_int($key))->isNotEmpty()
+            || !$this->isList(
+                $keys->reduce(
+                    static fn (Collection $carry, ?int $key): Collection => $carry->put(
+                        $key ?? ($carry->isEmpty() ? 0 : $carry->keys()->sortDesc(\SORT_NUMERIC)->first() + 1),
+                        $key
+                    ),
+                    collect()
+                )->all()
+            )
+        ) {
+            return null;
+        }
+
+        $hasChanged = false;
+
+        foreach ($node->items as $item) {
+            if ($item->key instanceof Int_) {
+                $item->key = null;
+                $hasChanged = true;
+            }
+        }
+
+        return $hasChanged ? null : $node;
+    }
+
+    /**
+     * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
+     */
+    public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition(
+            'Simplify list index',
+            [
+                new CodeSample(
+                    <<<'CODE_SAMPLE'
+                        [
+                            0 => 'delimiter',
+                            1 => 'orderbynull',
+                            2 => 'groupbyconst',
+                        ]
+                        CODE_SAMPLE,
+                    <<<'CODE_SAMPLE'
+                        [
+                            'delimiter',
+                            'orderbynull',
+                            'groupbyconst',
+                        ]
+                        CODE_SAMPLE,
+                ),
+            ],
+        );
+    }
+
+    /**
+     * @noinspection ArrayIsListCanBeUsedInspection
+     */
+    private function isList(array $array): bool
+    {
+        return \function_exists('array_is_list') ? array_is_list($array) : array_values($array) === $array;
+    }
+}
