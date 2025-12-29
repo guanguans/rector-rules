@@ -1,12 +1,51 @@
 # 5 Rules Overview
 
-## AddNoinspectionsDocCommentToDeclareRector
+<br>
+
+## Categories
+
+- [Array](#array) (1)
+
+- [Declare](#declare) (1)
+
+- [Name](#name) (1)
+
+- [Namespace](#namespace) (1)
+
+- [New](#new) (1)
+
+<br>
+
+## Array
+
+### SimplifyListIndexRector
+
+Simplify list index
+
+- class: [`Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector`](../src/Rector/Array_/SimplifyListIndexRector.php)
+
+```diff
+ [
+-    0 => 'delimiter',
+-    1 => 'orderbynull',
+-    2 => 'groupbyconst',
++    'delimiter',
++    'orderbynull',
++    'groupbyconst',
+ ]
+```
+
+<br>
+
+## Declare
+
+### AddNoinspectionsDocCommentToDeclareRector
 
 Add noinspections doc comment to declare
 
 :wrench: **configure it!**
 
-- class: [`Guanguans\RectorRules\Rector\AddNoinspectionsDocCommentToDeclareRector`](src/Rector/AddNoinspectionsDocCommentToDeclareRector.php)
+- class: [`Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector`](../src/Rector/Declare_/AddNoinspectionsDocCommentToDeclareRector.php)
 
 ```diff
  /** @noinspection AnonymousFunctionStaticInspection */
@@ -20,48 +59,15 @@ Add noinspections doc comment to declare
 
 <br>
 
-## NewExceptionToNewAnonymousExtendsExceptionImplementsRector
+## Name
 
-New exception to new anonymous extends exception implements
-
-:wrench: **configure it!**
-
-- class: [`Guanguans\RectorRules\Rector\NewExceptionToNewAnonymousExtendsExceptionImplementsRector`](src/Rector/NewExceptionToNewAnonymousExtendsExceptionImplementsRector.php)
-
-```diff
--new \Exception('Testing');
-+new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
-+{
-+};
-```
-
-<br>
-
-## RemoveNamespaceRector
-
-Remove namespace
-
-:wrench: **configure it!**
-
-- class: [`Guanguans\RectorRules\Rector\RemoveNamespaceRector`](src/Rector/RemoveNamespaceRector.php)
-
-```diff
--namespace Guanguans\ValetDriversTests\Support;
--
- it('can get classes', function (): void {
-     expect(classes())->toBeArray()->toBeTruthy();
- })->group(__DIR__, __FILE__);
-```
-
-<br>
-
-## RenameToPsrNameRector
+### RenameToPsrNameRector
 
 Rename to psr name
 
 :wrench: **configure it!**
 
-- class: [`Guanguans\RectorRules\Rector\RenameToPsrNameRector`](src/Rector/RenameToPsrNameRector.php)
+- class: [`Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector`](../src/Rector/Name/RenameToPsrNameRector.php)
 
 ```diff
 -/** @noinspection ALL */
@@ -178,21 +184,41 @@ Rename to psr name
 
 <br>
 
-## SimplifyListIndexRector
+## Namespace
 
-Simplify list index
+### RemoveNamespaceRector
 
-- class: [`Guanguans\RectorRules\Rector\SimplifyListIndexRector`](src/Rector/SimplifyListIndexRector.php)
+Remove namespace
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector`](../src/Rector/Namespace_/RemoveNamespaceRector.php)
 
 ```diff
- [
--    0 => 'delimiter',
--    1 => 'orderbynull',
--    2 => 'groupbyconst',
-+    'delimiter',
-+    'orderbynull',
-+    'groupbyconst',
- ]
+-namespace Guanguans\ValetDriversTests\Support;
+-
+ it('can get classes', function (): void {
+     expect(classes())->toBeArray()->toBeTruthy();
+ })->group(__DIR__, __FILE__);
+```
+
+<br>
+
+## New
+
+### NewExceptionToNewAnonymousExtendsExceptionImplementsRector
+
+New exception to new anonymous extends exception implements
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector`](../src/Rector/New_/NewExceptionToNewAnonymousExtendsExceptionImplementsRector.php)
+
+```diff
+-new \Exception('Testing');
++new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
++{
++};
 ```
 
 <br>

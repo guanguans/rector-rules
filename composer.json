@@ -177,6 +177,7 @@
             "@sk:finalize-classes-dry-run",
             "@sk:find-multi-classes",
             "@sk:namespace-to-psr-4",
+            "@sk:namespace-to-psr-4-tests",
             "@sk:privatize-constants",
             "@sk:spot-lazy-traits",
             "@todo-lint",
@@ -187,7 +188,7 @@
             "@peck",
             "@php-cs-fixer:custom-fix-dry-run",
             "@php-cs-fixer:custom-ln-config",
-            "@rule-doc-generator:rector-generate",
+            "@rule-doc-generator:generate",
             "@zhlint"
         ],
         "checks:required": [
@@ -377,11 +378,14 @@
             "@putenv:php",
             "$PHP82 rule-doc-generator --ansi -vv"
         ],
-        "rule-doc-generator:rector-generate": "@rule-doc-generator generate src/Rector/ --output-file=rector-rules-overview.md --categorize=rector",
-        "rule-doc-generator:rector-validate": "@rule-doc-generator validate src/Rector/",
+        "rule-doc-generator:generate": [
+            "@rule-doc-generator generate src/Rector/ --output-file=docs/rules-overview.md --categorize=1 --skip-type=Guanguans\\RectorRules\\Rector\\Cases\\CaseRector",
+            "@rule-doc-generator generate src/Rector/ --output-file=rules-overview.md --categorize=1 --readme --skip-type=Guanguans\\RectorRules\\Rector\\Cases\\CaseRector"
+        ],
+        "rule-doc-generator:validate": "@rule-doc-generator validate src/Rector/",
         "sk": "@php vendor/bin/swiss-knife --ansi -vv",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",
-        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5 --skip-file=src/Rector/RenameToPsrNameRector.php",
+        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5 --skip-file=src/Rector/Name/RenameToPsrNameRector.php",
         "sk:check-conflicts": "@sk check-conflicts src/",
         "sk:dump-editorconfig": "@sk dump-editorconfig",
         "sk:finalize-classes": "@sk finalize-classes src/",
@@ -389,6 +393,7 @@
         "sk:find-multi-classes": "@sk find-multi-classes src/",
         "sk:generate-symfony-config-builders": "@sk generate-symfony-config-builders --help",
         "sk:namespace-to-psr-4": "@sk namespace-to-psr-4 src/ --namespace-root=Guanguans\\RectorRules\\",
+        "sk:namespace-to-psr-4-tests": "@sk namespace-to-psr-4 tests/ --namespace-root=Guanguans\\RectorRulesTests\\",
         "sk:pretty-json": "@sk pretty-json .lintmdrc",
         "sk:pretty-json-dry-run": "@sk:pretty-json --dry-run",
         "sk:privatize-constants": "@sk privatize-constants src/",

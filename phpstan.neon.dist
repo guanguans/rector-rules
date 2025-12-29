@@ -32,6 +32,7 @@ parameters:
         - src/
     scanFiles:
         - vendor/composer/InstalledVersions.php
+        - vendor/rector/rector/vendor/symplify/rule-doc-generator-contracts/src/Contract/DocumentedRuleInterface.php
     excludePaths:
         - src/Support/ComposerScripts.php
         - tests/Fixtures/
@@ -109,6 +110,11 @@ parameters:
 #        - identifier: trait.unused
 #        - identifier: typePerfect.noMixedMethodCaller
 
+        - identifier: method.childParameterType
+        - identifier: method.nonObject
+        - identifier: assign.propertyType
+        - identifier: binaryOp.invalid
+        - identifier: missingType.iterableValue
         - identifier: argument.type
 #        - identifier: cast.string
 #        - identifier: class.extendsFinalByPhpDoc
@@ -117,11 +123,11 @@ parameters:
 #        - identifier: method.dynamicName
         - identifier: missingType.generics
         - identifier: return.type
-#        - identifier: shipmonk.deadMethod
+        - identifier: shipmonk.deadMethod
         - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.explicitTraitSuffixName
 #        - identifier: symplify.forbiddenStaticClassConstFetch
 #        - identifier: symplify.noDynamicName
 
-#        - identifier: typeCoverage.paramTypeCoverage
+        - identifier: typeCoverage.paramTypeCoverage
 #        - identifier: typeCoverage.returnTypeCoverage

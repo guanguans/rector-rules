@@ -1,0 +1,33 @@
+# total 6 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\Array_\\SimplifyListIndexRector\:\:refactor\(\)" is 9, keep it under 8$#'
+            count: 1
+            path: ../src/Rector/Array_/SimplifyListIndexRector.php
+
+        -
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\Name\\RenameToPsrNameRector\:\:rename\(\)" is 13, keep it under 8$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php
+
+        -
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\Name\\RenameToPsrNameRector\:\:shouldLcfirstCamelName\(\)" is 10, keep it under 8$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php
+
+        -
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\Name\\RenameToPsrNameRector\:\:shouldLowerSnakeName\(\)" is 10, keep it under 8$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php
+
+        -
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\Name\\RenameToPsrNameRector\:\:shouldUcfirstCamelName\(\)" is 14, keep it under 8$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php
+
+        -
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\Name\\RenameToPsrNameRector\:\:shouldUpperSnakeName\(\)" is 11, keep it under 8$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php

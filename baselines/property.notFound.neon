@@ -1,0 +1,23 @@
+# total 11 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Access to an undefined property PhpParser\\Node\\Expr\|PhpParser\\Node\\Name\:\:\$name\.$#'
+            count: 1
+            path: ../src/Rector/Cases/Rule/FuncCallRule.php
+
+        -
+            message: '#^Access to an undefined property PhpParser\\Node\\Arg\|PhpParser\\Node\\VariadicPlaceholder\:\:\$name\.$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php
+
+        -
+            message: '#^Access to an undefined property PhpParser\\Node\\Arg\|PhpParser\\Node\\VariadicPlaceholder\:\:\$value\.$#'
+            count: 5
+            path: ../src/Rector/Name/RenameToPsrNameRector.php
+
+        -
+            message: '#^Access to an undefined property PhpParser\\Node\\Expr\:\:\$value\.$#'
+            count: 4
+            path: ../src/Rector/Name/RenameToPsrNameRector.php

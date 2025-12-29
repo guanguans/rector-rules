@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Provide more specific return type "Illuminate\\Support\\Collection" over abstract one$#'
+            count: 1
+            path: ../src/Rector/AbstractRector.php

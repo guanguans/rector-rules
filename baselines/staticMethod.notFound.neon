@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Call to an undefined static method Illuminate\\Support\\Str\:\:lcfirst\(\)\.$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php

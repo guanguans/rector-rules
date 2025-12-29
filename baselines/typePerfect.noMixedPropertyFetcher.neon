@@ -1,0 +1,13 @@
+# total 12 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Mixed property fetch in a "\$grandfather\-\>\.\.\." can skip important errors\. Make sure the type is known$#'
+            count: 6
+            path: ../src/Rector/Name/RenameToPsrNameRector.php
+
+        -
+            message: '#^Mixed property fetch in a "\$parent\-\>\.\.\." can skip important errors\. Make sure the type is known$#'
+            count: 6
+            path: ../src/Rector/Name/RenameToPsrNameRector.php

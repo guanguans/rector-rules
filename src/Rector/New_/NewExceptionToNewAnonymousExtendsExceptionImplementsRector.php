@@ -17,8 +17,6 @@ namespace Guanguans\RectorRules\Rector\New_;
 
 use Guanguans\RectorRules\Contract\ThrowableContract;
 use Guanguans\RectorRules\Rector\AbstractRector;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
@@ -124,25 +122,6 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
         Assert::allStringNotEmpty($configuration);
 
         $this->implements = $configuration;
-    }
-
-    public function classes(): Collection
-    {
-        return classes(
-            static fn (string $class): bool => Str::of($class)->startsWith('Rector\\')
-                && Str::of($class)->endsWith([
-                    'Factory',
-                    'Resolver',
-                    // 'er',
-                ])
-                && !Str::of($class)->contains([
-                    '\\SwissKnife\\',
-                    '\\TypePerfect\\',
-                ])
-        )
-            ->sortKeys()
-            // ->groupBy(fn (string $class) => str($class)->explode('\\')->get(1))
-            ->keys();
     }
 
     /**
