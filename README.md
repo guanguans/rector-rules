@@ -25,7 +25,8 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 > todo
 
-## Rules
+<details>
+<summary><b>Rules Overview</b></summary>
 
 [rules-overview.md](docs/rules-overview.md)
 
@@ -200,7 +201,7 @@ Rename to psr name
 -Foo::method_name();
 -method_exists($object, 'method_name');
 -property_exists($object, 'property_name');
-+$varName
++$varName;
 +$object->methodName();
 +$object->propertyName;
 +class Foo{public $propertyName;}
@@ -256,6 +257,7 @@ New exception to new anonymous extends exception implements
 <br>
 
 <!-- ruledoc-end -->
+</details>
 
 ## Composer scripts
 

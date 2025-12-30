@@ -17,22 +17,8 @@ use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 final class RemoveNamespaceRectorTest extends AbstractRectorTestCase
 {
-    /**
-     * @dataProvider provideCases()
-     */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideCases')]
-    public function test(string $filePath): void
+    protected static function directory(): string
     {
-        $this->doTestFile($filePath);
-    }
-
-    public static function provideCases(): iterable
-    {
-        return self::yieldFilesFromDirectory(__DIR__.'/Fixture');
-    }
-
-    public function provideConfigFilePath(): string
-    {
-        return __DIR__.'/config/configured_rule.php';
+        return __DIR__;
     }
 }

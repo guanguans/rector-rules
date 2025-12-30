@@ -1,4 +1,4 @@
-# total 48 errors
+# total 44 errors
 
 includes:
     - callable.nonCallable.neon
@@ -6,8 +6,5 @@ includes:
     - complexity.functionLike.neon
     - property.nonObject.neon
     - property.notFound.neon
-    - return.phpDocType.neon
-    - staticMethod.notFound.neon
-    - symplify.requiredInterfaceContractNamespace.neon
     - typePerfect.narrowReturnObjectType.neon
     - typePerfect.noMixedPropertyFetcher.neon

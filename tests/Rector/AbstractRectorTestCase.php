@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection LongInheritanceChainInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+
 declare(strict_types=1);
 
 /**
@@ -13,29 +16,98 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRulesTests\Rector;
 
+use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Illuminate\Support\Str;
-use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
+use PhpParser\NodeVisitor\ParentConnectingVisitor;
+use Rector\Config\RegisteredService;
+use Rector\Contract\PhpParser\DecoratingNodeVisitorInterface;
 
 abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRectorTestCase
 {
+    /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
+    final public static function setUpBeforeClass(): void
+    {
+        // if (RenameToPsrNameRector::class !== static::rectorClass()) {
+        //     return;
+        // }
+
+        $rectorConfig = parent::getContainer();
+        $registerService = new RegisteredService(
+            ParentConnectingVisitor::class,
+            null,
+            DecoratingNodeVisitorInterface::class
+        );
+        $rectorConfig->singleton($registerService->getClassName());
+        $rectorConfig->tag($registerService->getClassName(), $registerService->getTag());
+    }
+
+    final public function provideConfigFilePath(): string
+    {
+        return static::directory().'/config/configured_rule.php';
+    }
+
     final public function testRuleDefinition(): void
     {
-        $reflectionClass = new \ReflectionClass(static::class);
-        $reflectionClass = new \ReflectionClass(
-            (string) Str::of($reflectionClass->getNamespaceName())->replace(['RectorRulesTests'], 'RectorRules')
-        );
-        $documentedRule = $reflectionClass->newInstanceWithoutConstructor();
-        self::assertInstanceOf(DocumentedRuleInterface::class, $documentedRule);
-
+        $documentedRule = static::rectorReflectionClass()->newInstanceWithoutConstructor();
         $ruleDefinition = $documentedRule->getRuleDefinition();
-        self::assertInstanceOf(RuleDefinition::class, $ruleDefinition);
-
-        /** @see \Symplify\RuleDocGenerator\ValueObject\AbstractCodeSample */
-        // foreach ($ruleDefinition->getCodeSamples() as $codeSample) {
-        //     self::assertNotEmpty($codeSample->getBadCode());
-        //     self::assertNotEmpty($codeSample->getGoodCode());
-        //     self::assertNotSame($codeSample->getBadCode(), $codeSample->getGoodCode());
-        // }
+        self::assertNotEmpty($ruleDefinition->getDescription());
+        self::assertNotEmpty($ruleDefinition->getCodeSamples());
+        self::assertIsBool($ruleDefinition->isConfigurable());
     }
+
+    /**
+     * @noinspection PhpUndefinedNamespaceInspection
+     * @noinspection PhpUndefinedClassInspection
+     * @noinspection PhpLanguageLevelInspection
+     * @noinspection PhpFullyQualifiedNameUsageInspection
+     *
+     * @dataProvider provideCases()
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCases')]
+    final public function test(string $filePath): void
+    {
+        $this->doTestFile($filePath);
+    }
+
+    final public static function provideCases(): iterable
+    {
+        return self::yieldFilesFromDirectory(static::directory().'/Fixture');
+    }
+
+    /**
+     * @throws \ReflectionException
+     *
+     * @return \ReflectionClass<\Guanguans\RectorRules\Rector\AbstractRector>
+     */
+    protected static function rectorReflectionClass(): \ReflectionClass
+    {
+        static $reflectionClass;
+
+        if ($reflectionClass instanceof \ReflectionClass) {
+            return $reflectionClass;
+        }
+
+        return $reflectionClass = new \ReflectionClass(static::rectorClass());
+    }
+
+    /**
+     * @return class-string<\Guanguans\RectorRules\Rector\AbstractRector>
+     */
+    protected static function rectorClass(): string
+    {
+        static $rectorClass;
+
+        if ($rectorClass) {
+            return $rectorClass;
+        }
+
+        return $rectorClass = (string) Str::of((new \ReflectionClass(static::class))->getNamespaceName())->replace(
+            'RectorRulesTests',
+            'RectorRules'
+        );
+    }
+
+    abstract protected static function directory(): string;
 }

@@ -11,11 +11,11 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-namespace Guanguans\RectorRulesTests\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
+namespace Guanguans\RectorRulesTests\Rector\Name\RenameToPsrNameRector;
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
-final class NewExceptionToNewAnonymousExtendsExceptionImplementsRectorTest extends AbstractRectorTestCase
+final class RenameToPsrNameRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string
     {

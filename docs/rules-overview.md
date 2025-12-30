@@ -168,7 +168,7 @@ Rename to psr name
 -Foo::method_name();
 -method_exists($object, 'method_name');
 -property_exists($object, 'property_name');
-+$varName
++$varName;
 +$object->methodName();
 +$object->propertyName;
 +class Foo{public $propertyName;}

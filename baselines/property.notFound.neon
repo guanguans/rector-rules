@@ -1,12 +1,7 @@
-# total 11 errors
+# total 10 errors
 
 parameters:
     ignoreErrors:
-        -
-            message: '#^Access to an undefined property PhpParser\\Node\\Expr\|PhpParser\\Node\\Name\:\:\$name\.$#'
-            count: 1
-            path: ../src/Rector/Cases/Rule/FuncCallRule.php
-
         -
             message: '#^Access to an undefined property PhpParser\\Node\\Arg\|PhpParser\\Node\\VariadicPlaceholder\:\:\$name\.$#'
             count: 1

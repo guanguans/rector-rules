@@ -37,13 +37,13 @@ return (new Configuration)
         ],
         [ErrorType::SHADOW_DEPENDENCY],
     )
-    ->ignoreErrorsOnPackageAndPaths(
-        'ergebnis/php-cs-fixer-config',
-        [
-            __DIR__.'/src/Rector/Cases/Rule/FuncCallRule.php',
-        ],
-        [ErrorType::DEV_DEPENDENCY_IN_PROD]
-    )
+    // ->ignoreErrorsOnPackageAndPaths(
+    //     'ergebnis/php-cs-fixer-config',
+    //     [
+    //         __DIR__.'/src/Rector/Cases/Rule/FuncCallRule.php',
+    //     ],
+    //     [ErrorType::DEV_DEPENDENCY_IN_PROD]
+    // )
     ->ignoreErrorsOnPackages(
         [
             // 'illuminate/support',

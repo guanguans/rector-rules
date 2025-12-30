@@ -20,9 +20,11 @@ declare(strict_types=1);
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\RectorRules\Contract\ThrowableContract;
 use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector;
+use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
 use Illuminate\Support\Str;
+use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
@@ -43,6 +45,7 @@ use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrEndsWithRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
+use Rector\NodeTypeResolver\PHPStan\Scope\Contract\NodeVisitor\ScopeResolverNodeVisitorInterface;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 use Rector\Php80\ValueObject\AnnotationToAttribute;
@@ -77,7 +80,7 @@ return RectorConfig::configure()
     ->withSkip([
         '**/Fixtures/*',
         __DIR__.'/_ide_helper.php',
-        __DIR__.'/tests.php',
+        // __DIR__.'/tests.php',
         // __FILE__,
     ])
     ->withCache(__DIR__.'/.build/rector/')
@@ -151,6 +154,15 @@ return RectorConfig::configure()
     // ->withConfiguredRule(RemoveNamespaceRector::class, [
     //     'Guanguans\RectorRulesTests',
     // ])
+    // ->registerService(className: ParentConnectingVisitor::class, tag: ScopeResolverNodeVisitorInterface::class)
+    // ->registerService(ParentConnectingVisitor::class, null, ScopeResolverNodeVisitorInterface::class)
+    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
+    ->withConfiguredRule(RenameToPsrNameRector::class, [
+        // '*',
+        'static::PARENT_ID',
+        'parent',
+        'MIT',
+    ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',
         'inheritDoc',

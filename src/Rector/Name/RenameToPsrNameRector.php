@@ -133,6 +133,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      */
     public function refactor(Node $node): ?Node
     {
+        // dump($node->getAttribute('parent'));
         try {
             if ($this->shouldLowerSnakeName($node)) {
                 return $this->rename($node, static fn (string $name): string => Str::lower(Str::snake($name)));
@@ -147,7 +148,8 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             }
 
             if ($this->shouldLcfirstCamelName($node)) {
-                return $this->rename($node, static fn (string $name): string => Str::lcfirst(Str::camel($name)));
+                // return $this->rename($node, static fn (string $name): string => Str::lcfirst(Str::camel($name)));
+                return $this->rename($node, static fn (string $name): string => lcfirst(Str::camel($name)));
             }
         } catch (Error $error) {
             $this->makeCollecting()->handleError($error);
@@ -274,7 +276,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                         CONST_NAME;
 
                         // lcfirst camel
-                        $varName
+                        $varName;
                         $object->methodName();
                         $object->propertyName;
                         class Foo{public $propertyName;}

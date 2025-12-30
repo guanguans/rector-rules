@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Interface must be located in "Contract" or "Contracts" namespace$#'
-            count: 1
-            path: ../src/Rector/Cases/Rule/RuleInterface.php
