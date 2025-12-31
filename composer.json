@@ -197,7 +197,7 @@
             "@pest"
         ],
         "class-leak": "@php vendor/bin/class-leak --ansi -vv",
-        "class-leak:check": "@class-leak check src/ --skip-type=Guanguans\\RectorRules\\Contract\\ThrowableContract --skip-type=Guanguans\\RectorRules\\Rector\\Cases\\Rule\\RuleInterface --skip-type=Rector\\Rector\\AbstractRector --skip-path=Support/",
+        "class-leak:check": "@class-leak check src/ --skip-type=Rector\\Rector\\AbstractRector --skip-path=Support/",
         "composer-bump": [
             "@putenv:php",
             "@composer-config:disable-process-timeout",

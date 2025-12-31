@@ -124,7 +124,7 @@ parameters:
         - identifier: missingType.generics
         - identifier: return.type
         - identifier: shipmonk.deadMethod
-        - identifier: symplify.explicitInterfaceSuffixName
+#        - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.explicitTraitSuffixName
 #        - identifier: symplify.forbiddenStaticClassConstFetch
 #        - identifier: symplify.noDynamicName

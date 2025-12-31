@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRules\Rector\New_;
 
-use Guanguans\RectorRules\Contract\ThrowableContract;
 use Guanguans\RectorRules\Rector\AbstractRector;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
@@ -102,7 +101,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
                         };
                         CODE_SAMPLE,
                     [
-                        ThrowableContract::class,
+                        'Guanguans\RectorRules\Contract\ThrowableContract',
                     ],
                 ),
             ],

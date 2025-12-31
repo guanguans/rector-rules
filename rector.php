@@ -18,7 +18,6 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\RectorRules\Contract\ThrowableContract;
 use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
@@ -149,7 +148,7 @@ return RectorConfig::configure()
     //     'StaticClosureCanBeUsedInspection',
     // ])
     ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [
-        ThrowableContract::class,
+        'Guanguans\RectorRules\Contract\ThrowableContract',
     ])
     // ->withConfiguredRule(RemoveNamespaceRector::class, [
     //     'Guanguans\RectorRulesTests',
