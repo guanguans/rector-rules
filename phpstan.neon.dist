@@ -30,9 +30,10 @@ includes:
 parameters:
     paths:
         - src/
+    scanDirectories:
+        - vendor/rector/rector/vendor/symplify/rule-doc-generator-contracts/
     scanFiles:
         - vendor/composer/InstalledVersions.php
-        - vendor/rector/rector/vendor/symplify/rule-doc-generator-contracts/src/Contract/DocumentedRuleInterface.php
     excludePaths:
         - src/Support/ComposerScripts.php
         - tests/Fixtures/

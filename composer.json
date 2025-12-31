@@ -396,7 +396,7 @@
         "sk:namespace-to-psr-4-tests": "@sk namespace-to-psr-4 tests/ --namespace-root=Guanguans\\RectorRulesTests\\",
         "sk:pretty-json": "@sk pretty-json .lintmdrc",
         "sk:pretty-json-dry-run": "@sk:pretty-json --dry-run",
-        "sk:privatize-constants": "@sk privatize-constants src/",
+        "sk:privatize-constants": "@sk privatize-constants src/ --exclude-path=src/Rector/Namespace_/RemoveNamespaceRector.php",
         "sk:search-regex": "@sk search-regex 'Guanguans.*ValetDrivers'",
         "sk:split-config-per-package": "@sk split-config-per-package monorepo-builder.php",
         "sk:spot-lazy-traits": "@sk spot-lazy-traits src/ --max-used=2",

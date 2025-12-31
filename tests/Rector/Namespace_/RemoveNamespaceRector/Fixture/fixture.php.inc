@@ -10,8 +10,8 @@ it('can get classes', function (): void {
 -----
 <?php
 
-
-
 it('can get classes', function (): void {
     expect(classes())->toBeArray()->toBeTruthy();
 })->group(__DIR__, __FILE__);
+
+?>

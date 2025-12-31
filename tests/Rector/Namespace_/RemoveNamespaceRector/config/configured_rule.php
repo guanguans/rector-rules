@@ -15,7 +15,5 @@ use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->ruleWithConfiguration(RemoveNamespaceRector::class, [
-        'Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture',
-    ]);
+    $rectorConfig->rule(RemoveNamespaceRector::class);
 };

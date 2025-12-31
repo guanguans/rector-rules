@@ -190,8 +190,6 @@ Rename To Psr Name
 
 Remove Namespace
 
-:wrench: **configure it!**
-
 - class: [`Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector`](../src/Rector/Namespace_/RemoveNamespaceRector.php)
 
 ```diff

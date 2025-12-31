@@ -149,6 +149,7 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
             ->filter(fn (array $inspections, string $path) => Str::is($path, $this->file->getFilePath()))
             // ->flatten()
             ->collapse()
+            ->unique()
             // ->sort()
             // ->values()
             // ->dd()

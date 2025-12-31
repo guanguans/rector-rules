@@ -1,9 +1,10 @@
-# total 44 errors
+# total 46 errors
 
 includes:
     - callable.nonCallable.neon
     - complexity.classLike.neon
     - complexity.functionLike.neon
+    - method.childReturnType.neon
     - property.nonObject.neon
     - property.notFound.neon
     - typePerfect.narrowReturnObjectType.neon

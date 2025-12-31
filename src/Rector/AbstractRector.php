@@ -21,6 +21,17 @@ use PhpParser\ErrorHandler\Collecting;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use function Guanguans\RectorRules\Support\classes;
 
+/**
+ * @see https://github.com/driftingly/rector-laravel
+ * @see https://github.com/epifrin/rector-custom-rules
+ * @see https://github.com/ergebnis/rector-rules
+ * @see https://github.com/ingenerator/risky-rector-rules
+ * @see https://github.com/MrPunyapal/rector-pest
+ * @see https://github.com/nikic/PHP-Parser
+ * @see https://github.com/rectorphp/rector
+ * @see https://github.com/rectorphp/rector-src
+ * @see https://github.com/savinmikhail/AddNamedArgumentsRector
+ */
 abstract class AbstractRector extends \Rector\Rector\AbstractRector implements DocumentedRuleInterface
 {
     public function __destruct()
@@ -35,6 +46,9 @@ abstract class AbstractRector extends \Rector\Rector\AbstractRector implements D
         }
     }
 
+    /**
+     * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
+     */
     final public function classes(): Collection
     {
         return classes(

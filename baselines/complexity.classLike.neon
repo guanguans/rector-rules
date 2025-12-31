@@ -3,6 +3,6 @@
 parameters:
     ignoreErrors:
         -
-            message: '#^Class cognitive complexity is 69, keep it under 42$#'
+            message: '#^Class cognitive complexity is 65, keep it under 42$#'
             count: 1
             path: ../src/Rector/Name/RenameToPsrNameRector.php
