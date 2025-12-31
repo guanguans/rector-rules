@@ -65,3 +65,58 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
             });
     }
 }
+
+if (!\function_exists('Guanguans\RectorRules\Support\is_instances_of')) {
+    /**
+     * @param mixed $objectOrClass
+     * @param list<class-string> $classes
+     */
+    function is_instances_of($objectOrClass, array $classes): bool
+    {
+        foreach ($classes as $class) {
+            if ($objectOrClass instanceof $class) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!\function_exists('Guanguans\RectorRules\Support\is_classes_of')) {
+    /**
+     * @see is_a()
+     *
+     * @param mixed $objectOrClass
+     * @param list<class-string> $classes
+     */
+    function is_classes_of($objectOrClass, array $classes, bool $allowString = false): bool
+    {
+        foreach ($classes as $class) {
+            if (is_a($objectOrClass, $class, $allowString)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!\function_exists('Guanguans\RectorRules\Support\is_subclasses_of')) {
+    /**
+     * @see is_subclass_of()
+     *
+     * @param mixed $objectOrClass
+     * @param list<class-string> $classes
+     */
+    function is_subclasses_of($objectOrClass, array $classes, bool $allowString = true): bool
+    {
+        foreach ($classes as $class) {
+            if (is_subclass_of($objectOrClass, $class, $allowString)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}

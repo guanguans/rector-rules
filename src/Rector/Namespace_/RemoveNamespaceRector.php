@@ -16,18 +16,32 @@ namespace Guanguans\RectorRules\Rector\Namespace_;
 use Guanguans\RectorRules\Rector\AbstractRector;
 use Illuminate\Support\Str;
 use PhpParser\Node;
+use PhpParser\Node\Stmt\ClassLike;
+use PhpParser\Node\Stmt\Const_;
 use PhpParser\Node\Stmt\Expression;
+use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Nop;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitorAbstract;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
+use function Guanguans\RectorRules\Support\is_classes_of;
 
 final class RemoveNamespaceRector extends AbstractRector implements ConfigurableRectorInterface
 {
+    /** 类(特性、枚举、注解)、函数、常量。 */
+    public const STMT_CLASSES = [
+        ClassLike::class,
+        Function_::class,
+        Const_::class,
+    ];
+
     /** @var list<string> */
     private array $namespaces = [];
+    private array $stmts = [];
 
     public function getNodeTypes(): array
     {
@@ -43,6 +57,10 @@ final class RemoveNamespaceRector extends AbstractRector implements Configurable
      */
     public function refactor(Node $node): ?array
     {
+        if ([] !== $this->collectNodes($node)) {
+            return null;
+        }
+
         if (!Str::of($this->getName($node))->startsWith($this->namespaces)) {
             return null;
         }
@@ -76,7 +94,7 @@ final class RemoveNamespaceRector extends AbstractRector implements Configurable
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
-            'Remove namespace',
+            $this->description(),
             [
                 new ConfiguredCodeSample(
                     <<<'CODE_SAMPLE'
@@ -106,5 +124,44 @@ final class RemoveNamespaceRector extends AbstractRector implements Configurable
     {
         Assert::allStringNotEmpty($configuration);
         $this->namespaces = $configuration;
+    }
+
+    public function addStmt(Node $stmt): void
+    {
+        $this->stmts[] = $stmt;
+    }
+
+    public function refreshStmts(): void
+    {
+        $this->stmts = [];
+    }
+
+    /**
+     * @return list<Node>
+     */
+    private function collectNodes(Namespace_ $namespace): array
+    {
+        $traverser = new NodeTraverser(
+            new class($this) extends NodeVisitorAbstract {
+                private RemoveNamespaceRector $rector;
+
+                public function __construct(RemoveNamespaceRector $rector)
+                {
+                    $this->rector = $rector;
+                    $this->rector->refreshStmts();
+                }
+
+                public function enterNode(Node $node): void
+                {
+                    if (is_classes_of($node, RemoveNamespaceRector::STMT_CLASSES)) {
+                        $this->rector->addStmt($node);
+                    }
+                }
+            }
+        );
+
+        $traverser->traverse([$namespace]);
+
+        return $this->stmts;
     }
 }

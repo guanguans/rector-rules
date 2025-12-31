@@ -48,10 +48,9 @@ final class SimplifyListIndexRector extends AbstractRector
             ->pluck('key')
             ->map(fn (?Expr $expr) => $expr instanceof Expr ? $this->valueResolver->getValue($expr) : null);
 
-        /** @noinspection NullPointerExceptionInspection */
         if (
             $keys->filter(static fn ($key): bool => null !== $key && !\is_int($key))->isNotEmpty()
-            || !$this->isList(
+            || !array_is_list(
                 $keys->reduce(
                     static fn (Collection $carry, ?int $key): Collection => $carry->put(
                         $key ?? ($carry->isEmpty() ? 0 : $carry->keys()->sortDesc(\SORT_NUMERIC)->first() + 1),
@@ -82,7 +81,7 @@ final class SimplifyListIndexRector extends AbstractRector
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
-            'Simplify list index',
+            $this->description(),
             [
                 new CodeSample(
                     <<<'CODE_SAMPLE'
@@ -102,13 +101,5 @@ final class SimplifyListIndexRector extends AbstractRector
                 ),
             ],
         );
-    }
-
-    /**
-     * @noinspection ArrayIsListCanBeUsedInspection
-     */
-    private function isList(array $array): bool
-    {
-        return \function_exists('array_is_list') ? array_is_list($array) : array_values($array) === $array;
     }
 }

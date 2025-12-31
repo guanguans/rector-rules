@@ -54,6 +54,14 @@ abstract class AbstractRector extends \Rector\Rector\AbstractRector implements D
             ->keys();
     }
 
+    protected function description(): string
+    {
+        return (string) Str::of(static::class)
+            ->afterLast('\\')
+            ->beforeLast('Rector')
+            ->headline();
+    }
+
     protected function makeCollecting(): Collecting
     {
         static $collecting;

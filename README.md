@@ -53,7 +53,7 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 ### SimplifyListIndexRector
 
-Simplify list index
+Simplify List Index
 
 - class: [`Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector`](src/Rector/Array_/SimplifyListIndexRector.php)
 
@@ -74,7 +74,7 @@ Simplify list index
 
 ### AddNoinspectionsDocCommentToDeclareRector
 
-Add noinspections doc comment to declare
+Add Noinspections Doc Comment To Declare
 
 :wrench: **configure it!**
 
@@ -96,7 +96,7 @@ Add noinspections doc comment to declare
 
 ### RenameToPsrNameRector
 
-Rename to psr name
+Rename To Psr Name
 
 :wrench: **configure it!**
 
@@ -221,7 +221,7 @@ Rename to psr name
 
 ### RemoveNamespaceRector
 
-Remove namespace
+Remove Namespace
 
 :wrench: **configure it!**
 
@@ -241,7 +241,7 @@ Remove namespace
 
 ### NewExceptionToNewAnonymousExtendsExceptionImplementsRector
 
-New exception to new anonymous extends exception implements
+New `Exception` To New Anonymous Extends `Exception` Implements
 
 :wrench: **configure it!**
 

@@ -15,6 +15,7 @@ namespace Guanguans\RectorRules\Rector\Declare_;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use PhpParser\Comment;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
@@ -26,8 +27,8 @@ use Webmozart\Assert\Assert;
 
 final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector implements ConfigurableRectorInterface
 {
-    /** @var list<string> */
-    private array $inspections = [];
+    /** @var array<non-empty-string, non-empty-list<string>> */
+    private array $inspectionsMap = [];
 
     public function getNodeTypes(): array
     {
@@ -37,20 +38,21 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
     }
 
     /**
-     * @noinspection PhpUndefinedMethodInspection
-     * @noinspection NullPointerExceptionInspection
-     *
      * @param \PhpParser\Node\Stmt\Declare_ $node
      */
-    public function refactor(Node $node): Node
+    public function refactor(Node $node): ?Node
     {
+        if ([] === $this->getInspections()) {
+            return null;
+        }
+
         $originalCommentContents = collect($node->getComments())
             ->map(static fn (Comment $comment): string => $comment->getText())
             ->implode(\PHP_EOL);
 
         $node->setAttribute(
             'comments',
-            collect($this->inspections)
+            collect($this->getInspections())
                 ->reduce(
                     static fn (Collection $comments, string $inspection): Collection => str_contains(
                         $originalCommentContents,
@@ -59,11 +61,11 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
                     collect($node->getComments())
                 )
                 ->sort(function (Comment $a, Comment $b): int {
-                    if (!$this->search($a) && $this->search($b)) {
+                    if (!$this->inspectionsContains($a) && $this->inspectionsContains($b)) {
                         return 1;
                     }
 
-                    if ($this->search($a) && !$this->search($b)) {
+                    if ($this->inspectionsContains($a) && !$this->inspectionsContains($b)) {
                         return -1;
                     }
 
@@ -82,7 +84,7 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
-            'Add noinspections doc comment to declare',
+            $this->description(),
             [
                 new ConfiguredCodeSample(
                     <<<'CODE_SAMPLE'
@@ -113,22 +115,45 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
     }
 
     /**
-     * @param list<string> $configuration
+     * @param array<non-empty-string, non-empty-list<string>> $configuration
      */
     public function configure(array $configuration): void
     {
-        Assert::allStringNotEmpty($configuration);
-        $this->inspections = $configuration;
+        Assert::allIsArray($configuration);
+        Assert::allNotEmpty($configuration);
+        Assert::allStringNotEmpty(array_keys($configuration));
+
+        $this->inspectionsMap = $configuration;
     }
 
-    private function search(Comment $comment): int
+    private function inspectionsContains(Comment $comment): bool
     {
-        foreach ($this->inspections as $index => $inspection) {
+        foreach ($this->getInspections() as $inspection) {
             if (str_contains($comment->getText(), $inspection)) {
-                return $index + 1;
+                return true;
             }
         }
 
-        return 0;
+        return false;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function getInspections(): array
+    {
+        /** @var array<non-empty-string, list<string>> $inspectionsMap */
+        static $inspectionsMap = [];
+
+        $inspectionsMap[$this->file->getFilePath()] ??= collect($this->inspectionsMap)
+            ->filter(fn (array $inspections, string $path) => Str::is($path, $this->file->getFilePath()))
+            // ->flatten()
+            ->collapse()
+            // ->sort()
+            // ->values()
+            // ->dd()
+            ->all();
+
+        return $inspectionsMap[$this->file->getFilePath()];
     }
 }

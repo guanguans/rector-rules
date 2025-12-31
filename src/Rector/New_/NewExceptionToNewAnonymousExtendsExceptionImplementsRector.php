@@ -89,7 +89,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
-            'New exception to new anonymous extends exception implements',
+            $this->description(),
             [
                 new ConfiguredCodeSample(
                     <<<'CODE_SAMPLE'

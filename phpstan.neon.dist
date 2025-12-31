@@ -114,7 +114,7 @@ parameters:
         - identifier: method.nonObject
         - identifier: assign.propertyType
         - identifier: binaryOp.invalid
-        - identifier: missingType.iterableValue
+#        - identifier: missingType.iterableValue
         - identifier: argument.type
 #        - identifier: cast.string
 #        - identifier: class.extendsFinalByPhpDoc
@@ -126,7 +126,7 @@ parameters:
         - identifier: shipmonk.deadMethod
 #        - identifier: symplify.explicitInterfaceSuffixName
 #        - identifier: symplify.explicitTraitSuffixName
-#        - identifier: symplify.forbiddenStaticClassConstFetch
+        - identifier: symplify.forbiddenStaticClassConstFetch
 #        - identifier: symplify.noDynamicName
 
         - identifier: typeCoverage.paramTypeCoverage

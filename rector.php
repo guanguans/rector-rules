@@ -42,6 +42,7 @@ use Rector\DeadCode\Rector\If_\RemoveAlwaysTrueIfConditionRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrContainsRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrEndsWithRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
+use Rector\DowngradePhp81\Rector\FuncCall\DowngradeArrayIsListRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\NodeTypeResolver\PHPStan\Scope\Contract\NodeVisitor\ScopeResolverNodeVisitorInterface;
@@ -225,6 +226,7 @@ return RectorConfig::configure()
         )
     )
     ->withSkip([
+        DowngradeArrayIsListRector::class,
         DowngradeStrContainsRector::class,
         DowngradeStrEndsWithRector::class,
         DowngradeStrStartsWithRector::class,

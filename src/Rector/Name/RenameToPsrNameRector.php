@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection PhpUnusedAliasInspection */
+/** @noinspection EfferentObjectCouplingInspection */
+
 declare(strict_types=1);
 
 /**
@@ -48,6 +51,7 @@ use Rector\PHPStan\ScopeFetcher;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
+use function Guanguans\RectorRules\Support\is_classes_of;
 
 final class RenameToPsrNameRector extends AbstractRector implements ConfigurableRectorInterface
 {
@@ -165,7 +169,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
-            'Rename to psr name',
+            $this->description(),
             [
                 new ConfiguredCodeSample(
                     <<<'CODE_SAMPLE'
@@ -309,7 +313,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      *
      * @noinspection PhpDocSignatureInspection
      * @noinspection PhpPossiblePolymorphicInvocationInspection
-     * @noinspection PhpStrictTypeCheckingInspection
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      */
@@ -335,7 +338,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         }
 
         if (
-            $this->isSubclasses($node, [
+            is_classes_of($node, [
                 Variable::class,
                 Identifier::class,
             ])
@@ -435,7 +438,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             && (
                 $parent instanceof FuncCall
                 || (
-                    $this->isSubclasses($parent, [UseItem::class])
+                    is_classes_of($parent, [UseItem::class])
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_FUNCTION === $parent->type)
                         || (Use_::TYPE_FUNCTION === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
@@ -472,7 +475,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
         if (
             $node instanceof Identifier
-            && $this->isSubclasses($parent, [
+            && is_classes_of($parent, [
                 // interface InterfaceName{}
                 Interface_::class,
                 // class ClassName{}
@@ -493,13 +496,13 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 // use ClassName;
                 /** @noinspection PhpConditionAlreadyCheckedInspection */
                 (
-                    $this->isSubclasses($parent, [UseItem::class])
+                    is_classes_of($parent, [UseItem::class])
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_NORMAL === $parent->type)
                         || (Use_::TYPE_NORMAL === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
                     )
                 )
-                || $this->isSubclasses($parent, [
+                || is_classes_of($parent, [
                     // #[\AttributeName]
                     Attribute::class,
                     // class Foo extends ClassName implements InterfaceName{}
@@ -582,7 +585,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         if (
             $node instanceof Identifier
             && !$this->isName($node, 'class')
-            && $this->isSubclasses($parent, [
+            && is_classes_of($parent, [
                 // class Foo{public const CONST_NAME = 'const';}
                 Const_::class,
                 // Foo::CONST_NAME;
@@ -614,7 +617,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             && (
                 $parent instanceof ConstFetch
                 || (
-                    $this->isSubclasses($parent, [UseItem::class])
+                    is_classes_of($parent, [UseItem::class])
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_CONSTANT === $parent->type)
                         || (Use_::TYPE_CONSTANT === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
@@ -637,7 +640,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
         if (
             $node instanceof Identifier
-            && $this->isSubclasses($node->getAttribute('parent'), [
+            && is_classes_of($node->getAttribute('parent'), [
                 // class Foo{public $propertyName;}
                 Property::class,
                 // class Foo{public int $propertyName;}
@@ -679,24 +682,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 ])
                 && $this->hasFuncCallIndexStringArg($node, 1)
             ) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param list<class-string> $classes
-     */
-    private function isSubclasses(?object $object, array $classes): bool
-    {
-        if (!\is_object($object)) {
-            return false;
-        }
-
-        foreach ($classes as $class) {
-            if ($object instanceof $class) {
                 return true;
             }
         }
