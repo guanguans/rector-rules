@@ -21,23 +21,13 @@ use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Nop;
 use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitorAbstract;
+use PhpParser\NodeVisitor\FirstFindingVisitor;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use function Guanguans\RectorRules\Support\is_classes_of;
+use function Guanguans\RectorRules\Support\is_instance_of_any;
 
 final class RemoveNamespaceRector extends AbstractRector
 {
-    /** ClassLike(Attribute、Class、Enum、Interface、Trait)、Constant、Function. */
-    public const STMT_CLASSES = [
-        ClassLike::class,
-        Const_::class,
-        Function_::class,
-    ];
-
-    /** @var list<\PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Stmt\Function_> */
-    private array $stmts = [];
-
     public function getNodeTypes(): array
     {
         return [
@@ -52,7 +42,7 @@ final class RemoveNamespaceRector extends AbstractRector
      */
     public function refactor(Node $node): ?array
     {
-        if ($this->collectStmts($node)) {
+        if ($this->findFirstSkippedNode($node) instanceof Node) {
             return null;
         }
 
@@ -68,7 +58,6 @@ final class RemoveNamespaceRector extends AbstractRector
 
     /**
      * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
-     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
      */
     public function getRuleDefinition(): RuleDefinition
     {
@@ -93,49 +82,24 @@ final class RemoveNamespaceRector extends AbstractRector
         );
     }
 
-    public function addStmt(Node $stmt): void
-    {
-        $this->stmts[] = $stmt;
-    }
-
-    public function refreshStmts(): void
-    {
-        $this->stmts = [];
-    }
-
     /**
-     * @noinspection SelfClassReferencingInspection
+     * @see \PhpParser\NodeVisitor\
+     * @see \PhpParser\NodeVisitor\FirstFindingVisitor
      *
-     * @return list<\PhpParser\Node>
+     * @return null|\PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Stmt\Function_
      */
-    private function collectStmts(Namespace_ $namespace): array
+    private function findFirstSkippedNode(Namespace_ $namespace): ?Node
     {
-        $traverser = new NodeTraverser(
-            new class($this) extends NodeVisitorAbstract {
-                private RemoveNamespaceRector $rector;
-
-                public function __construct(RemoveNamespaceRector $rector)
-                {
-                    $rector->refreshStmts();
-                    $this->rector = $rector;
-                }
-
-                /**
-                 * @noinspection PhpMissingParentCallCommonInspection
-                 */
-                public function enterNode(Node $node): void
-                {
-                    if (is_classes_of($node, RemoveNamespaceRector::STMT_CLASSES)) {
-                        $this->rector->addStmt($node);
-                    }
-                }
-            }
-        );
-
+        $traverser = new NodeTraverser($firstFindingVisitor = new FirstFindingVisitor(
+            static fn (Node $node): bool => is_instance_of_any($node, [
+                /** ClassLike(Attribute、Class、Enum、Interface、Trait)、Constant、Function. */
+                ClassLike::class,
+                Const_::class,
+                Function_::class,
+            ])
+        ));
         $traverser->traverse([$namespace]);
 
-        // array_filter($namespace->stmts, static fn (Node $node): bool => is_classes_of($node, self::STMT_CLASSES));
-
-        return $this->stmts;
+        return $firstFindingVisitor->getFoundNode();
     }
 }

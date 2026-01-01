@@ -51,7 +51,7 @@ use Rector\PHPStan\ScopeFetcher;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
-use function Guanguans\RectorRules\Support\is_classes_of;
+use function Guanguans\RectorRules\Support\is_instance_of_any;
 
 final class RenameToPsrNameRector extends AbstractRector implements ConfigurableRectorInterface
 {
@@ -131,9 +131,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
-     * @noinspection PhpDocSignatureInspection
-     *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
+     *
+     * @noinspection PhpDocSignatureInspection
      */
     public function refactor(Node $node): ?Node
     {
@@ -163,6 +163,8 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
+     * @see https://github.com/barryvdh/laravel-ide-helper/blob/master/resources/views/meta.php
+     *
      * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
      * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
      */
@@ -311,10 +313,10 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      * @see https://github.com/rectorphp/rector/issues/7611
      * @see https://github.com/rectorphp/rector/blob/main/UPGRADING.md#1-abstractscopeawarerector-is-removed-use-abstractrector-instead
      *
+     * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
+     *
      * @noinspection PhpDocSignatureInspection
      * @noinspection PhpPossiblePolymorphicInvocationInspection
-     *
-     * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      */
     private function rename(Node $node, callable $renamer): ?Node
     {
@@ -338,7 +340,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         }
 
         if (
-            is_classes_of($node, [
+            is_instance_of_any($node, [
                 Variable::class,
                 Identifier::class,
             ])
@@ -416,9 +418,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
-     * @noinspection PhpDocSignatureInspection
-     *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
+     *
+     * @noinspection PhpDocSignatureInspection
      */
     private function shouldLowerSnakeName(Node $node): bool
     {
@@ -438,7 +440,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             && (
                 $parent instanceof FuncCall
                 || (
-                    is_classes_of($parent, [UseItem::class])
+                    is_instance_of_any($parent, [UseItem::class])
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_FUNCTION === $parent->type)
                         || (Use_::TYPE_FUNCTION === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
@@ -462,9 +464,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
-     * @noinspection PhpDocSignatureInspection
-     *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
+     *
+     * @noinspection PhpDocSignatureInspection
      */
     private function shouldUcfirstCamelName(Node $node): bool
     {
@@ -475,7 +477,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
         if (
             $node instanceof Identifier
-            && is_classes_of($parent, [
+            && is_instance_of_any($parent, [
                 // interface InterfaceName{}
                 Interface_::class,
                 // class ClassName{}
@@ -496,13 +498,13 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 // use ClassName;
                 /** @noinspection PhpConditionAlreadyCheckedInspection */
                 (
-                    is_classes_of($parent, [UseItem::class])
+                    is_instance_of_any($parent, [UseItem::class])
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_NORMAL === $parent->type)
                         || (Use_::TYPE_NORMAL === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
                     )
                 )
-                || is_classes_of($parent, [
+                || is_instance_of_any($parent, [
                     // #[\AttributeName]
                     Attribute::class,
                     // class Foo extends ClassName implements InterfaceName{}
@@ -573,9 +575,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
-     * @noinspection PhpDocSignatureInspection
-     *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
+     *
+     * @noinspection PhpDocSignatureInspection
      */
     private function shouldUpperSnakeName(Node $node): bool
     {
@@ -585,7 +587,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         if (
             $node instanceof Identifier
             && !$this->isName($node, 'class')
-            && is_classes_of($parent, [
+            && is_instance_of_any($parent, [
                 // class Foo{public const CONST_NAME = 'const';}
                 Const_::class,
                 // Foo::CONST_NAME;
@@ -617,7 +619,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             && (
                 $parent instanceof ConstFetch
                 || (
-                    is_classes_of($parent, [UseItem::class])
+                    is_instance_of_any($parent, [UseItem::class])
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_CONSTANT === $parent->type)
                         || (Use_::TYPE_CONSTANT === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
@@ -627,9 +629,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
-     * @noinspection PhpDocSignatureInspection
-     *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
+     *
+     * @noinspection PhpDocSignatureInspection
      */
     private function shouldLcfirstCamelName(Node $node): bool
     {
@@ -640,7 +642,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
         if (
             $node instanceof Identifier
-            && is_classes_of($node->getAttribute('parent'), [
+            && is_instance_of_any($node->getAttribute('parent'), [
                 // class Foo{public $propertyName;}
                 Property::class,
                 // class Foo{public int $propertyName;}

@@ -28,6 +28,7 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\classes;
+use function Guanguans\RectorRules\Support\is_subclass_of_all;
 
 /**
  * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
@@ -45,13 +46,13 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
     }
 
     /**
-     * @param \PhpParser\Node\Expr\New_ $node
-     *
      * @see \PhpParser\NodeVisitor::*
      * @see \Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory
      * @see \Rector\Comments\NodeDocBlock\DocBlockUpdater
      * @see \RectorPrefix202512\dump_node()
      * @see \RectorPrefix202512\print_node()
+     *
+     * @param \PhpParser\Node\Expr\New_ $node
      */
     public function refactor(Node $node): ?Node
     {
@@ -61,7 +62,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
         if (
             !($className = $this->getName($node->class))
             || !is_subclass_of($className, \Throwable::class)
-            || $this->isSubclassesOf($className)
+            || is_subclass_of_all($className, $this->implements)
         ) {
             return null;
         }
@@ -116,27 +117,9 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
     public function configure(array $configuration): void
     {
         // $this->classes()->dd();
-
         // Assert::allIsAOf($configuration, \Throwable::class);
         Assert::allStringNotEmpty($configuration);
 
         $this->implements = $configuration;
-    }
-
-    /**
-     * @param class-string $className
-     *
-     * @see \is_subclass_of()
-     * @see \is_a()
-     */
-    private function isSubclassesOf(string $className): bool
-    {
-        foreach ($this->implements as $implement) {
-            if (!is_subclass_of($className, $implement)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

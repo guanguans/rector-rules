@@ -275,20 +275,31 @@ return Factory::fromRuleSet(Php74::create()
         ],
         'phpdoc_order' => [
             'order' => [
+                'see',
+
+                'extends',
+                'implements',
+                'mixin',
+
+                'deprecated',
+                'final',
+                'internal',
+                'readonly',
+
+                'covers',
+                'uses',
+                'dataProvider',
+
+                'param',
+                'throws',
+                'return',
+
+                'codeCoverageIgnore',
                 'noinspection',
                 'phan-suppress',
                 'phpcsSuppress',
                 'phpstan-ignore',
                 'psalm-suppress',
-
-                'deprecated',
-                'internal',
-                'covers',
-                'uses',
-                'dataProvider',
-                'param',
-                'throws',
-                'return',
             ],
         ],
         'phpdoc_order_by_value' => [
