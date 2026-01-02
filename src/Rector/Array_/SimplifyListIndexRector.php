@@ -72,7 +72,7 @@ final class SimplifyListIndexRector extends AbstractRector
             }
         }
 
-        return $hasChanged ? null : $node;
+        return $hasChanged ? $node : null;
     }
 
     /**

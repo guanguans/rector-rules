@@ -13,11 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRules\Rector;
 
-use Guanguans\RectorRules\Support\ComposerScripts;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use PhpParser\Error;
-use PhpParser\ErrorHandler\Collecting;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
 use function Guanguans\RectorRules\Support\classes;
 
@@ -34,19 +31,9 @@ use function Guanguans\RectorRules\Support\classes;
  */
 abstract class AbstractRector extends \Rector\Rector\AbstractRector implements DocumentedRuleInterface
 {
-    public function __destruct()
-    {
-        if (ComposerScripts::makeSymfonyStyle()->isDebug()) {
-            ComposerScripts::makeSymfonyStyle()->comment(
-                collect($this->makeCollecting()->getErrors())
-                    ->map(static fn (Error $error): string => $error->getRawMessage())
-                    ->unique()
-                    ->all()
-            );
-        }
-    }
-
     /**
+     * @see \Rector\PhpParser\Parser
+     * @see \Rector\PhpParser\Printer
      * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
      */
     final public function classes(): Collection
@@ -74,12 +61,5 @@ abstract class AbstractRector extends \Rector\Rector\AbstractRector implements D
             ->afterLast('\\')
             ->beforeLast('Rector')
             ->headline();
-    }
-
-    protected function makeCollecting(): Collecting
-    {
-        static $collecting;
-
-        return $collecting ??= new Collecting;
     }
 }

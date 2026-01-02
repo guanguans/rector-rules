@@ -255,6 +255,7 @@ return Factory::fromRuleSet(Php74::create()
                 'property-read',
                 'property-write',
                 'return',
+                'see',
                 'throws',
                 'type',
                 'var',

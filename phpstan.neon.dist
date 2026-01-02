@@ -130,5 +130,6 @@ parameters:
         - identifier: symplify.forbiddenStaticClassConstFetch
 #        - identifier: symplify.noDynamicName
 
+        - identifier: complexity.classLike
         - identifier: typeCoverage.paramTypeCoverage
 #        - identifier: typeCoverage.returnTypeCoverage

@@ -161,8 +161,10 @@ if (!\function_exists('Guanguans\RectorRules\Support\is_subclass_of_any')) {
      * @param mixed $objectOrClass
      * @param list<class-string> $classes
      */
-    function is_subclass_of_any($objectOrClass, array $classes, bool $allowString = true): bool
+    function is_subclass_of_any($objectOrClass, array $classes, ?bool $allowString = null): bool
     {
+        $allowString ??= \is_string($objectOrClass);
+
         foreach ($classes as $class) {
             if (is_subclass_of($objectOrClass, $class, $allowString)) {
                 return true;
@@ -178,8 +180,10 @@ if (!\function_exists('Guanguans\RectorRules\Support\is_subclass_of_all')) {
      * @param mixed $objectOrClass
      * @param list<class-string> $classes
      */
-    function is_subclass_of_all($objectOrClass, array $classes, bool $allowString = true): bool
+    function is_subclass_of_all($objectOrClass, array $classes, ?bool $allowString = null): bool
     {
+        $allowString ??= \is_string($objectOrClass);
+
         foreach ($classes as $class) {
             if (!is_subclass_of($objectOrClass, $class, $allowString)) {
                 return false;

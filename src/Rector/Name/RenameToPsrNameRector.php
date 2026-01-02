@@ -20,6 +20,7 @@ use Guanguans\RectorRules\Rector\AbstractRector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpParser\Error;
+use PhpParser\ErrorHandler\Collecting;
 use PhpParser\Node;
 use PhpParser\Node\Attribute;
 use PhpParser\Node\Const_;
@@ -46,6 +47,7 @@ use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\UseItem;
+use Rector\Console\Style\SymfonyStyleFactory;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\PHPStan\ScopeFetcher;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
@@ -119,6 +121,39 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
          */
         'php_user_filter',
     ];
+    private Collecting $collecting;
+
+    public function __construct(Collecting $collecting, SymfonyStyleFactory $symfonyStyleFactory)
+    {
+        $this->collecting = $collecting;
+
+        register_shutdown_function(
+            /**
+             * @throws \ReflectionException
+             */
+            function (SymfonyStyleFactory $symfonyStyleFactory): void {
+                $rectorStyle = $symfonyStyleFactory->create();
+
+                $reflectionProperty = (new \ReflectionObject($rectorStyle))->getParentClass()->getProperty('input');
+                \PHP_VERSION_ID < 80100 and $reflectionProperty->setAccessible(true);
+                $input = $reflectionProperty->getValue($rectorStyle);
+
+                if (
+                    $this->collecting->hasErrors()
+                    && $rectorStyle->isDebug()
+                    && 'console' === $input->getParameterOption('--output-format', 'console', true)
+                ) {
+                    $rectorStyle->comment(
+                        collect($this->collecting->getErrors())
+                            ->map(static fn (Error $error): string => $error->getRawMessage())
+                            ->unique()
+                            ->all()
+                    );
+                }
+            },
+            $symfonyStyleFactory
+        );
+    }
 
     public function getNodeTypes(): array
     {
@@ -156,7 +191,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 return $this->rename($node, static fn (string $name): string => lcfirst(Str::camel($name)));
             }
         } catch (Error $error) {
-            $this->makeCollecting()->handleError($error);
+            $this->collecting->handleError($error);
         }
 
         return null;
