@@ -6,8 +6,8 @@
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
-/** @noinspection SqlResolve */
 /** @noinspection StaticClosureCanBeUsedInspection */
+/** @noinspection SqlResolve */
 declare(strict_types=1);
 
 /**
@@ -18,8 +18,6 @@ declare(strict_types=1);
  *
  * @see https://github.com/guanguans/rector-rules
  */
-
-namespace Guanguans\PackageSkeletonTests\Datasets;
 
 dataset('movies', [
     '肖申克的救赎',

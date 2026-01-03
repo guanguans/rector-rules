@@ -172,6 +172,13 @@ return Factory::fromRuleSet(Php74::create()
             'single_line' => false,
             'space_before_parenthesis' => false,
         ],
+        'comment_to_phpdoc' => [
+            'ignored_tags' => [
+                'codeCoverageIgnore',
+                'codeCoverageIgnoreEnd',
+                'codeCoverageIgnoreStart',
+            ],
+        ],
         'concat_space' => [
             'spacing' => 'none',
         ],
@@ -277,6 +284,11 @@ return Factory::fromRuleSet(Php74::create()
         'phpdoc_order' => [
             'order' => [
                 'see',
+
+                'template',
+                'template-covariant',
+                'template-extends',
+                'template-implements',
 
                 'extends',
                 'implements',

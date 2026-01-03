@@ -27,12 +27,8 @@ use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterfa
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
-use function Guanguans\RectorRules\Support\classes;
 use function Guanguans\RectorRules\Support\is_subclass_of_all;
 
-/**
- * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
- */
 final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface, MinPhpVersionInterface
 {
     /** @var list<class-string> */
@@ -46,6 +42,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
     }
 
     /**
+     * @see https://github.com/symfony/ai/blob/main/.phpstan/ForbidNativeExceptionRule.php
      * @see \PhpParser\NodeVisitor::*
      * @see \Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory
      * @see \Rector\Comments\NodeDocBlock\DocBlockUpdater
@@ -114,9 +111,11 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
         return PhpVersion::PHP_70;
     }
 
+    /**
+     * @param list<class-string> $configuration
+     */
     public function configure(array $configuration): void
     {
-        // $this->classes()->dd();
         // Assert::allIsAOf($configuration, \Throwable::class);
         Assert::allStringNotEmpty($configuration);
 

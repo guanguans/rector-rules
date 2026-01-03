@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PropertyCanBeStaticInspection */
 /** @noinspection PhpUnusedAliasInspection */
 /** @noinspection EfferentObjectCouplingInspection */
 
@@ -34,6 +35,7 @@ use PhpParser\Node\Expr\StaticPropertyFetch;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
+use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -42,7 +44,6 @@ use PhpParser\Node\Stmt\EnumCase;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Interface_;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\Use_;
@@ -65,6 +66,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         'class',
         'false',
         'null',
+        'parent',
         'self',
         'static',
         'stdClass',
@@ -131,7 +133,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             /**
              * @throws \ReflectionException
              */
-            function (SymfonyStyleFactory $symfonyStyleFactory): void {
+            function (SymfonyStyleFactory $symfonyStyleFactory): void { // @codeCoverageIgnoreStart
                 $rectorStyle = $symfonyStyleFactory->create();
 
                 $reflectionProperty = (new \ReflectionObject($rectorStyle))->getParentClass()->getProperty('input');
@@ -150,7 +152,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                             ->all()
                     );
                 }
-            },
+            }, // @codeCoverageIgnoreEnd
             $symfonyStyleFactory
         );
     }
@@ -169,6 +171,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *
      * @noinspection PhpDocSignatureInspection
+     * @noinspection BadExceptionsProcessingInspection
      */
     public function refactor(Node $node): ?Node
     {
@@ -336,6 +339,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         );
     }
 
+    /**
+     * @param list<class-string> $configuration
+     */
     public function configure(array $configuration): void
     {
         Assert::allStringNotEmpty($configuration);
@@ -361,7 +367,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             }
 
             if (ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name))) {
-                return mb_strtolower($name, 'UTF-8');
+                return Str::lower($name);
             }
 
             return $name;
@@ -681,7 +687,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 // class Foo{public $propertyName;}
                 Property::class,
                 // class Foo{public int $propertyName;}
-                PropertyProperty::class,
+                PropertyItem::class,
                 // class Foo{public function methodName(){}}
                 ClassMethod::class,
                 // $object->propertyName;

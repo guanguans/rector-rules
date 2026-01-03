@@ -26,6 +26,7 @@ class_name::method();
 use class_name;
 use trait_name;
 class_alias('class_name', 'alias_class_name');
+class_alias($className, 'alias_class_name');
 class_exists('class_name');
 class_implements('class_name');
 class_parents('class_name');
@@ -36,6 +37,7 @@ get_class_vars('class_name');
 get_parent_class('class_name');
 interface_exists('interface_name');
 is_subclass_of('class_name', 'parent_class_name');
+is_subclass_of($className, 'parent_class_name');
 trait_exists('trait_name', true);
 
 // upper snake
@@ -91,6 +93,7 @@ class Foo extends \ClassName implements \InterfaceName{}
 use ClassName;
 use TraitName;
 class_alias('ClassName', 'AliasClassName');
+class_alias($className, 'AliasClassName');
 class_exists('ClassName');
 class_implements('ClassName');
 class_parents('ClassName');
@@ -101,6 +104,7 @@ get_class_vars('ClassName');
 get_parent_class('ClassName');
 interface_exists('InterfaceName');
 is_subclass_of('ClassName', 'ParentClassName');
+is_subclass_of($className, 'ParentClassName');
 trait_exists('TraitName', true);
 
 // upper snake

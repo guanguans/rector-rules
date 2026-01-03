@@ -19,6 +19,8 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Support;
 
 use Composer\Script\Event;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Rector\Config\RectorConfig;
 use Rector\DependencyInjection\LazyContainerFactory;
 use Symfony\Component\Console\Application;
@@ -43,6 +45,53 @@ final class ComposerScripts
      * @see \PhpCsFixer\Utils
      */
     private function __construct() {}
+
+    /**
+     * @see \Rector\PhpParser\Parser
+     * @see \Rector\PhpParser\Printer
+     * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
+     *
+     * @return int<0>|never-returns<1>
+     *
+     * @noinspection PhpDocSignatureInspection
+     */
+    public static function listFiles(Event $event): int
+    {
+        self::requireAutoload($event);
+
+        require_once $event->getComposer()->getConfig()->get('vendor-dir').'/rector/rector/vendor/autoload.php';
+
+        classes(
+            static fn (string $class, string $file): bool => Str::of($class)->startsWith('Rector\\')
+                && Str::of($class)->endsWith([
+                    'Factory',
+                    'Resolver',
+                    // 'er',
+                ])
+                && !Str::of($file)->contains([
+                    '/rector-doctrine/',
+                    '/rector-downgrade-php/',
+                    '/rector-phpunit/',
+                    '/rector-symfony/',
+                    '/jack/',
+                    '/swiss-knife/',
+                    '/type-perfect/',
+                ])
+        )
+            ->sortKeys()
+            // ->groupBy(fn (string $class) => str($class)->explode('\\')->get(1))
+            // ->keys()
+            ->tap(static function (Collection $classes) use ($event): void {
+                $event->getIO()->info('');
+                $event->getIO()->info("Found {$classes->count()} files:");
+                $event->getIO()->info('');
+            })
+            ->each(static function (\ReflectionClass $reflectionClass) use ($event): void {
+                $event->getIO()->info(Str::remove(getcwd().\DIRECTORY_SEPARATOR, $reflectionClass->getFileName()));
+            });
+
+        return 0;
+    }
 
     public static function makeRectorConfig(): RectorConfig
     {

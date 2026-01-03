@@ -1,9 +1,5 @@
-# total 43 errors
+# total 2 errors
 
 includes:
     - callable.nonCallable.neon
-    - complexity.functionLike.neon
-    - property.nonObject.neon
-    - property.notFound.neon
-    - typePerfect.narrowReturnObjectType.neon
-    - typePerfect.noMixedPropertyFetcher.neon
+    - missingType.generics.neon

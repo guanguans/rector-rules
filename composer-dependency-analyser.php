@@ -23,7 +23,6 @@ return (new Configuration)
     )
     ->addPathsToExclude([
         __DIR__.'/src/Support/ComposerScripts.php',
-        // __DIR__.'/src/Rector/',
         __DIR__.'/tests/',
     ])
     ->ignoreUnknownClasses([
@@ -33,32 +32,17 @@ return (new Configuration)
     ->ignoreErrorsOnExtensions(
         [
             'ext-ctype',
-            'ext-mbstring',
         ],
         [ErrorType::SHADOW_DEPENDENCY],
     )
-    // ->ignoreErrorsOnPackageAndPaths(
-    //     'ergebnis/php-cs-fixer-config',
-    //     [
-    //         __DIR__.'/src/Rector/Cases/Rule/FuncCallRule.php',
-    //     ],
-    //     [ErrorType::DEV_DEPENDENCY_IN_PROD]
-    // )
     ->ignoreErrorsOnPackages(
         [
-            // 'illuminate/support',
-            // 'rector/rector',
-        ],
-        [ErrorType::UNUSED_DEPENDENCY]
-    )
-    ->ignoreErrorsOnPackages(
-        [
-            'nikic/php-parser',
+            /**
+             * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
+             * @see vendor/rector/rector/vendor/symfony/
+             */
             'illuminate/collections',
-            // 'symfony/console',
-            'webmozart/assert',
-            'symfony/polyfill-php80',
-            'symfony/polyfill-php81',
+            'nikic/php-parser',
         ],
         [ErrorType::SHADOW_DEPENDENCY]
     );

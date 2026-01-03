@@ -51,13 +51,15 @@ final class SimplifyListIndexRector extends AbstractRector
         if (
             $keys->filter(static fn ($key): bool => null !== $key && !\is_int($key))->isNotEmpty()
             || !array_is_list(
-                $keys->reduce(
-                    static fn (Collection $carry, ?int $key): Collection => $carry->put(
-                        $key ?? ($carry->isEmpty() ? 0 : $carry->keys()->sortDesc(\SORT_NUMERIC)->first() + 1),
-                        $key
-                    ),
-                    collect()
-                )->all()
+                $keys
+                    ->reduce(
+                        static fn (Collection $carry, ?int $key): Collection => $carry->put(
+                            $key ?? (int) $carry->keys()->sortDesc(\SORT_NUMERIC)->first(null, -1) + 1,
+                            $key
+                        ),
+                        collect()
+                    )
+                    ->all()
             )
         ) {
             return null;

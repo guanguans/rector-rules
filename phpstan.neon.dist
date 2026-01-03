@@ -87,6 +87,7 @@ parameters:
 #        - identifier: cast.double
 #        - identifier: cast.int
 #        - identifier: cast.string
+#        - identifier: class.extendsFinalByPhpDoc
 #        - identifier: empty.notAllowed
 #        - identifier: encapsedStringPart.nonString
 #        - identifier: foreach.valueOverwrite
@@ -95,6 +96,7 @@ parameters:
 #        - identifier: method.childParameterType
 #        - identifier: method.dynamicName
 #        - identifier: method.nonObject
+#        - identifier: missingType.generics
 #        - identifier: missingType.iterableValue
 #        - identifier: new.static
 #        - identifier: offsetAccess.nonOffsetAccessible
@@ -102,6 +104,8 @@ parameters:
 #        - identifier: paramOut.type
 #        - identifier: phpstanApi.class
 #        - identifier: return.void
+#        - identifier: symplify.explicitInterfaceSuffixName
+#        - identifier: symplify.explicitTraitSuffixName
 #        - identifier: symplify.forbiddenExtendOfNonAbstractClass
 #        - identifier: symplify.forbiddenStaticClassConstFetch
 #        - identifier: symplify.noDynamicName
@@ -111,25 +115,28 @@ parameters:
 #        - identifier: trait.unused
 #        - identifier: typePerfect.noMixedMethodCaller
 
+        - identifier: argument.type
+        - identifier: cast.int
         - identifier: method.childParameterType
         - identifier: method.nonObject
-        - identifier: assign.propertyType
-        - identifier: binaryOp.invalid
-#        - identifier: missingType.iterableValue
-        - identifier: argument.type
-#        - identifier: cast.string
-#        - identifier: class.extendsFinalByPhpDoc
-#        - identifier: encapsedStringPart.nonString
-#        - identifier: logicalAnd.resultUnused
-#        - identifier: method.dynamicName
-        - identifier: missingType.generics
         - identifier: return.type
         - identifier: shipmonk.deadMethod
-#        - identifier: symplify.explicitInterfaceSuffixName
-#        - identifier: symplify.explicitTraitSuffixName
         - identifier: symplify.forbiddenStaticClassConstFetch
-#        - identifier: symplify.noDynamicName
+        -
+            identifier: complexity.classLike
+            path: src/Rector/Name/RenameToPsrNameRector.php
+        -
+            identifier: complexity.functionLike
+            path: src/Rector/Name/RenameToPsrNameRector.php
+        -
+            identifier: property.nonObject
+            path: src/Rector/Name/RenameToPsrNameRector.php
+        -
+            identifier: property.notFound
+            path: src/Rector/Name/RenameToPsrNameRector.php
+        -
+            identifier: typePerfect.noMixedPropertyFetcher
+            path: src/Rector/Name/RenameToPsrNameRector.php
 
-        - identifier: complexity.classLike
         - identifier: typeCoverage.paramTypeCoverage
 #        - identifier: typeCoverage.returnTypeCoverage

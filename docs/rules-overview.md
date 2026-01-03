@@ -20,7 +20,7 @@
 
 ### SimplifyListIndexRector
 
-Simplify List Index
+Simplify list index
 
 - class: [`Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector`](../src/Rector/Array_/SimplifyListIndexRector.php)
 
@@ -41,7 +41,7 @@ Simplify List Index
 
 ### AddNoinspectionsDocCommentToDeclareRector
 
-Add Noinspections Doc Comment To Declare
+Add noinspections doc comment to declare
 
 :wrench: **configure it!**
 
@@ -63,7 +63,7 @@ Add Noinspections Doc Comment To Declare
 
 ### RenameToPsrNameRector
 
-Rename To Psr Name
+Rename to psr name
 
 :wrench: **configure it!**
 
@@ -188,7 +188,7 @@ Rename To Psr Name
 
 ### RemoveNamespaceRector
 
-Remove Namespace
+Remove namespace
 
 - class: [`Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector`](../src/Rector/Namespace_/RemoveNamespaceRector.php)
 
@@ -206,7 +206,7 @@ Remove Namespace
 
 ### NewExceptionToNewAnonymousExtendsExceptionImplementsRector
 
-New `Exception` To New Anonymous Extends `Exception` Implements
+New exception to new anonymous extends exception implements
 
 :wrench: **configure it!**
 

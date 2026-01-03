@@ -1,5 +1,12 @@
 <?php
 
+/** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
 declare(strict_types=1);
 
 /**
@@ -17,6 +24,12 @@ use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 final class RenameToPsrNameRectorTest extends AbstractRectorTestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $_SERVER['argv'][] = '--debug';
+    }
+
     protected static function directory(): string
     {
         return __DIR__;

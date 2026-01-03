@@ -39,7 +39,10 @@
     "require": {
         "php": ">=7.4",
         "illuminate/support": "^8.83 || ^9.0 || ^10.0 || ^11.0 || ^12.0",
-        "rector/rector": "^2.3"
+        "rector/rector": "^2.3",
+        "symfony/polyfill-php80": "^1.33",
+        "symfony/polyfill-php81": "^1.33",
+        "webmozart/assert": "^1.12 || ^2.0"
     },
     "require-dev": {
         "adamwojs/php-cs-fixer-phpdoc-force-fqcn": "^2.0",
@@ -65,7 +68,7 @@
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpstan/phpstan-webmozart-assert": "^2.0",
         "povils/phpmnd": "^3.6",
-        "rector/jack": "^0.4 || ^0.5",
+        "rector/jack": "^0.5",
         "rector/swiss-knife": "^2.3",
         "rector/type-perfect": "^2.1",
         "shipmonk/composer-dependency-analyser": "^1.8",
@@ -82,9 +85,6 @@
         "tomasvotruba/cognitive-complexity": "^1.0",
         "tomasvotruba/type-coverage": "^2.1",
         "yamadashy/phpstan-friendly-formatter": "^1.2"
-    },
-    "suggest": {
-        "symfony/var-dumper": "Required to use the the function [dump、dd]."
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
@@ -170,7 +170,7 @@
             "@jsonlint",
             "@phpmnd",
             "@phpstan:analyse",
-            "@rector-rules:update-fixers-document",
+            "@rector-rules:list-files",
             "@rector:process-dry-run",
             "@sk:check-commented-code",
             "@sk:check-conflicts",
@@ -197,7 +197,7 @@
             "@pest"
         ],
         "class-leak": "@php vendor/bin/class-leak --ansi -vv",
-        "class-leak:check": "@class-leak check src/ --skip-type=Rector\\Rector\\AbstractRector --skip-path=Support/",
+        "class-leak:check": "@class-leak check src/ --skip-type=Guanguans\\RectorRules\\Rector\\AbstractRector --skip-path=Support/",
         "composer-bump": [
             "@putenv:php",
             "@composer-config:disable-process-timeout",
@@ -287,7 +287,7 @@
         "peck:init": "@peck --init",
         "pest": [
             "@putenv:xdebug-on",
-            "@php vendor/bin/pest --colors=always --min=1 --coverage",
+            "@php vendor/bin/pest --colors=always --min=80 --coverage",
             "@putenv:xdebug-off"
         ],
         "pest:coverage": "@pest --coverage-html=.build/phpunit/ --coverage-clover=.build/phpunit/clover.xml",
@@ -365,7 +365,7 @@
             "ls -lh builds/rector-rules.phar",
             "ls -lr builds/rector-rules.phar"
         ],
-        "rector-rules:update-fixers-document": "Guanguans\\RectorRules\\Support\\ComposerScripts::updateFixersDocument",
+        "rector-rules:list-files": "Guanguans\\RectorRules\\Support\\ComposerScripts::listFiles",
         "rector:custom-rule": "@rector custom-rule",
         "rector:list-rules": "@rector list-rules",
         "rector:process": "@rector process",
@@ -378,10 +378,7 @@
             "@putenv:php",
             "$PHP82 rule-doc-generator --ansi -vv"
         ],
-        "rule-doc-generator:generate": [
-            "@rule-doc-generator generate src/Rector/ --output-file=docs/rules-overview.md --categorize=1 --skip-type=Guanguans\\RectorRules\\Rector\\Cases\\CaseRector",
-            "@rule-doc-generator generate src/Rector/ --output-file=rules-overview.md --categorize=1 --readme --skip-type=Guanguans\\RectorRules\\Rector\\Cases\\CaseRector"
-        ],
+        "rule-doc-generator:generate": "@rule-doc-generator generate src/Rector/ --output-file=docs/rules-overview.md --categorize=1",
         "rule-doc-generator:validate": "@rule-doc-generator validate src/Rector/",
         "sk": "@php vendor/bin/swiss-knife --ansi -vv",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",

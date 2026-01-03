@@ -6,9 +6,9 @@
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
-/** @noinspection SqlResolve */
 /** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection PhpMissingParentCallCommonInspection */
+/** @noinspection SqlResolve */
 declare(strict_types=1);
 
 /**

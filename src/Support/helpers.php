@@ -36,7 +36,7 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
      *
      * @param null|(callable(class-string, string): bool) $filter
      *
-     * @return \Illuminate\Support\Collection<class-string, \ReflectionClass>
+     * @return \Illuminate\Support\Collection<class-string, \ReflectionClass|\Throwable>
      *
      * @noinspection PhpUndefinedNamespaceInspection
      */
@@ -48,6 +48,7 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
                 ? $loader[0]->getClassMap()
                 : []
         );
+        // $filter ??= static fn ($class, $file): bool => true;
 
         return $classes
             ->when(
