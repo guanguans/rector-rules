@@ -1,10 +1,12 @@
-# 5 Rules Overview
+# 6 Rules Overview
 
 <br>
 
 ## Categories
 
 - [Array](#array) (1)
+
+- [Class](#class) (1)
 
 - [Declare](#declare) (1)
 
@@ -23,6 +25,27 @@
 Simplify list index
 
 - class: [`Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector`](../src/Rector/Array_/SimplifyListIndexRector.php)
+
+```diff
+ [
+-    0 => 'foo',
+-    1 => 'bar',
+-    2 => 'baz',
++    'foo',
++    'bar',
++    'baz',
+ ]
+```
+
+<br>
+
+## Class
+
+### UpdateParamTypeOfRectorRefactorMethodRector
+
+Update param type of rector refactor method
+
+- class: [`Guanguans\RectorRules\Rector\Class_\UpdateParamTypeOfRectorRefactorMethodRector`](../src/Rector/Class_/UpdateParamTypeOfRectorRefactorMethodRector.php)
 
 ```diff
  [

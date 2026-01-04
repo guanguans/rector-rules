@@ -372,7 +372,7 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
-        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\Name\\RenameToPsrNameRector",
+        "rector:process-only": "@rector:process-clear-cache src/Rector/Array_/SimplifyListIndexRector.php --only=Guanguans\\RectorRules\\Rector\\Class_\\UpdateParamTypeOfRectorRefactorMethodRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "rule-doc-generator": [
             "@putenv:php",

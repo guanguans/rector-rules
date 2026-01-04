@@ -3,6 +3,7 @@
     "ignore": {
         "words": [
             "noinspections",
+            "param",
             "utils"
         ],
         "paths": []

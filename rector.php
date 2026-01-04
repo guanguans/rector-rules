@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
+use Guanguans\RectorRules\Rector\Class_\UpdateParamTypeOfRectorRefactorMethodRector;
 use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
@@ -121,6 +122,7 @@ return RectorConfig::configure()
         RemoveNamespaceRector::class,
         SimplifyListIndexRector::class,
         SortAssociativeArrayByKeyRector::class,
+        UpdateParamTypeOfRectorRefactorMethodRector::class,
 
         // ArraySpreadInsteadOfArrayMergeRector::class,
         JsonThrowOnErrorRector::class,
