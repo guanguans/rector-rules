@@ -25,7 +25,6 @@ use Rector\ValueObject\PhpVersion;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_subclass_of_all;
 
@@ -80,32 +79,6 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
         );
     }
 
-    /**
-     * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
-     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
-     */
-    public function getRuleDefinition(): RuleDefinition
-    {
-        return new RuleDefinition(
-            $this->description(),
-            [
-                new ConfiguredCodeSample(
-                    <<<'CODE_SAMPLE'
-                        new \Exception('Testing');
-                        CODE_SAMPLE,
-                    <<<'CODE_SAMPLE'
-                        new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
-                        {
-                        };
-                        CODE_SAMPLE,
-                    [
-                        'Guanguans\RectorRules\Contract\ThrowableContract',
-                    ],
-                ),
-            ],
-        );
-    }
-
     public function provideMinPhpVersion(): int
     {
         return PhpVersion::PHP_70;
@@ -120,5 +93,31 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
         Assert::allStringNotEmpty($configuration);
 
         $this->implements = $configuration;
+    }
+
+    /**
+     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
+     *
+     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample>
+     */
+    protected function codeSamples(): array
+    {
+        return [
+            new ConfiguredCodeSample(
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    new Exception('Testing');
+                    PHP,
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
+                    {
+                    };
+                    PHP,
+                [
+                    'Guanguans\RectorRules\Contract\ThrowableContract',
+                ],
+            ),
+        ];
     }
 }

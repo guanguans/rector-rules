@@ -22,7 +22,6 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Declare_;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
 
 final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector implements ConfigurableRectorInterface
@@ -78,43 +77,6 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
     }
 
     /**
-     * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
-     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
-     */
-    public function getRuleDefinition(): RuleDefinition
-    {
-        return new RuleDefinition(
-            $this->description(),
-            [
-                new ConfiguredCodeSample(
-                    <<<'CODE_SAMPLE'
-                         /** @noinspection AnonymousFunctionStaticInspection */
-                         /** @noinspection StaticClosureCanBeUsedInspection */
-                         /** @noinspection PhpVoidFunctionResultUsedInspection */
-                         declare(strict_types=1);
-                        CODE_SAMPLE,
-                    <<<'CODE_SAMPLE'
-                         /** @noinspection AnonymousFunctionStaticInspection */
-                         /** @noinspection NullPointerExceptionInspection */
-                         /** @noinspection PhpPossiblePolymorphicInvocationInspection */
-                         /** @noinspection PhpUnhandledExceptionInspection */
-                         /** @noinspection StaticClosureCanBeUsedInspection */
-                         /** @noinspection PhpVoidFunctionResultUsedInspection */
-                         declare(strict_types=1);
-                        CODE_SAMPLE,
-                    [
-                        'AnonymousFunctionStaticInspection',
-                        'NullPointerExceptionInspection',
-                        'PhpPossiblePolymorphicInvocationInspection',
-                        'PhpUnhandledExceptionInspection',
-                        'StaticClosureCanBeUsedInspection',
-                    ],
-                ),
-            ],
-        );
-    }
-
-    /**
      * @param array<non-empty-string, non-empty-list<string>> $configuration
      */
     public function configure(array $configuration): void
@@ -124,6 +86,51 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
         Assert::allStringNotEmpty(array_keys($configuration));
 
         $this->inspectionsMap = $configuration;
+    }
+
+    /**
+     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
+     *
+     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample>
+     */
+    protected function codeSamples(): array
+    {
+        return [
+            new ConfiguredCodeSample(
+                <<<'PHP'
+                    /** @noinspection AnonymousFunctionStaticInspection */
+                    /** @noinspection StaticClosureCanBeUsedInspection */
+                    /** @noinspection ALL */
+                    /** @noinspection PhpUnusedAliasInspection */
+                    declare(strict_types=1);
+                    PHP,
+                <<<'PHP'
+                    /** @noinspection AnonymousFunctionStaticInspection */
+                    /** @noinspection NullPointerExceptionInspection */
+                    /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+                    /** @noinspection PhpUndefinedClassInspection */
+                    /** @noinspection PhpUnhandledExceptionInspection */
+                    /** @noinspection PhpVoidFunctionResultUsedInspection */
+                    /** @noinspection StaticClosureCanBeUsedInspection */
+                    /** @noinspection ALL */
+                    /** @noinspection PhpUnusedAliasInspection */
+                    declare(strict_types=1);
+                    PHP,
+                [
+                    '*/Fixture/fixture.php' => [
+                        'AnonymousFunctionStaticInspection',
+                        'StaticClosureCanBeUsedInspection',
+                    ],
+                    '*/fixture.php' => [
+                        'NullPointerExceptionInspection',
+                        'PhpPossiblePolymorphicInvocationInspection',
+                        'PhpUndefinedClassInspection',
+                        'PhpUnhandledExceptionInspection',
+                        'PhpVoidFunctionResultUsedInspection',
+                    ],
+                ],
+            ),
+        ];
     }
 
     private function inspectionsContains(Comment $comment): bool

@@ -21,7 +21,6 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Scalar\Int_;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 final class SimplifyListIndexRector extends AbstractRector
 {
@@ -78,30 +77,23 @@ final class SimplifyListIndexRector extends AbstractRector
     }
 
     /**
-     * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
+     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample>
      */
-    public function getRuleDefinition(): RuleDefinition
+    protected function codeSamples(): array
     {
-        return new RuleDefinition(
-            $this->description(),
-            [
-                new CodeSample(
-                    <<<'CODE_SAMPLE'
-                        [
-                            0 => 'foo',
-                            1 => 'bar',
-                            2 => 'baz',
-                        ]
-                        CODE_SAMPLE,
-                    <<<'CODE_SAMPLE'
-                        [
-                            'foo',
-                            'bar',
-                            'baz',
-                        ]
-                        CODE_SAMPLE,
-                ),
-            ],
-        );
+        return [
+            new CodeSample(
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    [0 => 'foo', 1 => 'bar', 2 => 'baz'];
+                    [0 => 'foo', 'bar', 2 => 'baz'];
+                    PHP,
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    ['foo', 'bar', 'baz'];
+                    ['foo', 'bar', 'baz'];
+                    PHP,
+            ),
+        ];
     }
 }

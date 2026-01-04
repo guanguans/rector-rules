@@ -23,7 +23,6 @@ use PhpParser\Node\Stmt\Nop;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\FirstFindingVisitor;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
-use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use function Guanguans\RectorRules\Support\is_instance_of_any;
 
 final class RemoveNamespaceRector extends AbstractRector
@@ -57,29 +56,45 @@ final class RemoveNamespaceRector extends AbstractRector
     }
 
     /**
-     * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
+     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample>
      */
-    public function getRuleDefinition(): RuleDefinition
+    protected function codeSamples(): array
     {
-        return new RuleDefinition(
-            $this->description(),
-            [
-                new CodeSample(
-                    <<<'CODE_SAMPLE'
-                        namespace Guanguans\ValetDriversTests\Support;
+        return [
+            new CodeSample(
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    /**
+                     * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
+                     *
+                     * For the full copyright and license information, please view
+                     * the LICENSE file that was distributed with this source code.
+                     *
+                     * @see https://github.com/guanguans/rector-rules
+                     */
+                    namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture;
 
-                        it('can get classes', function (): void {
-                            expect(classes())->toBeArray()->toBeTruthy();
-                        })->group(__DIR__, __FILE__);
-                        CODE_SAMPLE,
-                    <<<'CODE_SAMPLE'
-                        it('can get classes', function (): void {
-                            expect(classes())->toBeArray()->toBeTruthy();
-                        })->group(__DIR__, __FILE__);
-                        CODE_SAMPLE,
-                ),
-            ],
-        );
+                    it('is true', function (): void {
+                        expect(true)->toBeTrue();
+                    });
+                    PHP,
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    /**
+                     * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
+                     *
+                     * For the full copyright and license information, please view
+                     * the LICENSE file that was distributed with this source code.
+                     *
+                     * @see https://github.com/guanguans/rector-rules
+                     */
+
+                    it('is true', function (): void {
+                        expect(true)->toBeTrue();
+                    });
+                    PHP,
+            ),
+        ];
     }
 
     /**

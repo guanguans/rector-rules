@@ -15,6 +15,7 @@ namespace Guanguans\RectorRules\Rector;
 
 use Illuminate\Support\Str;
 use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
+use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 /**
  * @see https://github.com/driftingly/rector-laravel
@@ -29,6 +30,14 @@ use Symplify\RuleDocGenerator\Contract\DocumentedRuleInterface;
  */
 abstract class AbstractRector extends \Rector\Rector\AbstractRector implements DocumentedRuleInterface
 {
+    /**
+     * @throws \Symplify\RuleDocGenerator\Exception\PoorDocumentationException
+     */
+    final public function getRuleDefinition(): RuleDefinition
+    {
+        return new RuleDefinition($this->description(), $this->codeSamples());
+    }
+
     protected function description(): string
     {
         return (string) Str::of(static::class)
@@ -38,4 +47,9 @@ abstract class AbstractRector extends \Rector\Rector\AbstractRector implements D
             ->lower()
             ->ucfirst();
     }
+
+    /**
+     * @return list<\Symplify\RuleDocGenerator\Contract\CodeSampleInterface>
+     */
+    abstract protected function codeSamples(): array;
 }

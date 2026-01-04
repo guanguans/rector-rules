@@ -44,5 +44,6 @@ return static function (RectorConfig $rectorConfig): void {
     // $rectorConfig->tag($registerService->getClassName(), $registerService->getTag());
 
     $rectorConfig->ruleWithConfiguration(RenameToPsrNameRector::class, [
+        'exceptName',
     ]);
 };

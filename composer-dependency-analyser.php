@@ -37,6 +37,12 @@ return (new Configuration)
     )
     ->ignoreErrorsOnPackages(
         [
+            'phpstan/phpstan',
+        ],
+        [ErrorType::DEV_DEPENDENCY_IN_PROD]
+    )
+    ->ignoreErrorsOnPackages(
+        [
             /**
              * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
              * @see vendor/rector/rector/vendor/symfony/
