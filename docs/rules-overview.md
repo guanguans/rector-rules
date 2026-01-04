@@ -26,12 +26,12 @@ Simplify list index
 
 ```diff
  [
--    0 => 'delimiter',
--    1 => 'orderbynull',
--    2 => 'groupbyconst',
-+    'delimiter',
-+    'orderbynull',
-+    'groupbyconst',
+-    0 => 'foo',
+-    1 => 'bar',
+-    2 => 'baz',
++    'foo',
++    'bar',
++    'baz',
  ]
 ```
 

@@ -8,6 +8,8 @@
 /** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection LongInheritanceChainInspection */
+/** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -54,10 +56,18 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
         return static::directory().'/config/configured_rule.php';
     }
 
+    final public function testRectorTestCaseClassName(): void
+    {
+        self::assertSame(
+            Str::replaceLast('Test', '', (new \ReflectionClass(static::class))->getShortName()),
+            static::rectorReflectionClass()->getShortName()
+        );
+    }
+
     final public function testRuleDefinition(): void
     {
-        $documentedRule = static::rectorReflectionClass()->newInstanceWithoutConstructor();
-        $ruleDefinition = $documentedRule->getRuleDefinition();
+        $ruleDefinition = static::rectorReflectionClass()->newInstanceWithoutConstructor()->getRuleDefinition();
+
         self::assertNotEmpty($ruleDefinition->getDescription());
         self::assertNotEmpty($ruleDefinition->getCodeSamples());
         self::assertIsBool($ruleDefinition->isConfigurable());
@@ -66,10 +76,9 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
     /**
      * @dataProvider provideCases()
      *
-     * @noinspection PhpUndefinedNamespaceInspection
-     * @noinspection PhpUndefinedClassInspection
-     * @noinspection PhpLanguageLevelInspection
      * @noinspection PhpFullyQualifiedNameUsageInspection
+     * @noinspection PhpLanguageLevelInspection
+     * @noinspection PhpUndefinedNamespaceInspection
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideCases')]
     final public function test(string $filePath): void
@@ -79,13 +88,12 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
 
     final public static function provideCases(): iterable
     {
-        return self::yieldFilesFromDirectory(static::directory().'/Fixture');
+        return self::yieldFilesFromDirectory(static::directory().'/Fixture/');
     }
 
-    /**
-     * @noinspection PhpUndefinedClassInspection
-     */
-    protected function doTestFile(string $fixtureFilePath, bool $includeFixtureDirectoryAsSource = \false): void
+    abstract protected static function directory(): string;
+
+    protected function doTestFile(string $fixtureFilePath, bool $includeFixtureDirectoryAsSource = false): void
     {
         // $reflectionClass = new \ReflectionClass(parent::class);
         // $reflectionMethod = $reflectionClass->getMethod('createInputFilePath');
@@ -132,6 +140,8 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
     }
 
     /**
+     * @throws \ReflectionException
+     *
      * @return class-string<\Guanguans\RectorRules\Rector\AbstractRector>
      */
     protected static function rectorClass(): string
@@ -142,11 +152,9 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
             return $rectorClass;
         }
 
-        return $rectorClass = (string) Str::of((new \ReflectionClass(static::class))->getNamespaceName())->replace(
+        return $rectorClass = (string) Str::of(class_namespace(static::class))->replace(
             'RectorRulesTests',
             'RectorRules'
         );
     }
-
-    abstract protected static function directory(): string;
 }

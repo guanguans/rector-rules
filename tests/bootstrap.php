@@ -24,5 +24,5 @@ require __DIR__.'/../vendor/autoload.php';
 
 BypassFinals::enable(false);
 BypassFinals::allowPaths([
-    '*/src/Fixer/CommandLineTool/GenericsFixer.php',
+    '*/src/Rector/Array_/SimplifyListIndexRector.php',
 ]);

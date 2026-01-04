@@ -1,12 +1,4 @@
 <?php
 
-namespace Guanguans\RectorRulesTests\Rector\Array_\SimplifyListIndexRector\Fixture;
-
-[
-    0 => 'delimiter',
-    1 => 'orderbynull',
-    3 => 'groupbyconst',
-];
-
-?>
-
+/** @noinspection ALL */
+[0 => 'foo', 1 => 'bar', 3 => 'baz'];

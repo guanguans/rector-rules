@@ -170,7 +170,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     /**
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *
-     * @noinspection PhpDocSignatureInspection
      * @noinspection BadExceptionsProcessingInspection
      */
     public function refactor(Node $node): ?Node
@@ -356,7 +355,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *
-     * @noinspection PhpDocSignatureInspection
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     private function rename(Node $node, callable $renamer): ?Node
@@ -460,8 +458,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
     /**
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
-     *
-     * @noinspection PhpDocSignatureInspection
      */
     private function shouldLowerSnakeName(Node $node): bool
     {
@@ -506,8 +502,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
     /**
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
-     *
-     * @noinspection PhpDocSignatureInspection
      */
     private function shouldUcfirstCamelName(Node $node): bool
     {
@@ -617,8 +611,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
     /**
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
-     *
-     * @noinspection PhpDocSignatureInspection
      */
     private function shouldUpperSnakeName(Node $node): bool
     {
@@ -671,8 +663,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
     /**
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
-     *
-     * @noinspection PhpDocSignatureInspection
      */
     private function shouldLcfirstCamelName(Node $node): bool
     {

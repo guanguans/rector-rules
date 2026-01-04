@@ -1,8 +1,6 @@
 <?php
 
 /** @noinspection EfferentObjectCouplingInspection */
-/** @noinspection PhpDeprecationInspection */
-/** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection PhpUnused */
 
 declare(strict_types=1);

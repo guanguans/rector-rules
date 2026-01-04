@@ -1,23 +1,15 @@
 <?php
 
-namespace Guanguans\RectorRulesTests\Rector\Array_\SimplifyListIndexRector\Fixture;
-
-[
-    0 => 'delimiter',
-    1 => 'orderbynull',
-    2 => 'groupbyconst',
-];
+/** @noinspection ALL */
+[0 => 'foo', 1 => 'bar', 2 => 'baz'];
+[0 => 'foo', 'bar', 2 => 'baz'];
 
 ?>
 -----
 <?php
 
-namespace Guanguans\RectorRulesTests\Rector\Array_\SimplifyListIndexRector\Fixture;
-
-[
-    'delimiter',
-    'orderbynull',
-    'groupbyconst',
-];
+/** @noinspection ALL */
+['foo', 'bar', 'baz'];
+['foo', 'bar', 'baz'];
 
 ?>

@@ -1,7 +1,8 @@
 <?php
 
+/** @noinspection ALL */
 /**
- * Copyright (c) 2025 guanguans<ityaozm@gmail.com>
+ * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -10,16 +11,17 @@
  */
 namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture;
 
-it('can get classes', function (): void {
-    expect(classes())->toBeArray()->toBeTruthy();
-})->group(__DIR__, __FILE__);
+it('is true', function (): void {
+    expect(true)->toBeTrue();
+});
 
 ?>
 -----
 <?php
 
+/** @noinspection ALL */
 /**
- * Copyright (c) 2025 guanguans<ityaozm@gmail.com>
+ * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
@@ -27,6 +29,6 @@ it('can get classes', function (): void {
  * @see https://github.com/guanguans/rector-rules
  */
 
-it('can get classes', function (): void {
-    expect(classes())->toBeArray()->toBeTruthy();
-})->group(__DIR__, __FILE__);
+it('is true', function (): void {
+    expect(true)->toBeTrue();
+});

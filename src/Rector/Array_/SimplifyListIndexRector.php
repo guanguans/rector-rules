@@ -88,16 +88,16 @@ final class SimplifyListIndexRector extends AbstractRector
                 new CodeSample(
                     <<<'CODE_SAMPLE'
                         [
-                            0 => 'delimiter',
-                            1 => 'orderbynull',
-                            2 => 'groupbyconst',
+                            0 => 'foo',
+                            1 => 'bar',
+                            2 => 'baz',
                         ]
                         CODE_SAMPLE,
                     <<<'CODE_SAMPLE'
                         [
-                            'delimiter',
-                            'orderbynull',
-                            'groupbyconst',
+                            'foo',
+                            'bar',
+                            'baz',
                         ]
                         CODE_SAMPLE,
                 ),

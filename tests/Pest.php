@@ -96,9 +96,9 @@ expect()->extend(
  */
 
 /**
- * @param object|string $class
+ * @param class-string|object $class
  *
- * @throws ReflectionException
+ * @throws \ReflectionException
  */
 function class_namespace($class): string
 {

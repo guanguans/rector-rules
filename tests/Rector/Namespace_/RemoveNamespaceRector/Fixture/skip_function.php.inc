@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection ALL */
 namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture;
 
 if (!\function_exists('Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture\add')) {
@@ -7,5 +8,3 @@ if (!\function_exists('Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamesp
         return $a + $b;
     }
 }
-
-?>

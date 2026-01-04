@@ -2,10 +2,9 @@
 
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
-/** @noinspection PhpVoidFunctionResultUsedInspection */
+/** @noinspection ALL */
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
-
-namespace Guanguans\RectorRulesTests\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector\Fixture;
 
 ?>
 -----
@@ -14,11 +13,12 @@ namespace Guanguans\RectorRulesTests\Rector\Declare_\AddNoinspectionsDocCommentT
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection NullPointerExceptionInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
+/** @noinspection ALL */
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
-
-namespace Guanguans\RectorRulesTests\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector\Fixture;
 
 ?>

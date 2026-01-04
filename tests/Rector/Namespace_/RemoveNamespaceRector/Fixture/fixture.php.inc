@@ -1,17 +1,18 @@
 <?php
 
+/** @noinspection ALL */
 namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture;
 
-it('can get classes', function (): void {
-    expect(classes())->toBeArray()->toBeTruthy();
-})->group(__DIR__, __FILE__);
+it('is true', function (): void {
+    expect(true)->toBeTrue();
+});
 
 ?>
 -----
 <?php
 
-it('can get classes', function (): void {
-    expect(classes())->toBeArray()->toBeTruthy();
-})->group(__DIR__, __FILE__);
+/** @noinspection ALL */
 
-?>
+it('is true', function (): void {
+    expect(true)->toBeTrue();
+});

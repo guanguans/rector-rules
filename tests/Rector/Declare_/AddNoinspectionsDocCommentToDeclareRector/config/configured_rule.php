@@ -24,14 +24,15 @@ use Rector\Config\RectorConfig;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(AddNoinspectionsDocCommentToDeclareRector::class, [
         '*/Fixture/fixture.php' => [
+            'AnonymousFunctionStaticInspection',
             'StaticClosureCanBeUsedInspection',
-            'PhpPossiblePolymorphicInvocationInspection',
-            'PhpUnhandledExceptionInspection',
         ],
-
         '*/fixture.php' => [
             'NullPointerExceptionInspection',
-            'AnonymousFunctionStaticInspection',
+            'PhpPossiblePolymorphicInvocationInspection',
+            'PhpUndefinedClassInspection',
+            'PhpUnhandledExceptionInspection',
+            'PhpVoidFunctionResultUsedInspection',
         ],
     ]);
 };

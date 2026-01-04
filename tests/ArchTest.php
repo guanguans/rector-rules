@@ -20,7 +20,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Support\ComposerScripts;
+use Guanguans\RectorRules\Support\Utils;
 
 // arch('will not use debugging functions')
 //     // ->throwsNoExceptions()
@@ -46,5 +46,5 @@ use Guanguans\RectorRules\Support\ComposerScripts;
 //     // ->each
 //     ->not->toBeUsed()
 //     ->ignoring([
-//         ComposerScripts::class,
+//         Utils::class,
 //     ]);

@@ -34,7 +34,6 @@ use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
-use Rector\CodingStyle\Rector\FunctionLike\FunctionLikeToFirstClassCallableRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
@@ -200,9 +199,6 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
-        FunctionLikeToFirstClassCallableRector::class => [
-            __DIR__.'/src/Support/helpers.php',
-        ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src/',
             __DIR__.'/tests/',

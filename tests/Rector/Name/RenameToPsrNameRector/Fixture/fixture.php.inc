@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection ALL */
 // @formatter:off
 // phpcs:ignoreFile
@@ -63,9 +64,11 @@ Foo::$property_name;
 Foo::method_name();
 method_exists($object, 'method_name');
 property_exists($object, 'property_name');
+
 ?>
 -----
 <?php
+
 /** @noinspection ALL */
 // @formatter:off
 // phpcs:ignoreFile
@@ -130,4 +133,5 @@ Foo::$propertyName;
 Foo::methodName();
 method_exists($object, 'methodName');
 property_exists($object, 'propertyName');
+
 ?>
