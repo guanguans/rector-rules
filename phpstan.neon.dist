@@ -119,9 +119,12 @@ parameters:
         - identifier: cast.int
         - identifier: method.childParameterType
         - identifier: method.nonObject
+        - identifier: phpstanApi.class
         - identifier: return.type
         - identifier: shipmonk.deadMethod
+        - identifier: symplify.forbiddenArrayMethodCall
         - identifier: symplify.forbiddenStaticClassConstFetch
+        - identifier: symplify.noArrayMapWithArrayCallable
         -
             identifier: complexity.classLike
             path: src/Rector/Name/RenameToPsrNameRector.php

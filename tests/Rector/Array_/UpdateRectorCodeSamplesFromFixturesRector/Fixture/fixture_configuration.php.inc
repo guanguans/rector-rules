@@ -14,18 +14,16 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
         return [
             new ConfiguredCodeSample(
                 <<<'PHP'
-                    /** @noinspection ALL */
-                    // new Exception('Testing');
-                    PHP,
+                /** @noinspection ALL */
+                // new Exception('Testing');
+                PHP,
                 <<<'PHP'
-                    /** @noinspection ALL */
-                    // new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
-                    // {
-                    // };
-                    PHP,
-                [
-                    // 'Guanguans\RectorRules\Contract\ThrowableContract',
-                ],
+                /** @noinspection ALL */
+                // new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
+                // {
+                // };
+                PHP,
+                [/*'Guanguans\RectorRules\Contract\ThrowableContract'*/],
             ),
         ];
     }

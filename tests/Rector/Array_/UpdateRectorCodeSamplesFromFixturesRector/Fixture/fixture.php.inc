@@ -13,15 +13,15 @@ final class SimplifyListIndexRector extends AbstractRector
         return [
             new CodeSample(
                 <<<'PHP'
-                    /** @noinspection ALL */
-                    [0 => 'foo', 1 => 'bar', 2 => 'baz'];
-                    // [0 => 'foo', 'bar', 2 => 'baz'];
-                    PHP,
+                /** @noinspection ALL */
+                [0 => 'foo', 1 => 'bar', 2 => 'baz'];
+                // [0 => 'foo', 'bar', 2 => 'baz'];
+                PHP,
                 <<<'PHP'
-                    /** @noinspection ALL */
-                    ['foo', 'bar', 'baz'];
-                    // ['foo', 'bar', 'baz'];
-                    PHP,
+                /** @noinspection ALL */
+                ['foo', 'bar', 'baz'];
+                // ['foo', 'bar', 'baz'];
+                PHP,
             ),
         ];
     }

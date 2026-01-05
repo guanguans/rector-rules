@@ -2,6 +2,7 @@
     "preset": "base",
     "ignore": {
         "words": [
+            "docblock",
             "noinspections",
             "param",
             "utils"

@@ -7,7 +7,6 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
-/** @noinspection SqlResolve */
 declare(strict_types=1);
 
 /**

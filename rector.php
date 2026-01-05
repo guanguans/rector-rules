@@ -132,6 +132,9 @@ return RectorConfig::configure()
         StaticClosureRector::class,
     ])
     ->withConfiguredRule(AddNoinspectionsDocCommentToDeclareRector::class, [
+        '*/src/Rector/*Rector.php' => [
+            'PhpMultipleClassDeclarationsInspection',
+        ],
         '*/tests/*' => [
             'AnonymousFunctionStaticInspection',
             'NullPointerExceptionInspection',

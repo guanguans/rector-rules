@@ -1,9 +1,9 @@
 <?php
 
-/** @noinspection PropertyCanBeStaticInspection */
-/** @noinspection PhpUnusedAliasInspection */
+/** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection EfferentObjectCouplingInspection */
-
+/** @noinspection PhpUnusedAliasInspection */
+/** @noinspection PropertyCanBeStaticInspection */
 declare(strict_types=1);
 
 /**
@@ -146,6 +146,8 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 ) {
                     $rectorStyle->comment(
                         collect($this->collecting->getErrors())
+                            // ->map(static fn (Error $error): string => $error->getMessage())
+                            // ->map(static fn (Error $error): string => $error->getMessageWithColumnInfo())
                             ->map(static fn (Error $error): string => $error->getRawMessage())
                             ->unique()
                             ->all()
@@ -369,7 +371,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     {
         $renamer = fn (string $name): string => $renamer((function (string $name) use ($node): string {
             if (Str::is($this->except, $name)) {
-                throw new Error("The name [$name] is skipped.", $node->getAttributes());
+                throw new Error(\sprintf("[%s] The name [$name] is skipped.", self::class), $node->getAttributes());
             }
 
             if (ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name))) {

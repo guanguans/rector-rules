@@ -11,7 +11,6 @@
 /** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection PhpUnused */
-/** @noinspection SqlResolve */
 declare(strict_types=1);
 
 /**
