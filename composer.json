@@ -372,7 +372,7 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
-        "rector:process-only": "@rector:process-clear-cache src/Rector/Declare_/AddNoinspectionsDocCommentToDeclareRector.php --only=Guanguans\\RectorRules\\Rector\\Array_\\UpdateRectorCodeSamplesRector",
+        "rector:process-only": "@rector:process-clear-cache src/Rector/New_/NewExceptionToNewAnonymousExtendsExceptionImplementsRector.php --only=Guanguans\\RectorRules\\Rector\\Array_\\UpdateRectorCodeSamplesFromFixturesRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "rule-doc-generator": [
             "@putenv:php",

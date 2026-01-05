@@ -15,6 +15,9 @@ namespace Guanguans\RectorRules\Support;
 
 use Composer\Autoload\ClassLoader;
 use Illuminate\Support\Collection;
+use PhpParser\Node;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\CloningVisitor;
 
 if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
     /**
@@ -64,6 +67,44 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
                     return [$class => $throwable];
                 }
             });
+    }
+}
+
+if (!\function_exists('Guanguans\RectorRules\Support\clone_node')) {
+    /**
+     * @see \DeepCopy\deep_copy()
+     *
+     * @template T of Node
+     *
+     * @param T $node
+     *
+     * @return T
+     */
+    // function clone_node(Node $node): Node
+    // {
+    //     $node = clone $node;
+    //
+    //     foreach ($node->getSubNodeNames() as $subNodeName) {
+    //         $subNode = $node->{$subNodeName};
+    //
+    //         if ($subNode instanceof Node) {
+    //             $node->{$subNodeName} = clone_node($subNode);
+    //         } elseif (\is_array($subNode)) {
+    //             $node->{$subNodeName} = array_map(
+    //                 static fn ($node) => $node instanceof Node ? clone_node($node) : $node,
+    //                 $subNode
+    //             );
+    //         }
+    //     }
+    //
+    //     return $node;
+    // }
+    function clone_node(Node $node): Node
+    {
+        /** @var list<T> $nodes */
+        $nodes = (new NodeTraverser(new CloningVisitor))->traverse([$node]);
+
+        return $nodes[0];
     }
 }
 

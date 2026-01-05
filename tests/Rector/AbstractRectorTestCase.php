@@ -130,13 +130,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
      */
     protected static function rectorReflectionClass(): \ReflectionClass
     {
-        static $reflectionClass;
-
-        if ($reflectionClass instanceof \ReflectionClass) {
-            return $reflectionClass;
-        }
-
-        return $reflectionClass = new \ReflectionClass(static::rectorClass());
+        return new \ReflectionClass(static::rectorClass());
     }
 
     /**
@@ -146,13 +140,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
      */
     protected static function rectorClass(): string
     {
-        static $rectorClass;
-
-        if ($rectorClass) {
-            return $rectorClass;
-        }
-
-        return $rectorClass = (string) Str::of(class_namespace(static::class))->replace(
+        return (string) Str::of(class_namespace(static::class))->replace(
             'RectorRulesTests',
             'RectorRules'
         );

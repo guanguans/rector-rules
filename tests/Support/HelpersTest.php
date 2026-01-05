@@ -21,7 +21,9 @@ declare(strict_types=1);
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Rector\PhpParser\Parser\SimplePhpParser;
 use function Guanguans\RectorRules\Support\classes;
+use function Guanguans\RectorRules\Support\clone_node;
 use function Guanguans\RectorRules\Support\is_class_of_all;
 use function Guanguans\RectorRules\Support\is_class_of_any;
 use function Guanguans\RectorRules\Support\is_instance_of_all;
@@ -34,6 +36,15 @@ it('can get classes', function (): void {
         ->toBeInstanceOf(Collection::class)
         ->groupBy(fn (object $object): bool => $object instanceof ReflectionClass)
         ->toHaveCount(2);
+})->group(__DIR__, __FILE__);
+
+it('can deep clone node', function (): void {
+    $node = (new SimplePhpParser)->parseFile(__FILE__)[0];
+
+    expect(clone_node($node))
+        ->toBeInstanceOf(\get_class($node))
+        ->not->toBe($node)
+        ->not->toEqual($node);
 })->group(__DIR__, __FILE__);
 
 it('is instance of any', function (): void {

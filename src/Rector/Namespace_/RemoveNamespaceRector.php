@@ -64,6 +64,22 @@ final class RemoveNamespaceRector extends AbstractRector
             new CodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
+                    namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture;
+
+                    it('is true', function (): void {
+                        expect(true)->toBeTrue();
+                    });
+                    PHP,
+                <<<'PHP'
+                    /** @noinspection ALL */
+
+                    it('is true', function (): void {
+                        expect(true)->toBeTrue();
+                    });
+                    PHP,
+            ), new CodeSample(
+                <<<'PHP'
+                    /** @noinspection ALL */
                     /**
                      * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
                      *
