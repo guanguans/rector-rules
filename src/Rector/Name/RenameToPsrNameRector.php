@@ -50,7 +50,6 @@ use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\UseItem;
 use Rector\Console\Style\SymfonyStyleFactory;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\PHPStan\ScopeFetcher;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_instance_of_any;
@@ -352,7 +351,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                     method_exists($object, 'methodName');
                     property_exists($object, 'propertyName');
                     PHP,
-                ['exceptName']
+                ['afterAll', 'afterEach', 'assertMatches*Snapshot', 'beforeAll', 'beforeEach', 'PDO']
             ),
         ];
     }
@@ -360,8 +359,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     /**
      * @see \Rector\NodeNameResolver\NodeNameResolver
      * @see \Rector\Renaming\Collector\RenamedNameCollector
-     * @see https://github.com/rectorphp/rector/issues/7611
-     * @see https://github.com/rectorphp/rector/blob/main/UPGRADING.md#1-abstractscopeawarerector-is-removed-use-abstractrector-instead
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *
@@ -406,7 +403,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 return null;
             }
 
-            // $node->setAttribute('scope', ScopeFetcher::fetch($node));
             $node->name = $caseName;
 
             return $node;

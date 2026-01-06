@@ -45,6 +45,11 @@ return static function (RectorConfig $rectorConfig): void {
     // $rectorConfig->tag($registeredService->getClassName(), $registeredService->getTag());
 
     $rectorConfig->ruleWithConfiguration(RenameToPsrNameRector::class, [
-        'exceptName',
+        'afterAll',
+        'afterEach',
+        'assertMatches*Snapshot',
+        'beforeAll',
+        'beforeEach',
+        'PDO',
     ]);
 };

@@ -26,10 +26,10 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
-use PHPStan\Analyser\MutatingScope;
 use PHPStan\Reflection\ClassReflection;
 use Rector\Config\RectorConfig;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\PHPStan\ScopeFetcher;
 use Rector\Testing\Fixture\FixtureSplitter;
 use Symplify\RuleDocGenerator\Contract\CodeSampleInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -66,8 +66,13 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
      */
     public function refactor(Node $node): ?Node
     {
-        $scope = $node->getAttribute('scope');
-        \assert($scope instanceof MutatingScope);
+        /**
+         * @see \Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector::refactor()
+         * @see https://github.com/rectorphp/rector/blob/main/UPGRADING.md#1-abstractscopeawarerector-is-removed-use-abstractrector-instead
+         * @see https://github.com/rectorphp/rector/issues/7611
+         */
+        // $scope = $node->getAttribute('scope');
+        $scope = ScopeFetcher::fetch($node);
 
         if (
             [] === $node->items

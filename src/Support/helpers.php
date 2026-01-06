@@ -48,6 +48,8 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
     function classes(?callable $filter = null): Collection
     {
         $filter ??= static fn (string $class, string $file): bool => true;
+
+        /** @var null|\Illuminate\Support\Collection $classes */
         static $classes;
         $classes ??= collect(spl_autoload_functions())->flatMap(
             static fn (callable $loader): array => \is_array($loader) && $loader[0] instanceof ClassLoader

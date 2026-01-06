@@ -66,6 +66,7 @@
         "phpstan/phpstan-mockery": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpstan/phpstan-webmozart-assert": "^2.0",
+        "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0 || ^12.0",
         "povils/phpmnd": "^3.6",
         "rector/jack": "^0.5",
         "rector/swiss-knife": "^2.3",
@@ -312,7 +313,7 @@
         "php-cs-fixer:custom-list-files": "@php-cs-fixer:custom list-files",
         "php-cs-fixer:custom-ln-config": [
             "ln -f vendor/guanguans/php-cs-fixer-custom-fixers/.php-cs-fixer-custom.php .php-cs-fixer-custom.php",
-            "YEAR=$(date +%Y); sed -i '' -e 's|guanguans/php-cs-fixer-custom-fixers|guanguans/rector-rules|g' -e \"s|2025-$YEAR|2025-$YEAR|g\" -e \"s|2025|2025-$YEAR|g\" .php-cs-fixer-custom.php"
+            "YEAR=$(date +%Y); sed -i '' -e 's|guanguans/php-cs-fixer-custom-fixers|guanguans/rector-rules|g' -e \"s|2025-$YEAR|2025-$YEAR|g\" .php-cs-fixer-custom.php"
         ],
         "php-cs-fixer:fix": "@php-cs-fixer fix --show-progress=dots --diff",
         "php-cs-fixer:fix-dry-run": "@php-cs-fixer:fix --dry-run",
