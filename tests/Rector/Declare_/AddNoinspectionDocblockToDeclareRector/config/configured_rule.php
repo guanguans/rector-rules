@@ -18,11 +18,11 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector;
+use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionDocblockToDeclareRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->ruleWithConfiguration(AddNoinspectionsDocCommentToDeclareRector::class, [
+    $rectorConfig->ruleWithConfiguration(AddNoinspectionDocblockToDeclareRector::class, [
         '*/Fixture/fixture.php' => [
             'AnonymousFunctionStaticInspection',
             'StaticClosureCanBeUsedInspection',
@@ -33,6 +33,9 @@ return static function (RectorConfig $rectorConfig): void {
             'PhpUndefinedClassInspection',
             'PhpUnhandledExceptionInspection',
             'PhpVoidFunctionResultUsedInspection',
+        ],
+        '*/skip_same_inspections.php' => [
+            'ALL',
         ],
     ]);
 };

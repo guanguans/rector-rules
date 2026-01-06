@@ -36,13 +36,13 @@ use Rector\Contract\PhpParser\DecoratingNodeVisitorInterface;
 //     ]);
 
 return static function (RectorConfig $rectorConfig): void {
-    // $registerService = new RegisteredService(
+    // $registeredService = new RegisteredService(
     //     ParentConnectingVisitor::class,
     //     null,
     //     DecoratingNodeVisitorInterface::class
     // );
-    // $rectorConfig->singleton($registerService->getClassName());
-    // $rectorConfig->tag($registerService->getClassName(), $registerService->getTag());
+    // $rectorConfig->singleton($registeredService->getClassName());
+    // $rectorConfig->tag($registeredService->getClassName(), $registeredService->getTag());
 
     $rectorConfig->ruleWithConfiguration(RenameToPsrNameRector::class, [
         'exceptName',

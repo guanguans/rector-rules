@@ -24,9 +24,9 @@ declare(strict_types=1);
 
 use Faker\Factory;
 use Faker\Generator;
+use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 use Guanguans\RectorRulesTests\TestCase;
 use Pest\Expectation;
-use Rector\Testing\PHPUnit\AbstractRectorTestCase;
 
 uses(TestCase::class)
     // ->compact()

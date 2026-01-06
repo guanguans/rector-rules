@@ -19,7 +19,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
                 PHP,
                 <<<'PHP'
                 /** @noinspection ALL */
-                // new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
+                // new class('Testing') extends Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
                 // {
                 // };
                 PHP,
@@ -52,7 +52,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
                 PHP,
                 <<<'PHP'
                 /** @noinspection ALL */
-                new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
+                new class('Testing') extends Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
                 {
                 };
                 PHP,

@@ -110,11 +110,11 @@ final class ComposerScripts
         require_once $event->getComposer()->getConfig()->get('vendor-dir').\DIRECTORY_SEPARATOR.'autoload.php';
     }
 
-    public static function makeArgvInput(?array $argv = null, ?InputDefinition $definition = null): ArgvInput
+    public static function makeArgvInput(?array $argv = null, ?InputDefinition $inputDefinition = null): ArgvInput
     {
         static $argvInput;
 
-        return $argvInput ??= new ArgvInput($argv, $definition);
+        return $argvInput ??= new ArgvInput($argv, $inputDefinition);
     }
 
     /**

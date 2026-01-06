@@ -1,5 +1,3 @@
-# total 2 errors
+# total 0 errors
 
-includes:
-    - callable.nonCallable.neon
-    - missingType.generics.neon
+includes: []

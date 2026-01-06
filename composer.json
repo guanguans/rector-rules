@@ -14,7 +14,7 @@
         "rector",
         "refactor",
         "rule",
-        "standards"
+        "standard"
     ],
     "authors": [
         {
@@ -49,7 +49,6 @@
         "bamarni/composer-bin-plugin": "^1.8",
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "composer/composer": "^2.9",
-        "dg/bypass-finals": "^1.9",
         "ergebnis/composer-normalize": "^2.48",
         "ergebnis/license": "^2.7",
         "ergebnis/php-cs-fixer-config": "^6.58",
@@ -372,7 +371,7 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
-        "rector:process-only": "@rector:process-clear-cache src/Rector/New_/NewExceptionToNewAnonymousExtendsExceptionImplementsRector.php --only=Guanguans\\RectorRules\\Rector\\Array_\\UpdateRectorCodeSamplesFromFixturesRector",
+        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\New_\\NewExceptionToNewAnonymousExtendsExceptionImplementsRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "rule-doc-generator": [
             "@putenv:php",

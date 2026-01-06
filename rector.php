@@ -21,7 +21,7 @@ use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector;
 use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
-use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector;
+use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionDocblockToDeclareRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
@@ -45,6 +45,8 @@ use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
 use Rector\DowngradePhp81\Rector\FuncCall\DowngradeArrayIsListRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
+use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
+use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
@@ -110,7 +112,7 @@ return RectorConfig::configure()
         SetList::TYPE_DECLARATION,
         SetList::TYPE_DECLARATION_DOCBLOCKS,
         SetList::PRIVATIZATION,
-        // SetList::NAMING,
+        SetList::NAMING,
         SetList::INSTANCEOF,
         SetList::EARLY_RETURN,
         // SetList::CARBON,
@@ -131,7 +133,7 @@ return RectorConfig::configure()
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
     ])
-    ->withConfiguredRule(AddNoinspectionsDocCommentToDeclareRector::class, [
+    ->withConfiguredRule(AddNoinspectionDocblockToDeclareRector::class, [
         '*/src/Rector/*Rector.php' => [
             'PhpMultipleClassDeclarationsInspection',
         ],
@@ -206,6 +208,12 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        RenameParamToMatchTypeRector::class => [
+            __DIR__.'/src/Rector/*Rector.php',
+        ],
+        RenameVariableToMatchNewTypeRector::class => [
+            __DIR__.'/src/Rector/Namespace_/RemoveNamespaceRector.php',
+        ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src/',
             __DIR__.'/tests/',

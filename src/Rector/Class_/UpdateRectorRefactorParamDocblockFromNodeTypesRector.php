@@ -71,7 +71,7 @@ final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends Abstrac
             return null;
         }
 
-        $hasChanged = $this->changeParamTypeOfNode(
+        $hasChanged = $this->changeNodeParamTypeOfRefactorMethod(
             $node->getMethod('refactor'),
             $reflectionClass->newInstanceWithoutConstructor()->getNodeTypes()
         );
@@ -135,68 +135,6 @@ final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends Abstrac
                         }
                     }
                     PHP,
-            ), new CodeSample(
-                <<<'PHP'
-                    /** @noinspection ALL */
-                    namespace Guanguans\RectorRules\Rector\Name;
-
-                    use Guanguans\RectorRules\Rector\AbstractRector;
-                    use PhpParser\Node;
-                    use PhpParser\Node\Expr\FuncCall;
-                    use PhpParser\Node\Expr\Variable;
-                    use PhpParser\Node\Identifier;
-                    use PhpParser\Node\Name;
-
-                    final class RenameToPsrNameRector extends AbstractRector
-                    {
-                        public function getNodeTypes(): array
-                        {
-                            return [
-                                FuncCall::class,
-                                Identifier::class,
-                                Name::class,
-                                Variable::class,
-                            ];
-                        }
-
-                        public function refactor(Node $node): ?Node
-                        {
-                            return null;
-                        }
-                    }
-                    PHP,
-                <<<'PHP'
-                    /** @noinspection ALL */
-                    namespace Guanguans\RectorRules\Rector\Name;
-
-                    use Guanguans\RectorRules\Rector\AbstractRector;
-                    use PhpParser\Node;
-                    use PhpParser\Node\Expr\FuncCall;
-                    use PhpParser\Node\Expr\Variable;
-                    use PhpParser\Node\Identifier;
-                    use PhpParser\Node\Name;
-
-                    final class RenameToPsrNameRector extends AbstractRector
-                    {
-                        public function getNodeTypes(): array
-                        {
-                            return [
-                                FuncCall::class,
-                                Identifier::class,
-                                Name::class,
-                                Variable::class,
-                            ];
-                        }
-
-                        /**
-                         * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
-                         */
-                        public function refactor(Node $node): ?Node
-                        {
-                            return null;
-                        }
-                    }
-                    PHP,
             ),
         ];
     }
@@ -210,34 +148,34 @@ final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends Abstrac
      *
      * @throws \PHPStan\ShouldNotHappenException
      */
-    private function changeParamTypeOfNode(ClassMethod $node, array $nodeTypes): bool
+    private function changeNodeParamTypeOfRefactorMethod(ClassMethod $classMethodNode, array $nodeTypes): bool
     {
         // Assert::allIsInstanceOf($nodeTypes, Node::class);
         // Assert::allIsAOf($nodeTypes, Node::class);
         Assert::allSubclassOf($nodeTypes, Node::class);
 
         // $this->phpDocTypeChanger->changeParamTypeNode(
-        //     $node,
-        //     $this->phpDocInfoFactory->createFromNodeOrEmpty($node),
-        //     $node->getParams()[0],
+        //     $classMethodNode,
+        //     $this->phpDocInfoFactory->createFromNodeOrEmpty($classMethodNode),
+        //     $classMethodNode->getParams()[0],
         //     'node',
         //     new IdentifierTypeNode(
-        //         collect($nodeTypes)->sort()->map(static fn (string $class): string => "\\$class")->implode('|')
+        //         collect($nodeTypes)->sort()->map(static fn (string $nodeType): string => "\\$nodeType")->implode('|')
         //     )
         // );
 
         return $this->phpDocTypeChanger->changeParamType(
-            $node,
-            $this->phpDocInfoFactory->createFromNodeOrEmpty($node),
+            $classMethodNode,
+            $this->phpDocInfoFactory->createFromNodeOrEmpty($classMethodNode),
             collect($nodeTypes)
                 ->sort()
-                ->map(static fn (string $class): ObjectType => new ObjectType($class))
+                ->map(static fn (string $nodeType): ObjectType => new ObjectType($nodeType))
                 ->pipe(
                     static fn (Collection $types): Type => $types->count() > 1
                         ? new UnionType($types->all())
                         : $types->first()
                 ),
-            $node->getParams()[0],
+            $classMethodNode->getParams()[0],
             'node'
         );
     }

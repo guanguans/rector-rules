@@ -18,6 +18,7 @@ namespace Guanguans\RectorRules\Rector\Array_;
 use Guanguans\RectorRules\Rector\AbstractRector;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
+use PhpParser\Comment;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\ArrayItem;
@@ -71,9 +72,9 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         if (
             [] === $node->items
             || !collect($node->items)->every(
-                fn (ArrayItem $arrayItem): bool => $arrayItem->value instanceof New_
-                    && $arrayItem->value->class instanceof FullyQualified
-                    && is_subclass_of($this->getName($arrayItem->value->class), CodeSampleInterface::class)
+                fn (ArrayItem $arrayItemNode): bool => $arrayItemNode->value instanceof New_
+                    && $arrayItemNode->value->class instanceof FullyQualified
+                    && is_subclass_of($this->getName($arrayItemNode->value->class), CodeSampleInterface::class)
             )
             || !\in_array($scope->getFunctionName(), ['getRuleDefinition', 'codeSamples'], true)
             || !($classReflection = $scope->getClassReflection()) instanceof ClassReflection
@@ -149,67 +150,6 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
                         }
                     }
                     PHP_WRAP,
-            ), new CodeSample(
-                <<<'PHP_WRAP'
-                    /** @noinspection ALL */
-                    namespace Guanguans\RectorRules\Rector\New_;
-
-                    use Guanguans\RectorRules\Rector\AbstractRector;
-                    use Rector\Contract\Rector\ConfigurableRectorInterface;
-                    use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
-
-                    final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface
-                    {
-                        protected function codeSamples(): array
-                        {
-                            return [
-                                new ConfiguredCodeSample(
-                                    <<<'PHP'
-                                    /** @noinspection ALL */
-                                    // new Exception('Testing');
-                                    PHP,
-                                    <<<'PHP'
-                                    /** @noinspection ALL */
-                                    // new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
-                                    // {
-                                    // };
-                                    PHP,
-                                    [/*'Guanguans\RectorRules\Contract\ThrowableContract'*/],
-                                ),
-                            ];
-                        }
-                    }
-                    PHP_WRAP,
-                <<<'PHP_WRAP'
-                    /** @noinspection ALL */
-                    namespace Guanguans\RectorRules\Rector\New_;
-
-                    use Guanguans\RectorRules\Rector\AbstractRector;
-                    use Rector\Contract\Rector\ConfigurableRectorInterface;
-                    use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
-
-                    final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface
-                    {
-                        protected function codeSamples(): array
-                        {
-                            return [
-                                new ConfiguredCodeSample(
-                                    <<<'PHP'
-                                    /** @noinspection ALL */
-                                    new Exception('Testing');
-                                    PHP,
-                                    <<<'PHP'
-                                    /** @noinspection ALL */
-                                    new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
-                                    {
-                                    };
-                                    PHP,
-                                    ['Guanguans\RectorRules\Contract\ThrowableContract'],
-                                ),
-                            ];
-                        }
-                    }
-                    PHP_WRAP,
             ),
         ];
     }
@@ -217,20 +157,20 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
     /**
      * @throws \Rector\Exception\ShouldNotHappenException
      */
-    private function doRefactor(Array_ $node, ClassReflection $classReflection): bool
+    private function doRefactor(Array_ $arrayNode, ClassReflection $classReflection): bool
     {
-        $configurationNode = $this->configurationNodeFor($classReflection);
-        $fixtureFiles = $this->fixtureFilesFor($classReflection);
+        $configurationArrayNode = $this->createConfigurationArrayNode($classReflection);
+        $fixtureFiles = $this->parseFixtureFiles($classReflection);
         $hasChanged = false;
 
         foreach ($fixtureFiles as $index => $fixtureFile) {
-            // $arrayItem = $node->items[$index] ?? clone $node->items[0];
-            $arrayItem = $node->items[$index] ?? clone_node($node->items[0]);
-            \assert($arrayItem->value instanceof New_);
-            Assert::allIsInstanceOf($arrayItem->value->args, Arg::class);
+            // $arrayItemNode = $arrayNode->items[$index] ?? clone $arrayNode->items[0];
+            $arrayItemNode = $arrayNode->items[$index] ?? clone_node($arrayNode->items[0]);
+            \assert($arrayItemNode->value instanceof New_);
+            Assert::allIsInstanceOf($arrayItemNode->value->args, Arg::class);
             [$badCode, $goodCode] = array_map([$this, 'sanitizeCode'], FixtureSplitter::split($fixtureFile));
 
-            $badCodeNode = $arrayItem->value->args[0]->value;
+            $badCodeNode = $arrayItemNode->value->args[0]->value;
             \assert($badCodeNode instanceof String_);
 
             if ($badCodeNode->value !== $badCode) {
@@ -239,7 +179,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
                 $hasChanged = true;
             }
 
-            $goodCodeNode = $arrayItem->value->args[1]->value;
+            $goodCodeNode = $arrayItemNode->value->args[1]->value;
             \assert($goodCodeNode instanceof String_);
 
             if ($goodCodeNode->value !== $goodCode) {
@@ -249,27 +189,38 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
             }
 
             if (
-                $configurationNode instanceof Array_
-                && !$this->nodeComparator->areNodesEqual($arrayItem->value->args[2]->value, $configurationNode)
+                $configurationArrayNode instanceof Array_
+                && !$this->nodeComparator->areNodesEqual($arrayItemNode->value->args[2]->value, $configurationArrayNode)
             ) {
-                $arrayItem->value->args[2]->value = $configurationNode;
+                $arrayItemNode->value->args[2]->value = $configurationArrayNode;
                 $hasChanged = true;
+            }
+
+            if (0 < $index && $arrayNode->items[$index - 1]->getEndLine() === $arrayItemNode->getStartLine()) {
+                // @codeCoverageIgnoreStart
+                $arrayItemNode->setAttribute(
+                    'comments',
+                    collect($arrayItemNode->getComments())->prepend(new Comment(''))->all()
+                );
+                $hasChanged = true;
+                // @codeCoverageIgnoreEnd
             }
         }
 
+        // $arrayNode->items = collect($arrayNode->items)->take(1)->all();
         return $hasChanged;
     }
 
     /**
      * @throws \Rector\Exception\ShouldNotHappenException
      */
-    private function configurationNodeFor(ClassReflection $classReflection): ?Array_
+    private function createConfigurationArrayNode(ClassReflection $classReflection): ?Array_
     {
         if (!$classReflection->getNativeReflection()->isSubclassOf(ConfigurableRectorInterface::class)) {
             return null;
         }
 
-        $configFile = $this->configFileFor($classReflection);
+        $configFile = $this->parseConfigFile($classReflection);
 
         if (!is_file($configFile)) {
             return null;
@@ -294,7 +245,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         return $this->nodeFactory->createArray($ruleConfigurations[$class]);
     }
 
-    private function configFileFor(ClassReflection $classReflection): string
+    private function parseConfigFile(ClassReflection $classReflection): string
     {
         // return str_replace(
         //     ['/src/', '.php'],
@@ -309,7 +260,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
     /**
      * @return list<string>
      */
-    private function fixtureFilesFor(ClassReflection $classReflection): array
+    private function parseFixtureFiles(ClassReflection $classReflection): array
     {
         // $fixtureFiles = glob(str_replace(
         //     ['/src/', '.php'],
@@ -319,7 +270,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         return glob(
             (string) Str::of($classReflection->getNativeReflection()->getName())
                 ->replace(['Guanguans\\RectorRules\\', '\\'], ['tests/', '/'])
-                ->append('/Fixture/fixture*.php.inc')
+                ->append('/Fixture/fixture.php.inc')
         );
     }
 

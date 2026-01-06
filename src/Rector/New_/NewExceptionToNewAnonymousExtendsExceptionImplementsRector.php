@@ -1,7 +1,6 @@
 <?php
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
-/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -18,12 +17,12 @@ namespace Guanguans\RectorRules\Rector\New_;
 use Guanguans\RectorRules\Rector\AbstractRector;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Stmt\Class_;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\ValueObject\PhpVersion;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_subclass_of_all;
@@ -49,16 +48,16 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
      * @see \RectorPrefix202512\print_node()
      *
      * @param \PhpParser\Node\Expr\New_ $node
+     *
+     * @noinspection PhpParamsInspection
      */
     public function refactor(Node $node): ?Node
     {
-        // // It's magical.
-        // class_exists(ReleaseWorkerInterface::class);
-
         if (
-            !($className = $this->getName($node->class))
-            || !is_subclass_of($className, \Throwable::class)
-            || is_subclass_of_all($className, $this->implements)
+            /** 暂不处理匿名类 `new class() extends Exception {}` 的情况. */
+            !$node->class instanceof Name
+            || !is_subclass_of($class = $this->getName($node->class), \Throwable::class)
+            || is_subclass_of_all($class, $this->implements)
         ) {
             return null;
         }
@@ -67,11 +66,13 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
             new Class_(
                 null,
                 [
-                    'extends' => new FullyQualified($className),
-                    'implements' => array_map(
-                        static fn (string $implement): FullyQualified => new FullyQualified($implement),
-                        $this->implements
-                    ),
+                    // 'extends' => new FullyQualified($class),
+                    'extends' => $node->class,
+                    'implements' => collect($this->implements)
+                        ->filter(static fn (string $implement): bool => !is_subclass_of($class, $implement))
+                        ->sort()
+                        ->map(static fn (string $implement): FullyQualified => new FullyQualified($implement))
+                        ->all(),
                 ],
                 $node->class->getAttributes()
             ),
@@ -110,7 +111,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
                     PHP,
                 <<<'PHP'
                     /** @noinspection ALL */
-                    new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
+                    new class('Testing') extends Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
                     {
                     };
                     PHP,

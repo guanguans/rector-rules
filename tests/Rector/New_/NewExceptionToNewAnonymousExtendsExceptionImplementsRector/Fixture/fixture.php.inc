@@ -8,7 +8,7 @@ new Exception('Testing');
 <?php
 
 /** @noinspection ALL */
-new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
+new class('Testing') extends Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
 {
 };
 

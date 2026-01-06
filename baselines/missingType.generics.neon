@@ -1,8 +1,0 @@
-# total 1 error
-
-parameters:
-    ignoreErrors:
-        -
-            message: '#^Function Guanguans\\RectorRules\\Support\\classes\(\) return type with generic class ReflectionClass does not specify its types\: T$#'
-            count: 1
-            path: ../src/Support/helpers.php

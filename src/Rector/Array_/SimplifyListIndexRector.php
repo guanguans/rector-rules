@@ -68,9 +68,9 @@ final class SimplifyListIndexRector extends AbstractRector
 
         $hasChanged = false;
 
-        foreach ($node->items as $item) {
-            if ($item->key instanceof Int_) {
-                $item->key = null;
+        foreach ($node->items as $arrayItemNode) {
+            if ($arrayItemNode->key instanceof Int_) {
+                $arrayItemNode->key = null;
                 $hasChanged = true;
             }
         }

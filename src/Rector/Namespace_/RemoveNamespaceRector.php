@@ -47,10 +47,10 @@ final class RemoveNamespaceRector extends AbstractRector
         }
 
         if ($comments = $node->getComments()) {
-            $nop = new Nop;
-            $nop->setAttribute('comments', $comments);
+            $nopNode = new Nop;
+            $nopNode->setAttribute('comments', $comments);
 
-            array_unshift($node->stmts, $nop, new Nop);
+            array_unshift($node->stmts, $nopNode, new Nop);
         }
 
         return $node->stmts;
@@ -78,38 +78,6 @@ final class RemoveNamespaceRector extends AbstractRector
                         expect(true)->toBeTrue();
                     });
                     PHP,
-            ), new CodeSample(
-                <<<'PHP'
-                    /** @noinspection ALL */
-                    /**
-                     * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
-                     *
-                     * For the full copyright and license information, please view
-                     * the LICENSE file that was distributed with this source code.
-                     *
-                     * @see https://github.com/guanguans/rector-rules
-                     */
-                    namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture;
-
-                    it('is true', function (): void {
-                        expect(true)->toBeTrue();
-                    });
-                    PHP,
-                <<<'PHP'
-                    /** @noinspection ALL */
-                    /**
-                     * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
-                     *
-                     * For the full copyright and license information, please view
-                     * the LICENSE file that was distributed with this source code.
-                     *
-                     * @see https://github.com/guanguans/rector-rules
-                     */
-
-                    it('is true', function (): void {
-                        expect(true)->toBeTrue();
-                    });
-                    PHP,
             ),
         ];
     }
@@ -120,9 +88,9 @@ final class RemoveNamespaceRector extends AbstractRector
      *
      * @return null|\PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Stmt\Function_
      */
-    private function findFirstSkippedNode(Namespace_ $namespace): ?Node
+    private function findFirstSkippedNode(Namespace_ $namespaceNode): ?Node
     {
-        $traverser = new NodeTraverser($firstFindingVisitor = new FirstFindingVisitor(
+        $nodeTraverser = new NodeTraverser($firstFindingVisitor = new FirstFindingVisitor(
             static fn (Node $node): bool => is_instance_of_any($node, [
                 /** ClassLike(Attribute、Class、Enum、Interface、Trait)、Constant、Function. */
                 ClassLike::class,
@@ -130,7 +98,7 @@ final class RemoveNamespaceRector extends AbstractRector
                 Function_::class,
             ])
         ));
-        $traverser->traverse([$namespace]);
+        $nodeTraverser->traverse([$namespaceNode]);
 
         return $firstFindingVisitor->getFoundNode();
     }

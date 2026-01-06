@@ -35,31 +35,28 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
      * @see \PhpCsFixer\ExecutorWithoutErrorHandler
      * @see \Phrity\Util\ErrorHandler
      *
+     * @template TObject of object
+     *
      * @internal
      *
-     * @param null|(callable(class-string, string): bool) $filter
+     * @param null|(callable(class-string<TObject>, string): bool) $filter
      *
-     * @return \Illuminate\Support\Collection<class-string, \ReflectionClass|\Throwable>
+     * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>|\Throwable>
      *
      * @noinspection PhpUndefinedNamespaceInspection
      */
     function classes(?callable $filter = null): Collection
     {
+        $filter ??= static fn (string $class, string $file): bool => true;
         static $classes;
         $classes ??= collect(spl_autoload_functions())->flatMap(
             static fn (callable $loader): array => \is_array($loader) && $loader[0] instanceof ClassLoader
                 ? $loader[0]->getClassMap()
                 : []
         );
-        // $filter ??= static fn ($class, $file): bool => true;
 
         return $classes
-            ->when(
-                \is_callable($filter),
-                static fn (Collection $classes): Collection => $classes->filter(
-                    static fn (string $file, string $class) => $filter($class, $file)
-                )
-            )
+            ->filter(static fn (string $file, string $class): bool => $filter($class, $file))
             ->mapWithKeys(static function (string $file, string $class): array {
                 try {
                     return [$class => new \ReflectionClass($class)];
@@ -74,11 +71,11 @@ if (!\function_exists('Guanguans\RectorRules\Support\clone_node')) {
     /**
      * @see \DeepCopy\deep_copy()
      *
-     * @template T of Node
+     * @template TNode of Node
      *
-     * @param T $node
+     * @param TNode $node
      *
-     * @return T
+     * @return TNode
      */
     // function clone_node(Node $node): Node
     // {
@@ -101,7 +98,7 @@ if (!\function_exists('Guanguans\RectorRules\Support\clone_node')) {
     // }
     function clone_node(Node $node): Node
     {
-        /** @var list<T> $nodes */
+        /** @var array{0: TNode} $nodes */
         $nodes = (new NodeTraverser(new CloningVisitor))->traverse([$node]);
 
         return $nodes[0];

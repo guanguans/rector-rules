@@ -25,7 +25,7 @@ use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 
-final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector implements ConfigurableRectorInterface
+final class AddNoinspectionDocblockToDeclareRector extends AbstractRector implements ConfigurableRectorInterface
 {
     /** @var array<non-empty-string, non-empty-list<string>> */
     private array $inspectionsMap = [];
@@ -46,33 +46,39 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
             return null;
         }
 
-        $originalCommentContents = collect($node->getComments())
+        $commentContents = collect($node->getComments())
             ->map(static fn (Comment $comment): string => $comment->getText())
             ->implode(\PHP_EOL);
 
-        $node->setAttribute(
-            'comments',
-            collect($this->getInspections())
-                ->reduce(
-                    static fn (Collection $comments, string $inspection): Collection => str_contains(
-                        $originalCommentContents,
-                        $inspection
-                    ) ? $comments : $comments->add(new Doc("/** @noinspection $inspection */")),
-                    collect($node->getComments())
-                )
-                ->sort(function (Comment $a, Comment $b): int {
-                    if (!$this->inspectionsContains($a) && $this->inspectionsContains($b)) {
-                        return 1;
-                    }
+        $newComments = collect($this->getInspections())
+            ->reduce(
+                static fn (Collection $comments, string $inspection): Collection => str_contains(
+                    $commentContents,
+                    $inspection
+                ) ? $comments : $comments->add(new Doc("/** @noinspection $inspection */")),
+                collect($node->getComments())
+            )
+            ->sort(function (Comment $a, Comment $b): int {
+                if (!$this->inspectionsContains($a) && $this->inspectionsContains($b)) {
+                    return 1;
+                }
 
-                    if ($this->inspectionsContains($a) && !$this->inspectionsContains($b)) {
-                        return -1;
-                    }
+                if ($this->inspectionsContains($a) && !$this->inspectionsContains($b)) {
+                    return -1;
+                }
 
-                    return strcmp($a->getText(), $b->getText());
-                })
-                ->all()
-        );
+                return strcmp($a->getText(), $b->getText());
+            });
+
+        if (
+            $newComments
+                ->map(static fn (Comment $comment): string => $comment->getText())
+                ->implode(\PHP_EOL) === $commentContents
+        ) {
+            return null;
+        }
+
+        $node->setAttribute('comments', $newComments->all());
 
         return $node;
     }
@@ -120,14 +126,16 @@ final class AddNoinspectionsDocCommentToDeclareRector extends AbstractRector imp
                 [
                     '*/Fixture/fixture.php' => [
                         'AnonymousFunctionStaticInspection',
-                        'StaticClosureCanBeUsedInspection',
-                    ],
+                        'StaticClosureCanBeUsedInspection'],
                     '*/fixture.php' => [
                         'NullPointerExceptionInspection',
                         'PhpPossiblePolymorphicInvocationInspection',
                         'PhpUndefinedClassInspection',
                         'PhpUnhandledExceptionInspection',
                         'PhpVoidFunctionResultUsedInspection',
+                    ],
+                    '*/skip_same_inspections.php' => [
+                        'ALL',
                     ],
                 ],
             ),

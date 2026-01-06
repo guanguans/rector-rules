@@ -42,13 +42,13 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
         // }
 
         $rectorConfig = parent::getContainer();
-        $registerService = new RegisteredService(
+        $registeredService = new RegisteredService(
             ParentConnectingVisitor::class,
             null,
             DecoratingNodeVisitorInterface::class
         );
-        $rectorConfig->singleton($registerService->getClassName());
-        $rectorConfig->tag($registerService->getClassName(), $registerService->getTag());
+        $rectorConfig->singleton($registeredService->getClassName());
+        $rectorConfig->tag($registeredService->getClassName(), $registeredService->getTag());
     }
 
     final public function provideConfigFilePath(): string
@@ -134,13 +134,11 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
     }
 
     /**
-     * @throws \ReflectionException
-     *
      * @return class-string<\Guanguans\RectorRules\Rector\AbstractRector>
      */
     protected static function rectorClass(): string
     {
-        return (string) Str::of(class_namespace(static::class))->replace(
+        return (string) Str::of((new \ReflectionClass(static::class))->getNamespaceName())->replace(
             'RectorRulesTests',
             'RectorRules'
         );

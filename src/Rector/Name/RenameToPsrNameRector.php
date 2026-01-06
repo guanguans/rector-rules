@@ -382,9 +382,15 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         })($name));
 
         if ($node instanceof Name) {
-            // return Name::concat($node->slice(0, -1), $renamer($node->getLast()));
-            $node->name = Name::concat($node->slice(0, -1), $renamer($node->getLast()))->name;
+            $caseName = $renamer($node->getLast());
 
+            if ($node->getLast() === $caseName) {
+                return null;
+            }
+
+            $node->name = Name::concat($node->slice(0, -1), $caseName)->name;
+
+            // return Name::concat($node->slice(0, -1), $caseName);
             return $node;
         }
 
@@ -397,12 +403,11 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             $caseName = $renamer($node->name);
 
             if ($caseName === $node->name) {
-                // return $node; // It's magical.
                 return null;
             }
 
-            $node->name = $caseName;
             // $node->setAttribute('scope', ScopeFetcher::fetch($node));
+            $node->name = $caseName;
 
             return $node;
         }
@@ -499,15 +504,15 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         }
 
         return $node instanceof FuncCall
-        && $this->isNames($node, [
-            // call_user_func('function_name');
-            'call_user_func',
-            // call_user_func_array('function_name');
-            'call_user_func_array',
-            // function_exists('function_name');
-            'function_exists',
-        ])
-        && $this->hasFuncCallIndexStringArg($node, 0);
+            && $this->isNames($node, [
+                // call_user_func('function_name');
+                'call_user_func',
+                // call_user_func_array('function_name');
+                'call_user_func_array',
+                // function_exists('function_name');
+                'function_exists',
+            ])
+            && $this->hasFuncCallIndexStringArg($node, 0);
     }
 
     /**

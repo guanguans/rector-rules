@@ -75,44 +75,6 @@ Update rector code samples from fixtures
 
 <br>
 
-```diff
- /** @noinspection ALL */
- namespace Guanguans\RectorRules\Rector\New_;
-
- use Guanguans\RectorRules\Rector\AbstractRector;
- use Rector\Contract\Rector\ConfigurableRectorInterface;
- use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
-
- final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface
- {
-     protected function codeSamples(): array
-     {
-         return [
-             new ConfiguredCodeSample(
-                 <<<'PHP'
-                 /** @noinspection ALL */
--                // new Exception('Testing');
-+                new Exception('Testing');
-                 PHP,
-                 <<<'PHP'
-                 /** @noinspection ALL */
--                // new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
--                // {
--                // };
-+                new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
-+                {
-+                };
-                 PHP,
--                [/*'Guanguans\RectorRules\Contract\ThrowableContract'*/],
-+                ['Guanguans\RectorRules\Contract\ThrowableContract'],
-             ),
-         ];
-     }
- }
-```
-
-<br>
-
 ## Class
 
 ### UpdateRectorRefactorParamDocblockFromNodeTypesRector
@@ -150,50 +112,15 @@ Update rector refactor param docblock from node types
 
 <br>
 
-```diff
- /** @noinspection ALL */
- namespace Guanguans\RectorRules\Rector\Name;
-
- use Guanguans\RectorRules\Rector\AbstractRector;
- use PhpParser\Node;
- use PhpParser\Node\Expr\FuncCall;
- use PhpParser\Node\Expr\Variable;
- use PhpParser\Node\Identifier;
- use PhpParser\Node\Name;
-
- final class RenameToPsrNameRector extends AbstractRector
- {
-     public function getNodeTypes(): array
-     {
-         return [
-             FuncCall::class,
-             Identifier::class,
-             Name::class,
-             Variable::class,
-         ];
-     }
-
-+    /**
-+     * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
-+     */
-     public function refactor(Node $node): ?Node
-     {
-         return null;
-     }
- }
-```
-
-<br>
-
 ## Declare
 
-### AddNoinspectionsDocCommentToDeclareRector
+### AddNoinspectionDocblockToDeclareRector
 
-Add noinspections doc comment to declare
+Add noinspection docblock to declare
 
 :wrench: **configure it!**
 
-- class: [`Guanguans\RectorRules\Rector\Declare_\AddNoinspectionsDocCommentToDeclareRector`](../src/Rector/Declare_/AddNoinspectionsDocCommentToDeclareRector.php)
+- class: [`Guanguans\RectorRules\Rector\Declare_\AddNoinspectionDocblockToDeclareRector`](../src/Rector/Declare_/AddNoinspectionDocblockToDeclareRector.php)
 
 ```diff
  /** @noinspection AnonymousFunctionStaticInspection */
@@ -357,25 +284,6 @@ Remove namespace
 
 <br>
 
-```diff
- /** @noinspection ALL */
- /**
-  * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
-  *
-  * For the full copyright and license information, please view
-  * the LICENSE file that was distributed with this source code.
-  *
-  * @see https://github.com/guanguans/rector-rules
-  */
--namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\Fixture;
-
- it('is true', function (): void {
-     expect(true)->toBeTrue();
- });
-```
-
-<br>
-
 ## New
 
 ### NewExceptionToNewAnonymousExtendsExceptionImplementsRector
@@ -389,7 +297,7 @@ New exception to new anonymous extends exception implements
 ```diff
  /** @noinspection ALL */
 -new Exception('Testing');
-+new class('Testing') extends \Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
++new class('Testing') extends Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
 +{
 +};
 ```
