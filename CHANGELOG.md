@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.0.1"></a>
+## [1.0.1] - 2026-01-06
+### ✨ Features
+- **Class:** Add UpdateParameterTypeOfRectorRefactorMethodRector ([e687de1](https://github.com/guanguans/rector-rules/commit/e687de1))
+- **Rector:** Add UpdateCodeSamplesRector for code sample updates ([d97c3dc](https://github.com/guanguans/rector-rules/commit/d97c3dc))
+
+### 💅 Code Refactorings
+- apply phpstan ([1ba240e](https://github.com/guanguans/rector-rules/commit/1ba240e))
+- **tests:** Remove custom bootstrap and update test configuration ([af219bf](https://github.com/guanguans/rector-rules/commit/af219bf))
+- **tests:** Remove unused tests and simplify logic ([b21d32f](https://github.com/guanguans/rector-rules/commit/b21d32f))
+
+### ✅ Tests
+- **rector:** Add testing for rector ([6d220c4](https://github.com/guanguans/rector-rules/commit/6d220c4))
+
+
 <a name="1.0.0"></a>
 ## 1.0.0 - 2026-01-03
 ### 🎨 Styles
@@ -32,4 +47,5 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/guanguans/rector-rules/compare/1.0.0...1.0.1
