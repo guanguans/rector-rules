@@ -5,6 +5,7 @@
             "docblock",
             "noinspection",
             "param",
+            "stmt",
             "utils"
         ],
         "paths": []

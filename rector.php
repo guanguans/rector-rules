@@ -1,11 +1,10 @@
 <?php
 
-/** @noinspection PhpUnusedAliasInspection */
 /** @noinspection PhpDeprecationInspection */
 /** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
-
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -22,6 +21,7 @@ use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector;
 use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
 use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionDocblockToDeclareRector;
+use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
@@ -125,6 +125,7 @@ return RectorConfig::configure()
         RemoveNamespaceRector::class,
         SimplifyListIndexRector::class,
         SortAssociativeArrayByKeyRector::class,
+        SortFileFirstStmtDocblockRector::class,
         UpdateRectorCodeSamplesFromFixturesRector::class,
         UpdateRectorRefactorParamDocblockFromNodeTypesRector::class,
 

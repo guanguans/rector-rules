@@ -1,4 +1,4 @@
-# 7 Rules Overview
+# 8 Rules Overview
 
 <br>
 
@@ -9,6 +9,8 @@
 - [Class](#class) (1)
 
 - [Declare](#declare) (1)
+
+- [File](#file) (1)
 
 - [Name](#name) (1)
 
@@ -132,6 +134,37 @@ Add noinspection docblock to declare
  /** @noinspection StaticClosureCanBeUsedInspection */
  /** @noinspection ALL */
  /** @noinspection PhpUnusedAliasInspection */
+ declare(strict_types=1);
+```
+
+<br>
+
+## File
+
+### SortFileFirstStmtDocblockRector
+
+Sort file first stmt docblock
+
+- class: [`Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector`](../src/Rector/File/SortFileFirstStmtDocblockRector.php)
+
+```diff
+ /** @noinspection ALL */
+-
++/** @noinspection NullPointerExceptionInspection */
++/** @noinspection PhpPossiblePolymorphicInvocationInspection */
++/** @noinspection StaticClosureCanBeUsedInspection */
+ /**
+  * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
+  *
+  * For the full copyright and license information, please view
+  * the LICENSE file that was distributed with this source code.
+  *
+  * @see https://github.com/guanguans/rector-rules
+  */
+-
+-/** @noinspection StaticClosureCanBeUsedInspection */
+-/** @noinspection NullPointerExceptionInspection */
+-/** @noinspection PhpPossiblePolymorphicInvocationInspection */
  declare(strict_types=1);
 ```
 
