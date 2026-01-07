@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.0"></a>
+## [1.1.0] - 2026-01-07
+### ✨ Features
+- **File:** Add SortFileNoinspectionDocblockRector ([a52c37c](https://github.com/guanguans/rector-rules/commit/a52c37c))
+
+### 💅 Code Refactorings
+- **Declare:** Rename AddNoinspectionDocblockToDeclareRector ([6c95725](https://github.com/guanguans/rector-rules/commit/6c95725))
+- **UpdateRectorCodeSamplesFromFixturesRector:** Improve scope handling ([286baf0](https://github.com/guanguans/rector-rules/commit/286baf0))
+
+
 <a name="1.0.1"></a>
 ## [1.0.1] - 2026-01-06
 ### ✨ Features
@@ -47,5 +57,6 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.0.1...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/guanguans/rector-rules/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/guanguans/rector-rules/compare/1.0.0...1.0.1
