@@ -20,7 +20,7 @@ use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector;
 use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
-use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionDocblockToDeclareRector;
+use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
@@ -134,7 +134,7 @@ return RectorConfig::configure()
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
     ])
-    ->withConfiguredRule(AddNoinspectionDocblockToDeclareRector::class, [
+    ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/src/Rector/*Rector.php' => [
             'PhpMultipleClassDeclarationsInspection',
         ],

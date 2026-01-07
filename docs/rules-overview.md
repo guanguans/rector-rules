@@ -8,9 +8,7 @@
 
 - [Class](#class) (1)
 
-- [Declare](#declare) (1)
-
-- [File](#file) (1)
+- [File](#file) (2)
 
 - [Name](#name) (1)
 
@@ -114,15 +112,15 @@ Update rector refactor param docblock from node types
 
 <br>
 
-## Declare
+## File
 
-### AddNoinspectionDocblockToDeclareRector
+### AddNoinspectionDocblockToFileFirstStmtRector
 
-Add noinspection docblock to declare
+Add noinspection docblock to file first stmt
 
 :wrench: **configure it!**
 
-- class: [`Guanguans\RectorRules\Rector\Declare_\AddNoinspectionDocblockToDeclareRector`](../src/Rector/Declare_/AddNoinspectionDocblockToDeclareRector.php)
+- class: [`Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector`](../src/Rector/File/AddNoinspectionDocblockToFileFirstStmtRector.php)
 
 ```diff
  /** @noinspection AnonymousFunctionStaticInspection */
@@ -138,8 +136,6 @@ Add noinspection docblock to declare
 ```
 
 <br>
-
-## File
 
 ### SortFileFirstStmtDocblockRector
 

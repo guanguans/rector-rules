@@ -12,20 +12,19 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-namespace Guanguans\RectorRules\Rector\Declare_;
+namespace Guanguans\RectorRules\Rector\File;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpParser\Comment;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
-use PhpParser\Node\Stmt\Declare_;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\PhpParser\Node\FileNode;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 
-final class AddNoinspectionDocblockToDeclareRector extends AbstractRector implements ConfigurableRectorInterface
+final class AddNoinspectionDocblockToFileFirstStmtRector extends AbstractRector implements ConfigurableRectorInterface
 {
     /** @var array<non-empty-string, non-empty-list<string>> */
     private array $inspectionsMap = [];
@@ -33,52 +32,45 @@ final class AddNoinspectionDocblockToDeclareRector extends AbstractRector implem
     public function getNodeTypes(): array
     {
         return [
-            Declare_::class,
+            FileNode::class,
         ];
     }
 
     /**
-     * @param \PhpParser\Node\Stmt\Declare_ $node
+     * @param \Rector\PhpParser\Node\FileNode $node
      */
     public function refactor(Node $node): ?Node
     {
-        if ([] === $this->getInspections()) {
+        if ([] === $node->stmts || [] === $this->getInspections()) {
             return null;
         }
 
-        $commentContents = collect($node->getComments())
-            ->map(static fn (Comment $comment): string => $comment->getText())
-            ->implode(\PHP_EOL);
-
-        $newComments = collect($this->getInspections())
-            ->reduce(
-                static fn (Collection $comments, string $inspection): Collection => str_contains(
-                    $commentContents,
-                    $inspection
-                ) ? $comments : $comments->add(new Doc("/** @noinspection $inspection */")),
-                collect($node->getComments())
-            )
+        $stmtNode = $node->stmts[0];
+        $comments = $stmtNode->getComments();
+        $newComments = collect($comments)
+            ->merge(array_map(
+                static fn (string $inspection): Doc => new Doc("/** @noinspection $inspection */"),
+                $this->getInspections()
+            ))
+            ->unique(static fn (Comment $comment): string => $comment->getText())
             ->sort(function (Comment $a, Comment $b): int {
-                if (!$this->inspectionsContains($a) && $this->inspectionsContains($b)) {
-                    return 1;
-                }
-
                 if ($this->inspectionsContains($a) && !$this->inspectionsContains($b)) {
                     return -1;
                 }
 
-                return strcmp($a->getText(), $b->getText());
-            });
+                if (!$this->inspectionsContains($a) && $this->inspectionsContains($b)) {
+                    return 1;
+                }
 
-        if (
-            $newComments
-                ->map(static fn (Comment $comment): string => $comment->getText())
-                ->implode(\PHP_EOL) === $commentContents
-        ) {
+                return strcmp($a->getText(), $b->getText());
+            })
+            ->all();
+
+        if ($newComments === $comments) {
             return null;
         }
 
-        $node->setAttribute('comments', $newComments->all());
+        $stmtNode->setAttribute('comments', $newComments);
 
         return $node;
     }

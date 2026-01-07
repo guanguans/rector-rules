@@ -29,11 +29,11 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 ```php
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
-use Guanguans\RectorRules\Rector\Declare_\AddNoinspectionDocblockToDeclareRector;
+use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
-    ->withConfiguredRule(AddNoinspectionDocblockToDeclareRector::class, [
+    ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/tests/*' => [
             'AnonymousFunctionStaticInspection',
             'NullPointerExceptionInspection',

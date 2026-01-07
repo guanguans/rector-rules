@@ -18,11 +18,11 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-namespace Guanguans\RectorRulesTests\Rector\Declare_\AddNoinspectionDocblockToDeclareRector;
+namespace Guanguans\RectorRulesTests\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
-final class AddNoinspectionDocblockToDeclareRectorTest extends AbstractRectorTestCase
+final class AddNoinspectionDocblockToFileFirstStmtRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string
     {
