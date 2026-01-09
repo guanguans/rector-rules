@@ -23,6 +23,7 @@ use Illuminate\Support\Str;
 use PhpParser\Error;
 use PhpParser\ErrorHandler\Collecting;
 use PhpParser\Node;
+use PhpParser\Node\Arg;
 use PhpParser\Node\Attribute;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Expr\ClassConstFetch;
@@ -392,8 +393,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      * @see \Rector\Renaming\Collector\RenamedNameCollector
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
-     *
-     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     private function rename(Node $node, callable $renamer): ?Node
     {
@@ -402,6 +401,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 throw new Error(\sprintf("[%s] The name [$name] is skipped.", self::class), $node->getAttributes());
             }
 
+            // if the name is all uppercase letters, convert it to lowercase letters.
             if (ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name))) {
                 return Str::lower($name);
             }
@@ -416,9 +416,10 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 return null;
             }
 
-            $node->name = Name::concat($node->slice(0, -1), $caseName)->name;
+            $nameNode = Name::concat($node->slice(0, -1), $caseName);
+            \assert($nameNode instanceof Name);
+            $node->name = $nameNode->name;
 
-            // return Name::concat($node->slice(0, -1), $caseName);
             return $node;
         }
 
@@ -467,19 +468,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 ])
                 && $this->hasFuncCallIndexStringArg($node, 0)
             ) {
-                $newValue = Str::of($node->args[0]->value->value)
-                    ->explode('\\')
-                    ->pipe(
-                        static fn (Collection $collection): string => $collection
-                            ->slice(0, -1)
-                            ->push($renamer($collection->last()))
-                            ->implode('\\')
-                    );
-
-                if ($newValue !== $node->args[0]->value->value) {
-                    $node->args[0]->value->value = $newValue;
-                    $hasChanged = true;
-                }
+                $this->renameFuncCallIndexStringArg($node->args[0], $renamer) and $hasChanged = true;
             }
 
             if (
@@ -491,19 +480,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 ])
                 && $this->hasFuncCallIndexStringArg($node, 1)
             ) {
-                $newValue = Str::of($node->args[1]->value->value)
-                    ->explode('\\')
-                    ->pipe(
-                        static fn (Collection $collection): string => $collection
-                            ->slice(0, -1)
-                            ->push($renamer($collection->last()))
-                            ->implode('\\')
-                    );
-
-                if ($newValue !== $node->args[1]->value->value) {
-                    $node->args[1]->value->value = $newValue;
-                    $hasChanged = true;
-                }
+                $this->renameFuncCallIndexStringArg($node->args[1], $renamer) and $hasChanged = true;
             }
         }
 
@@ -525,13 +502,13 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
         // function_name();
         // use function function_name;
-        /** @noinspection PhpConditionAlreadyCheckedInspection */
         if (
             $node instanceof Name
             && (
                 $parent instanceof FuncCall
                 || (
-                    is_instance_of_any($parent, [UseItem::class])
+                    $parent instanceof UseItem
+                    && $grandfather instanceof Use_
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_FUNCTION === $parent->type)
                         || (Use_::TYPE_FUNCTION === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
@@ -560,8 +537,6 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function shouldUcfirstCamelName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
-
-        /** @noinspection PhpUnusedLocalVariableInspection */
         $grandfather = $parent ? $parent->getAttribute('parent') : null;
 
         if (
@@ -585,9 +560,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         if (
             $node instanceof Name && (
                 // use ClassName;
-                /** @noinspection PhpConditionAlreadyCheckedInspection */
                 (
-                    is_instance_of_any($parent, [UseItem::class])
+                    $parent instanceof UseItem
+                    && $grandfather instanceof Use_
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_NORMAL === $parent->type)
                         || (Use_::TYPE_NORMAL === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
@@ -701,12 +676,12 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
         // CONST_NAME;
         // use const CONST_NAME;;
-        /** @noinspection PhpConditionAlreadyCheckedInspection */
         return $node instanceof Name
             && (
                 $parent instanceof ConstFetch
                 || (
-                    is_instance_of_any($parent, [UseItem::class])
+                    $parent instanceof UseItem
+                    && $grandfather instanceof Use_
                     && (
                         (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_CONSTANT === $parent->type)
                         || (Use_::TYPE_CONSTANT === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
@@ -779,15 +754,40 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function hasFuncCallIndexStringArg(FuncCall $funcCall, int $index): bool
     {
         return isset($funcCall->args[$index])
-            && null === $funcCall->args[$index]->name
+            && $funcCall->args[$index] instanceof Arg
+            && !$funcCall->args[$index]->name instanceof Identifier
             && $funcCall->args[$index]->value instanceof String_;
+    }
+
+    private function renameFuncCallIndexStringArg(Arg $argNode, callable $renamer): bool
+    {
+        $stringNode = $argNode->value;
+        \assert($stringNode instanceof String_);
+        $newValue = Str::of($stringNode->value)
+            ->explode('\\')
+            ->pipe(
+                static fn (Collection $collection): string => $collection
+                    ->slice(0, -1)
+                    ->push($renamer($collection->last()))
+                    ->implode('\\')
+            );
+        \assert(\is_string($newValue));
+
+        if ($newValue !== $stringNode->value) {
+            $stringNode->value = $newValue;
+
+            return true;
+        }
+
+        return false;
     }
 
     // private function hasFuncCallNameStringArg(FuncCall $funcCall, string $name): bool
     // {
     //     foreach ($funcCall->args as $arg) {
     //         if (
-    //             $arg->name instanceof Identifier
+    //             $arg instanceof Arg
+    //             && $arg->name instanceof Identifier
     //             && $arg->name->name === $name
     //             && $arg->value instanceof String_
     //         ) {

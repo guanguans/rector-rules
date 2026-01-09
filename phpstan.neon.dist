@@ -137,15 +137,6 @@ parameters:
         -
             identifier: complexity.functionLike
             path: src/Rector/Name/RenameToPsrNameRector.php
-        -
-            identifier: property.nonObject
-            path: src/Rector/Name/RenameToPsrNameRector.php
-        -
-            identifier: property.notFound
-            path: src/Rector/Name/RenameToPsrNameRector.php
-        -
-            identifier: typePerfect.noMixedPropertyFetcher
-            path: src/Rector/Name/RenameToPsrNameRector.php
 
         - identifier: typeCoverage.paramTypeCoverage
 #        - identifier: typeCoverage.returnTypeCoverage
