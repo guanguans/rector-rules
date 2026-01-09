@@ -1,4 +1,4 @@
-# 8 Rules Overview
+# 9 Rules Overview
 
 <br>
 
@@ -8,7 +8,7 @@
 
 - [Class](#class) (1)
 
-- [File](#file) (2)
+- [File](#file) (3)
 
 - [Name](#name) (1)
 
@@ -162,6 +162,25 @@ Sort file first stmt docblock
 -/** @noinspection NullPointerExceptionInspection */
 -/** @noinspection PhpPossiblePolymorphicInvocationInspection */
  declare(strict_types=1);
+```
+
+<br>
+
+### SortFileFunctionStmtRector
+
+Sort file function stmt
+
+- class: [`Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector`](../src/Rector/File/SortFileFunctionStmtRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStmtRector\Fixture;
+
+-function c(): void {}
++function a(): void {}
+ function b(): void {}
+-function a(): void {}
++function c(): void {}
 ```
 
 <br>

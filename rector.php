@@ -22,7 +22,7 @@ use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRecto
 use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
-use Guanguans\RectorRules\Rector\File\SortFuncDefinitionsRector;
+use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
@@ -126,8 +126,8 @@ return RectorConfig::configure()
         RemoveNamespaceRector::class,
         SimplifyListIndexRector::class,
         SortAssociativeArrayByKeyRector::class,
-        SortFuncDefinitionsRector::class,
         SortFileFirstStmtDocblockRector::class,
+        SortFileFunctionStmtRector::class,
         UpdateRectorCodeSamplesFromFixturesRector::class,
         UpdateRectorRefactorParamDocblockFromNodeTypesRector::class,
 

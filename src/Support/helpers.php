@@ -107,39 +107,19 @@ if (!\function_exists('Guanguans\RectorRules\Support\clone_node')) {
     }
 }
 
-if (!\function_exists('Guanguans\RectorRules\Support\is_instance_of_any')) {
+if (!\function_exists('Guanguans\RectorRules\Support\is_class_of_all')) {
     /**
-     * @see array_all()
-     * @see array_any()
-     * @see \Webmozart\Assert\Assert::allIsInstanceOf()
-     * @see \Webmozart\Assert\Assert::allIsInstanceOfAny()
-     * @see \Webmozart\Assert\Assert::isInstanceOf()
-     * @see \Webmozart\Assert\Assert::isInstanceOfAny()
+     * @param mixed $objectOrClass
+     * @param list<class-string> $classes
      *
-     * @param mixed $objectOrClass
-     * @param list<class-string> $classes
+     * @noinspection CallableParameterUseCaseInTypeContextInspection
      */
-    function is_instance_of_any($objectOrClass, array $classes): bool
+    function is_class_of_all($objectOrClass, array $classes, ?bool $allowString = null): bool
     {
-        foreach ($classes as $class) {
-            if ($objectOrClass instanceof $class) {
-                return true;
-            }
-        }
+        $allowString ??= \is_string($objectOrClass);
 
-        return false;
-    }
-}
-
-if (!\function_exists('Guanguans\RectorRules\Support\is_instance_of_all')) {
-    /**
-     * @param mixed $objectOrClass
-     * @param list<class-string> $classes
-     */
-    function is_instance_of_all($objectOrClass, array $classes): bool
-    {
         foreach ($classes as $class) {
-            if (!$objectOrClass instanceof $class) {
+            if (!is_a($objectOrClass, $class, $allowString)) {
                 return false;
             }
         }
@@ -173,19 +153,58 @@ if (!\function_exists('Guanguans\RectorRules\Support\is_class_of_any')) {
     }
 }
 
-if (!\function_exists('Guanguans\RectorRules\Support\is_class_of_all')) {
+if (!\function_exists('Guanguans\RectorRules\Support\is_instance_of_all')) {
     /**
      * @param mixed $objectOrClass
      * @param list<class-string> $classes
-     *
-     * @noinspection CallableParameterUseCaseInTypeContextInspection
      */
-    function is_class_of_all($objectOrClass, array $classes, ?bool $allowString = null): bool
+    function is_instance_of_all($objectOrClass, array $classes): bool
+    {
+        foreach ($classes as $class) {
+            if (!$objectOrClass instanceof $class) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+if (!\function_exists('Guanguans\RectorRules\Support\is_instance_of_any')) {
+    /**
+     * @see array_all()
+     * @see array_any()
+     * @see \Webmozart\Assert\Assert::allIsInstanceOf()
+     * @see \Webmozart\Assert\Assert::allIsInstanceOfAny()
+     * @see \Webmozart\Assert\Assert::isInstanceOf()
+     * @see \Webmozart\Assert\Assert::isInstanceOfAny()
+     *
+     * @param mixed $objectOrClass
+     * @param list<class-string> $classes
+     */
+    function is_instance_of_any($objectOrClass, array $classes): bool
+    {
+        foreach ($classes as $class) {
+            if ($objectOrClass instanceof $class) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+if (!\function_exists('Guanguans\RectorRules\Support\is_subclass_of_all')) {
+    /**
+     * @param mixed $objectOrClass
+     * @param list<class-string> $classes
+     */
+    function is_subclass_of_all($objectOrClass, array $classes, ?bool $allowString = null): bool
     {
         $allowString ??= \is_string($objectOrClass);
 
         foreach ($classes as $class) {
-            if (!is_a($objectOrClass, $class, $allowString)) {
+            if (!is_subclass_of($objectOrClass, $class, $allowString)) {
                 return false;
             }
         }
@@ -213,24 +232,5 @@ if (!\function_exists('Guanguans\RectorRules\Support\is_subclass_of_any')) {
         }
 
         return false;
-    }
-}
-
-if (!\function_exists('Guanguans\RectorRules\Support\is_subclass_of_all')) {
-    /**
-     * @param mixed $objectOrClass
-     * @param list<class-string> $classes
-     */
-    function is_subclass_of_all($objectOrClass, array $classes, ?bool $allowString = null): bool
-    {
-        $allowString ??= \is_string($objectOrClass);
-
-        foreach ($classes as $class) {
-            if (!is_subclass_of($objectOrClass, $class, $allowString)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

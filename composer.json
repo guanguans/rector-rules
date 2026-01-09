@@ -68,6 +68,7 @@
         "phpstan/phpstan-webmozart-assert": "^2.0",
         "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0 || ^12.0",
         "povils/phpmnd": "^3.6",
+        "rector/argtyper": "^0.6",
         "rector/jack": "^0.5",
         "rector/swiss-knife": "^2.3",
         "rector/type-perfect": "^2.1",
@@ -83,7 +84,9 @@
         "symplify/phpstan-rules": "^14.9",
         "tomasvotruba/class-leak": "^2.1",
         "tomasvotruba/cognitive-complexity": "^1.0",
+        "tomasvotruba/ctor": "^2.2",
         "tomasvotruba/type-coverage": "^2.1",
+        "tomasvotruba/unused-public": "^2.2",
         "yamadashy/phpstan-friendly-formatter": "^1.2"
     },
     "minimum-stability": "dev",
@@ -146,6 +149,8 @@
             "@composer:normalize"
         ],
         "actionlint": "actionlint -ignore=SC2035 -ignore=SC2086 -color -oneline -verbose",
+        "argtyper": "@php vendor/bin/argtyper --ansi -vv",
+        "argtyper:add-types": "@argtyper add-types .",
         "blade-formatter": "blade-formatter resources/views/*.blade.php resources/views/**/*.blade.php --ignore-path= --php-version=7.4 --progress",
         "blade-formatter:check-formatted": "@blade-formatter --check-formatted",
         "blade-formatter:write": "@blade-formatter --write",
@@ -372,7 +377,7 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
-        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\File\\SortFuncDefinitionsRector",
+        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\File\\SortFileFunctionStmtRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "rule-doc-generator": [
             "@putenv:php",

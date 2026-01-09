@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\File\\SortFileFunctionStmtRector\:\:parseFuncName\(\)" is 12, keep it under 8$#'
+            count: 1
+            path: ../src/Rector/File/SortFileFunctionStmtRector.php

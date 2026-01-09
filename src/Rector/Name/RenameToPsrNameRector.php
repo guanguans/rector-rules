@@ -50,6 +50,7 @@ use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\UseItem;
 use Rector\Console\Style\SymfonyStyleFactory;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\PHPStan\ScopeFetcher;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_instance_of_any;
@@ -403,6 +404,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 return null;
             }
 
+            // $node->setAttribute('scope', ScopeFetcher::fetch($node));
             $node->name = $caseName;
 
             return $node;
