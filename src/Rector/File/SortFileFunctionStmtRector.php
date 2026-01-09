@@ -137,13 +137,7 @@ final class SortFileFunctionStmtRector extends AbstractRector
             && $funcCallNode->args[0] instanceof Arg
             && $funcCallNode->args[0]->value instanceof String_
             && ($funcName = $this->valueResolver->getValue($funcCallNode->args[0]->value))
-            /**
-             * @see src/Rector/Name/RenameToPsrNameRector.php:407
-             *
-             * "System error: "Node "PhpParser\Node\Expr\Variable" with is missing scope required for scope refresh"
-             */
             && collect($stmtNode->stmts)->containsStrict(
-                // fn (Stmt $StmtNode): bool => $StmtNode instanceof Function_ && $this->isName($StmtNode, $funcName)
                 fn (Stmt $stmtNode): bool => $stmtNode instanceof Function_ && $this->isName($stmtNode, $funcName)
             )
         ) {

@@ -65,6 +65,7 @@ final class ComposerScripts
                     'Factory',
                     'Resolver',
                     // 'er',
+                    // 'Renamer',
                 ])
                 && !Str::of($file)->contains([
                     '/rector-doctrine/',

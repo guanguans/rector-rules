@@ -48,8 +48,10 @@ use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\UseItem;
+use PHPStan\Analyser\Scope;
 use Rector\Console\Style\SymfonyStyleFactory;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PHPStan\ScopeFetcher;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
@@ -169,6 +171,16 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
+     * @see vendor/rector/rector/src/BetterPhpDocParser/PhpDocManipulator/PhpDocClassRenamer.php
+     * @see vendor/rector/rector/rules/Naming/ParamRenamer/ParamRenamer.php
+     * @see vendor/rector/rector/rules/Naming/PhpDoc/VarTagValueNodeRenamer.php
+     * @see vendor/rector/rector/rules/Naming/PropertyRenamer/MatchTypePropertyRenamer.php
+     * @see vendor/rector/rector/rules/Naming/PropertyRenamer/PropertyFetchRenamer.php
+     * @see vendor/rector/rector/rules/Naming/PropertyRenamer/PropertyPromotionRenamer.php
+     * @see vendor/rector/rector/rules/Naming/VariableRenamer.php
+     * @see vendor/rector/rector/src/NodeTypeResolver/PhpDoc/NodeAnalyzer/DocBlockClassRenamer.php
+     * @see vendor/rector/rector/rules/Renaming/NodeManipulator/ClassRenamer.php
+     *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *
      * @noinspection BadExceptionsProcessingInspection
@@ -176,6 +188,24 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     public function refactor(Node $node): ?Node
     {
         // dump($node->getAttribute('parent'));
+        // dump($node->getAttribute('scope'));
+        // ScopeFetcher::fetch($node);
+        $scopeOrNull = $node->getAttribute(AttributeKey::SCOPE);
+
+        /**
+         * In the `\PhpParser\Node\FunctionLike` parameter,
+         * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute,
+         * and even if it is renamed, `rector` will report an error.
+         *
+         * "System error: "Node "PhpParser\Node\Expr\Variable" with is missing scope required for scope refresh"
+         * ```
+         * function func_name($var_name): void {}
+         * ```.
+         */
+        if ($node instanceof Variable && !$scopeOrNull instanceof Scope) {
+            return null;
+        }
+
         try {
             if ($this->shouldLowerSnakeName($node)) {
                 return $this->rename($node, static fn (string $name): string => Str::lower(Str::snake($name)));
@@ -404,11 +434,12 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 return null;
             }
 
-            // $node->setAttribute('scope', ScopeFetcher::fetch($node));
             $node->name = $caseName;
 
             return $node;
         }
+
+        $hasChanged = false;
 
         if ($node instanceof FuncCall) {
             if (
@@ -436,7 +467,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 ])
                 && $this->hasFuncCallIndexStringArg($node, 0)
             ) {
-                $node->args[0]->value->value = Str::of($node->args[0]->value->value)
+                $newValue = Str::of($node->args[0]->value->value)
                     ->explode('\\')
                     ->pipe(
                         static fn (Collection $collection): string => $collection
@@ -444,6 +475,11 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                             ->push($renamer($collection->last()))
                             ->implode('\\')
                     );
+
+                if ($newValue !== $node->args[0]->value->value) {
+                    $node->args[0]->value->value = $newValue;
+                    $hasChanged = true;
+                }
             }
 
             if (
@@ -455,7 +491,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 ])
                 && $this->hasFuncCallIndexStringArg($node, 1)
             ) {
-                $node->args[1]->value->value = Str::of($node->args[1]->value->value)
+                $newValue = Str::of($node->args[1]->value->value)
                     ->explode('\\')
                     ->pipe(
                         static fn (Collection $collection): string => $collection
@@ -463,10 +499,15 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                             ->push($renamer($collection->last()))
                             ->implode('\\')
                     );
+
+                if ($newValue !== $node->args[1]->value->value) {
+                    $node->args[1]->value->value = $newValue;
+                    $hasChanged = true;
+                }
             }
         }
 
-        return $node;
+        return $hasChanged ? $node : null;
     }
 
     /**
