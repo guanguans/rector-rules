@@ -17,14 +17,9 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector;
-use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
-use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
-use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
-use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
 use Illuminate\Support\Str;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
@@ -65,6 +60,7 @@ use function Guanguans\RectorRules\Support\classes;
 
 return RectorConfig::configure()
     ->withPaths([
+        __DIR__.'/config/',
         __DIR__.'/src/',
         __DIR__.'/tests/',
         __DIR__.'/composer-bump',
@@ -105,6 +101,7 @@ return RectorConfig::configure()
     //     // carbon: true,
     // )
     ->withSets([
+        Guanguans\RectorRules\Set\SetList::ALL,
         PHPUnitSetList::PHPUNIT_90,
         DowngradeLevelSetList::DOWN_TO_PHP_74,
         SetList::DEAD_CODE,
@@ -123,18 +120,12 @@ return RectorConfig::configure()
         SetList::RECTOR_PRESET,
     ])
     ->withRules([
-        RemoveNamespaceRector::class,
-        SimplifyListIndexRector::class,
-        SortAssociativeArrayByKeyRector::class,
-        SortFileFirstStmtDocblockRector::class,
-        SortFileFunctionStmtRector::class,
-        UpdateRectorCodeSamplesFromFixturesRector::class,
-        UpdateRectorRefactorParamDocblockFromNodeTypesRector::class,
-
         // ArraySpreadInsteadOfArrayMergeRector::class,
         JsonThrowOnErrorRector::class,
+        SortAssociativeArrayByKeyRector::class,
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
+        UpdateRectorCodeSamplesFromFixturesRector::class,
     ])
     ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/src/Rector/*Rector.php' => [
