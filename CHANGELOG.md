@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.2.0"></a>
+## [1.2.0] - 2026-01-09
+### ✨ Features
+- **File:** Add SortFuncDefinitionsRector ([b8c3a1b](https://github.com/guanguans/rector-rules/commit/b8c3a1b))
+- **config:** Add configuration files for Rector rules ([2a4c3bb](https://github.com/guanguans/rector-rules/commit/2a4c3bb))
+
+### 💅 Code Refactorings
+- **File:** Improve sorting logic in SortFuncDefinitionsRector ([83e9f8b](https://github.com/guanguans/rector-rules/commit/83e9f8b))
+- **RenameToPsrNameRector:** Improve return logic for node processing ([d199d62](https://github.com/guanguans/rector-rules/commit/d199d62))
+
+
 <a name="1.1.0"></a>
 ## [1.1.0] - 2026-01-07
 ### ✨ Features
@@ -57,6 +68,7 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/guanguans/rector-rules/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/guanguans/rector-rules/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/guanguans/rector-rules/compare/1.0.0...1.0.1
