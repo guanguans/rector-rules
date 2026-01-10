@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.2.1"></a>
+## [1.2.1] - 2026-01-10
+### ✨ Features
+- **exception:** Add RectorError class for handling exceptions ([d3db14f](https://github.com/guanguans/rector-rules/commit/d3db14f))
+
+### 💅 Code Refactorings
+- **RenameToPsrNameRector:** Simplify renamer logic ([a291079](https://github.com/guanguans/rector-rules/commit/a291079))
+- **RenameToPsrNameRector:** Simplify instance checks for UseItem ([b9604e4](https://github.com/guanguans/rector-rules/commit/b9604e4))
+
+
 <a name="1.2.0"></a>
 ## [1.2.0] - 2026-01-09
 ### ✨ Features
@@ -68,7 +78,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.2.1...HEAD
+[1.2.1]: https://github.com/guanguans/rector-rules/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/guanguans/rector-rules/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/guanguans/rector-rules/compare/1.0.1...1.1.0
 [1.0.1]: https://github.com/guanguans/rector-rules/compare/1.0.0...1.0.1
