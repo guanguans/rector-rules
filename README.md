@@ -29,17 +29,15 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 ```php
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
-use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
+use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
+use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
-    ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
-        '*/tests/*' => [
-            'AnonymousFunctionStaticInspection',
-            'NullPointerExceptionInspection',
-            'PhpUnhandledExceptionInspection',
-            'StaticClosureCanBeUsedInspection',
-        ],
+    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
+    ->withConfiguredRule(RenameToPsrNameRector::class, [
+        'MIT',
+        'PDO',
     ])
     // ...
     ->withRules([
