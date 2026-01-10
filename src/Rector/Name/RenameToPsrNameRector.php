@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRules\Rector\Name;
 
+use Guanguans\RectorRules\Exception\RectorErrorException;
 use Guanguans\RectorRules\Rector\AbstractRector;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -146,9 +147,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 ) {
                     $rectorStyle->comment(
                         collect($this->collecting->getErrors())
+                            ->map(static fn (Error $error): string => $error->getRawMessage())
                             // ->map(static fn (Error $error): string => $error->getMessage())
                             // ->map(static fn (Error $error): string => $error->getMessageWithColumnInfo())
-                            ->map(static fn (Error $error): string => $error->getRawMessage())
                             ->unique()
                             ->all()
                     );
@@ -403,11 +404,9 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
              * ```.
              */
             if ($node instanceof Variable && !$node->getAttribute(AttributeKey::SCOPE) instanceof Scope) {
-                throw new Error(
-                    \sprintf(
-                        "[%s] The variable name [$node->name] cannot be renamed to [$newName] because of missing scope.",
-                        self::class,
-                    ),
+                throw new RectorErrorException(
+                    $this,
+                    "The variable name [$node->name] cannot be renamed to [$newName] because of missing scope.",
                     $node->getAttributes()
                 );
             }
@@ -741,7 +740,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         return fn (string $name): string => $renamer(
             (function (string $name) use ($node): string {
                 if (Str::is($this->except, $name)) {
-                    throw new Error(\sprintf("[%s] The name [$name] is skipped.", self::class), $node->getAttributes());
+                    throw new RectorErrorException($this, "The name [$name] is skipped.", $node->getAttributes());
                 }
 
                 // if the name is all uppercase letters, convert it to lowercase letters.

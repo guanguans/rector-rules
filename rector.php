@@ -17,6 +17,7 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
+use Guanguans\RectorRules\Contract\ThrowableContract;
 use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
@@ -148,9 +149,7 @@ return RectorConfig::configure()
             'StaticClosureCanBeUsedInspection',
         ],
     ])
-    // ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [
-    //     'Guanguans\RectorRules\Contract\ThrowableContract',
-    // ])
+    ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [ThrowableContract::class])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToPsrNameRector::class, [
         'MIT',
@@ -218,6 +217,9 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
+            __DIR__.'/tests/Support/HelpersTest.php',
+        ],
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/src/Rector/*Rector.php',
         ],

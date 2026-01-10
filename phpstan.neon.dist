@@ -125,9 +125,11 @@ parameters:
 
         - identifier: argument.type
         - identifier: cast.int
+        - identifier: encapsedStringPart.nonString
         - identifier: method.childParameterType
         - identifier: method.nonObject
         - identifier: return.type
+        - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.forbiddenArrayMethodCall
         - identifier: symplify.forbiddenNode
         - identifier: symplify.forbiddenStaticClassConstFetch

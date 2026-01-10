@@ -23,6 +23,7 @@ namespace Guanguans\RectorRulesTests\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
+ * @covers \Guanguans\RectorRules\Exception\RectorErrorException
  * @covers \Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector
  */
 final class RenameToPsrNameRectorTest extends AbstractRectorTestCase
