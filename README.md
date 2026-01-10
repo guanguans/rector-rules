@@ -36,7 +36,8 @@ use Rector\Config\RectorConfig;
 return RectorConfig::configure()
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToPsrNameRector::class, [
-        'MIT',
+        'assertMatches*Snapshot',
+        'beforeEach',
         'PDO',
     ])
     // ...
