@@ -22,6 +22,9 @@ namespace Guanguans\RectorRulesTests\Rector\File\AddNoinspectionDocblockToFileFi
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
+/**
+ * @covers \Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector
+ */
 final class AddNoinspectionDocblockToFileFirstStmtRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string

@@ -22,6 +22,10 @@ namespace Guanguans\RectorRulesTests\Rector\Array_\SimplifyListIndexRector;
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
+/**
+ * @covers \Guanguans\RectorRules\Rector\AbstractRector
+ * @covers \Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector
+ */
 final class SimplifyListIndexRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string

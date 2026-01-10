@@ -45,9 +45,29 @@ final class ComposerScripts
     private function __construct() {}
 
     /**
-     * @see \Rector\PhpParser\Parser
-     * @see \Rector\PhpParser\Printer
      * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
+     * @see \Rector\Application\ChangedNodeScopeRefresher
+     * @see \Rector\BetterPhpDocParser\Comment\CommentsMerger
+     * @see \Rector\BetterPhpDocParser\PhpDocManipulator\
+     * @see \Rector\Naming\ParamRenamer\
+     * @see \Rector\Naming\PhpDoc\
+     * @see \Rector\Naming\PropertyRenamer\
+     * @see \Rector\Naming\VariableRenamer
+     * @see \Rector\NodeAnalyzer\
+     * @see \Rector\NodeAnalyzer\ExprAnalyzer
+     * @see \Rector\NodeAnalyzer\ScopeAnalyzer
+     * @see \Rector\NodeNameResolver\
+     * @see \Rector\NodeTypeResolver\PhpDoc\NodeAnalyzer\DocBlockClassRenamer
+     * @see \Rector\PhpDocParser\NodeTraverser\SimpleCallableNodeTraverser
+     * @see \Rector\PhpParser\Comparing\
+     * @see \Rector\PhpParser\Enum\NodeGroup
+     * @see \Rector\PhpParser\NodeFinder\
+     * @see \Rector\PhpParser\NodeTraverser\
+     * @see \Rector\PhpParser\NodeVisitor\
+     * @see \Rector\PhpParser\Parser\
+     * @see \Rector\PhpParser\Printer\
+     * @see \Rector\PostRector\Rector\
+     * @see \Rector\Renaming\NodeManipulator\ClassRenamer
      *
      * @return int<0>|never-returns<1>
      *

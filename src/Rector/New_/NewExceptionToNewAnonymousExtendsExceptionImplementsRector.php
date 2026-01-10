@@ -27,6 +27,9 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_subclass_of_all;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector\NewExceptionToNewAnonymousExtendsExceptionImplementsRectorTest
+ */
 final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface, MinPhpVersionInterface
 {
     /** @var list<class-string> */

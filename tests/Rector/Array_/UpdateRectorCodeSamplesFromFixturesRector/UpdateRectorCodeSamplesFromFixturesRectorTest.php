@@ -22,6 +22,9 @@ namespace Guanguans\RectorRulesTests\Rector\Array_\UpdateRectorCodeSamplesFromFi
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
+/**
+ * @covers \Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector
+ */
 final class UpdateRectorCodeSamplesFromFixturesRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string

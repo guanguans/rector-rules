@@ -162,12 +162,15 @@ return RectorConfig::configure()
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
-    ->withConfiguredRule(ScalarValueToConstFetchRector::class, [
-        new ScalarValueToConstFetch(
-            new String_(AttributeKey::SCOPE),
-            new ClassConstFetch(new FullyQualified(AttributeKey::class), new Identifier('SCOPE'))
-        ),
-    ])
+    ->withConfiguredRule(
+        ScalarValueToConstFetchRector::class,
+        collect((new ReflectionClass(AttributeKey::class))->getConstants())
+            ->map(static fn (string $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
+                new String_($value),
+                new ClassConstFetch(new FullyQualified(AttributeKey::class), new Identifier($name))
+            ))
+            ->all()
+    )
     ->withConfiguredRule(StaticCallToFuncCallRector::class, [
         // new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])

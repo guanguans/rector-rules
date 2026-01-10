@@ -24,6 +24,9 @@ use PhpParser\Node\Scalar\Int_;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\Array_\SimplifyListIndexRector\SimplifyListIndexRectorTest
+ */
 final class SimplifyListIndexRector extends AbstractRector
 {
     private ValueResolver $valueResolver;

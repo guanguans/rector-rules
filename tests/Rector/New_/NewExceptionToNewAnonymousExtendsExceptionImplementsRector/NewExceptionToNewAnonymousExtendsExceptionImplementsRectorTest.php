@@ -22,6 +22,9 @@ namespace Guanguans\RectorRulesTests\Rector\New_\NewExceptionToNewAnonymousExten
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
+/**
+ * @covers \Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector
+ */
 final class NewExceptionToNewAnonymousExtendsExceptionImplementsRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string

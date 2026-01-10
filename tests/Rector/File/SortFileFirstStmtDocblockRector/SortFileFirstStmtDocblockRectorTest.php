@@ -22,6 +22,9 @@ namespace Guanguans\RectorRulesTests\Rector\File\SortFileFirstStmtDocblockRector
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
+/**
+ * @covers \Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector
+ */
 final class SortFileFirstStmtDocblockRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string

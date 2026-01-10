@@ -23,9 +23,13 @@ use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Nop;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\FirstFindingVisitor;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use function Guanguans\RectorRules\Support\is_instance_of_any;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\RemoveNamespaceRectorTest
+ */
 final class RemoveNamespaceRector extends AbstractRector
 {
     public function getNodeTypes(): array
@@ -48,7 +52,7 @@ final class RemoveNamespaceRector extends AbstractRector
 
         if ($comments = $node->getComments()) {
             $nopNode = new Nop;
-            $nopNode->setAttribute('comments', $comments);
+            $nopNode->setAttribute(AttributeKey::COMMENTS, $comments);
 
             array_unshift($node->stmts, $nopNode, new Nop);
         }

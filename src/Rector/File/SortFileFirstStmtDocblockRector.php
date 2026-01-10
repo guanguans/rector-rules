@@ -17,9 +17,13 @@ namespace Guanguans\RectorRules\Rector\File;
 use Guanguans\RectorRules\Rector\AbstractRector;
 use PhpParser\Comment;
 use PhpParser\Node;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PhpParser\Node\FileNode;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\File\SortFileFirstStmtDocblockRector\SortFileFirstStmtDocblockRectorTest
+ */
 final class SortFileFirstStmtDocblockRector extends AbstractRector
 {
     private const NOINSPECTION = '@noinspection';
@@ -60,7 +64,7 @@ final class SortFileFirstStmtDocblockRector extends AbstractRector
             return null;
         }
 
-        $stmtNode->setAttribute('comments', $newComments);
+        $stmtNode->setAttribute(AttributeKey::COMMENTS, $newComments);
 
         return $node;
     }

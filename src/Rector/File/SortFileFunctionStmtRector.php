@@ -30,6 +30,9 @@ use Rector\PhpParser\Node\FileNode;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStmtRector\SortFileFunctionStmtRectorTest
+ */
 final class SortFileFunctionStmtRector extends AbstractRector
 {
     private ValueResolver $valueResolver;

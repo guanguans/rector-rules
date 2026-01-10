@@ -30,6 +30,9 @@ use Rector\BetterPhpDocParser\PhpDocManipulator\PhpDocTypeChanger;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 use Webmozart\Assert\Assert;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector\UpdateRectorRefactorParamDocblockFromNodeTypesRectorTest
+ */
 final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractRector
 {
     private PhpDocInfoFactory $phpDocInfoFactory;

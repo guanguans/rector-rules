@@ -20,10 +20,14 @@ use PhpParser\Comment;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PhpParser\Node\FileNode;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector\AddNoinspectionDocblockToFileFirstStmtRectorTest
+ */
 final class AddNoinspectionDocblockToFileFirstStmtRector extends AbstractRector implements ConfigurableRectorInterface
 {
     /** @var array<non-empty-string, non-empty-list<string>> */
@@ -70,7 +74,7 @@ final class AddNoinspectionDocblockToFileFirstStmtRector extends AbstractRector 
             return null;
         }
 
-        $stmtNode->setAttribute('comments', $newComments);
+        $stmtNode->setAttribute(AttributeKey::COMMENTS, $newComments);
 
         return $node;
     }

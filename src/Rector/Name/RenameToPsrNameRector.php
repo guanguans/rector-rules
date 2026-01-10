@@ -58,14 +58,17 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_instance_of_any;
 
+/**
+ * @see \Guanguans\RectorRulesTests\Rector\Name\RenameToPsrNameRector\RenameToPsrNameRectorTest
+ */
 final class RenameToPsrNameRector extends AbstractRector implements ConfigurableRectorInterface
 {
     /** @var list<string> */
     private array $except = [
-        '_*',
         '*_',
+        '_*',
 
-        'class',
+        // 'class',
         'false',
         'null',
         'parent',
@@ -74,9 +77,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         'stdClass',
         'true',
 
-        /**
-         * @see https://www.php.net/manual/zh/reserved.variables.php
-         */
+        /** @see https://www.php.net/manual/zh/reserved.variables.php */
         'GLOBALS',
         '_COOKIE',
         '_ENV',
@@ -96,9 +97,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         'http_response_header',
         'php_errormsg',
 
-        /**
-         * @see https://www.php.net/streamwrapper
-         */
+        /** @see https://www.php.net/streamwrapper */
         'dir_closedir',
         'dir_opendir',
         'dir_readdir',
@@ -120,9 +119,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         'unlink',
         'url_stat',
 
-        /**
-         * @see https://www.php.net/manual/zh/class.php-user-filter.php
-         */
+        /** @see https://www.php.net/manual/zh/class.php-user-filter.php */
         'php_user_filter',
     ];
     private Collecting $collecting;
@@ -172,15 +169,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     }
 
     /**
-     * @see vendor/rector/rector/src/BetterPhpDocParser/PhpDocManipulator/PhpDocClassRenamer.php
-     * @see vendor/rector/rector/rules/Naming/ParamRenamer/ParamRenamer.php
-     * @see vendor/rector/rector/rules/Naming/PhpDoc/VarTagValueNodeRenamer.php
-     * @see vendor/rector/rector/rules/Naming/PropertyRenamer/MatchTypePropertyRenamer.php
-     * @see vendor/rector/rector/rules/Naming/PropertyRenamer/PropertyFetchRenamer.php
-     * @see vendor/rector/rector/rules/Naming/PropertyRenamer/PropertyPromotionRenamer.php
-     * @see vendor/rector/rector/rules/Naming/VariableRenamer.php
-     * @see vendor/rector/rector/src/NodeTypeResolver/PhpDoc/NodeAnalyzer/DocBlockClassRenamer.php
-     * @see vendor/rector/rector/rules/Renaming/NodeManipulator/ClassRenamer.php
+     * @see https://github.com/jawira/case-converter
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *
@@ -188,41 +177,24 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      */
     public function refactor(Node $node): ?Node
     {
-        // dump($node->getAttribute('parent'));
-        // dump($node->getAttribute('scope'));
-        // ScopeFetcher::fetch($node);
-        $scopeOrNull = $node->getAttribute(AttributeKey::SCOPE);
-
-        /**
-         * In the `\PhpParser\Node\FunctionLike` parameter,
-         * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute,
-         * and even if it is renamed, `rector` will report an error.
-         *
-         * "System error: "Node "PhpParser\Node\Expr\Variable" with is missing scope required for scope refresh"
-         * ```
-         * function func_name($var_name): void {}
-         * ```.
-         */
-        if ($node instanceof Variable && !$scopeOrNull instanceof Scope) {
-            return null;
-        }
-
         try {
+            // dump($node->getAttribute('parent'));
+            // ScopeFetcher::fetch($node);
             if ($this->shouldLowerSnakeName($node)) {
-                return $this->rename($node, static fn (string $name): string => Str::lower(Str::snake($name)));
+                return $this->rename($node, static fn (string $name): string => (string) Str::of($name)->snake()->lower());
             }
 
             if ($this->shouldUcfirstCamelName($node)) {
-                return $this->rename($node, static fn (string $name): string => Str::ucfirst(Str::camel($name)));
+                return $this->rename($node, static fn (string $name): string => (string) Str::of($name)->camel()->ucfirst());
             }
 
             if ($this->shouldUpperSnakeName($node)) {
-                return $this->rename($node, static fn (string $name): string => Str::upper(Str::snake($name)));
+                return $this->rename($node, static fn (string $name): string => (string) Str::of($name)->snake()->upper());
             }
 
             if ($this->shouldLcfirstCamelName($node)) {
-                // return $this->rename($node, static fn (string $name): string => Str::lcfirst(Str::camel($name)));
-                return $this->rename($node, static fn (string $name): string => lcfirst(Str::camel($name)));
+                // return $this->rename($node, static fn (string $name): string => (string) Str::of($name)->camel()->lcfirst());
+                return $this->rename($node, static fn (string $name): string => (string) Str::of($name)->camel()->pipe('lcfirst'));
             }
         } catch (Error $error) {
             $this->collecting->handleError($error);
@@ -396,29 +368,16 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      */
     private function rename(Node $node, callable $renamer): ?Node
     {
-        $renamer = fn (string $name): string => $renamer((function (string $name) use ($node): string {
-            if (Str::is($this->except, $name)) {
-                throw new Error(\sprintf("[%s] The name [$name] is skipped.", self::class), $node->getAttributes());
-            }
-
-            // if the name is all uppercase letters, convert it to lowercase letters.
-            if (ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name))) {
-                return Str::lower($name);
-            }
-
-            return $name;
-        })($name));
+        $renamer = $this->wrapRenamer($renamer, $node);
 
         if ($node instanceof Name) {
-            $caseName = $renamer($node->getLast());
-
-            if ($node->getLast() === $caseName) {
+            if (($newLastName = $renamer($lastName = $node->getLast())) === $lastName) {
                 return null;
             }
 
-            $nameNode = Name::concat($node->slice(0, -1), $caseName);
-            \assert($nameNode instanceof Name);
-            $node->name = $nameNode->name;
+            $newNameNode = Name::concat($node->slice(0, -1), $newLastName);
+            \assert($newNameNode instanceof Name);
+            $node->name = $newNameNode->name;
 
             return $node;
         }
@@ -429,13 +388,31 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 Identifier::class,
             ])
         ) {
-            $caseName = $renamer($node->name);
-
-            if ($caseName === $node->name) {
+            if (($newName = $renamer($node->name)) === $node->name) {
                 return null;
             }
 
-            $node->name = $caseName;
+            /**
+             * In the `\PhpParser\Node\FunctionLike` parameter,
+             * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute,
+             * and even if it is renamed, `rector` will report an error.
+             *
+             * "System error: "Node "PhpParser\Node\Expr\Variable" with is missing scope required for scope refresh"
+             * ```
+             * function func_name($var_name): void {}
+             * ```.
+             */
+            if ($node instanceof Variable && !$node->getAttribute(AttributeKey::SCOPE) instanceof Scope) {
+                throw new Error(
+                    \sprintf(
+                        "[%s] The variable name [$node->name] cannot be renamed to [$newName] because of missing scope.",
+                        self::class,
+                    ),
+                    $node->getAttributes()
+                );
+            }
+
+            $node->name = $newName;
 
             return $node;
         }
@@ -493,7 +470,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function shouldLowerSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
-        $grandfather = $parent ? $parent->getAttribute('parent') : null;
+        $grandparent = $parent ? $parent->getAttribute('parent') : null;
 
         // function function_name(){}
         if ($node instanceof Identifier && $parent instanceof Function_) {
@@ -508,10 +485,10 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 $parent instanceof FuncCall
                 || (
                     $parent instanceof UseItem
-                    && $grandfather instanceof Use_
+                    && $grandparent instanceof Use_
                     && (
-                        (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_FUNCTION === $parent->type)
-                        || (Use_::TYPE_FUNCTION === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
+                        (Use_::TYPE_UNKNOWN === $grandparent->type && Use_::TYPE_FUNCTION === $parent->type)
+                        || (Use_::TYPE_FUNCTION === $grandparent->type && Use_::TYPE_UNKNOWN === $parent->type)
                     )
                 )
             )
@@ -537,7 +514,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function shouldUcfirstCamelName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
-        $grandfather = $parent ? $parent->getAttribute('parent') : null;
+        $grandparent = $parent ? $parent->getAttribute('parent') : null;
 
         if (
             $node instanceof Identifier
@@ -562,10 +539,10 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 // use ClassName;
                 (
                     $parent instanceof UseItem
-                    && $grandfather instanceof Use_
+                    && $grandparent instanceof Use_
                     && (
-                        (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_NORMAL === $parent->type)
-                        || (Use_::TYPE_NORMAL === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
+                        (Use_::TYPE_UNKNOWN === $grandparent->type && Use_::TYPE_NORMAL === $parent->type)
+                        || (Use_::TYPE_NORMAL === $grandparent->type && Use_::TYPE_UNKNOWN === $parent->type)
                     )
                 )
                 || is_instance_of_any($parent, [
@@ -644,10 +621,11 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function shouldUpperSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
-        $grandfather = $parent ? $parent->getAttribute('parent') : null;
+        $grandparent = $parent ? $parent->getAttribute('parent') : null;
 
         if (
             $node instanceof Identifier
+            // Foo::class;
             && !$this->isName($node, 'class')
             && is_instance_of_any($parent, [
                 // class Foo{public const CONST_NAME = 'const';}
@@ -675,16 +653,16 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         }
 
         // CONST_NAME;
-        // use const CONST_NAME;;
+        // use const CONST_NAME;
         return $node instanceof Name
             && (
                 $parent instanceof ConstFetch
                 || (
                     $parent instanceof UseItem
-                    && $grandfather instanceof Use_
+                    && $grandparent instanceof Use_
                     && (
-                        (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_CONSTANT === $parent->type)
-                        || (Use_::TYPE_CONSTANT === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
+                        (Use_::TYPE_UNKNOWN === $grandparent->type && Use_::TYPE_CONSTANT === $parent->type)
+                        || (Use_::TYPE_CONSTANT === $grandparent->type && Use_::TYPE_UNKNOWN === $parent->type)
                     )
                 )
             );
@@ -695,6 +673,8 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
      */
     private function shouldLcfirstCamelName(Node $node): bool
     {
+        $parent = $node->getAttribute('parent');
+
         // $varName;
         if ($node instanceof Variable && \is_string($node->name)) {
             return true;
@@ -702,7 +682,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
         if (
             $node instanceof Identifier
-            && is_instance_of_any($node->getAttribute('parent'), [
+            && is_instance_of_any($parent, [
                 // class Foo{public $propertyName;}
                 Property::class,
                 // class Foo{public int $propertyName;}
@@ -751,18 +731,34 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         return false;
     }
 
-    private function hasFuncCallIndexStringArg(FuncCall $funcCall, int $index): bool
+    /**
+     * @param callable(string): string $renamer
+     *
+     * @return \Closure(string): string
+     */
+    private function wrapRenamer(callable $renamer, Node $node): \Closure
     {
-        return isset($funcCall->args[$index])
-            && $funcCall->args[$index] instanceof Arg
-            && !$funcCall->args[$index]->name instanceof Identifier
-            && $funcCall->args[$index]->value instanceof String_;
+        return fn (string $name): string => $renamer(
+            (function (string $name) use ($node): string {
+                if (Str::is($this->except, $name)) {
+                    throw new Error(\sprintf("[%s] The name [$name] is skipped.", self::class), $node->getAttributes());
+                }
+
+                // if the name is all uppercase letters, convert it to lowercase letters.
+                if (ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name))) {
+                    return Str::lower($name);
+                }
+
+                return $name;
+            })($name)
+        );
     }
 
     private function renameFuncCallIndexStringArg(Arg $argNode, callable $renamer): bool
     {
         $stringNode = $argNode->value;
         \assert($stringNode instanceof String_);
+
         $newValue = Str::of($stringNode->value)
             ->explode('\\')
             ->pipe(
@@ -782,14 +778,44 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         return false;
     }
 
-    // private function hasFuncCallNameStringArg(FuncCall $funcCall, string $name): bool
+    private function hasFuncCallIndexStringArg(FuncCall $funcCallNode, int $index): bool
+    {
+        /**
+         * @see \Rector\Application\NodeAttributeReIndexer::reIndexNodeAttributes()
+         *
+         * Re-index the args to ensure the index is correct and to avoid other Rectors from messing up the index.
+         */
+        $funcCallNode->args = array_values($funcCallNode->args);
+
+        foreach ($funcCallNode->args as $idx => $argNode) {
+            if (
+                ($idx < $index && (!$argNode instanceof Arg || $argNode->name instanceof Identifier))
+                || $idx > $index
+            ) {
+                return false;
+            }
+
+            if (
+                $idx === $index
+                && $argNode instanceof Arg
+                && !$argNode->name instanceof Identifier
+                && $argNode->value instanceof String_
+            ) {
+                return true;
+            }
+        }
+
+        return false; // @codeCoverageIgnore
+    }
+
+    // private function hasFuncCallNameStringArg(FuncCall $funcCallNode, string $name): bool
     // {
-    //     foreach ($funcCall->args as $arg) {
+    //     foreach ($funcCallNode->args as $argNode) {
     //         if (
-    //             $arg instanceof Arg
-    //             && $arg->name instanceof Identifier
-    //             && $arg->name->name === $name
-    //             && $arg->value instanceof String_
+    //             $argNode instanceof Arg
+    //             && $argNode->name instanceof Identifier
+    //             && $argNode->name->name === $name
+    //             && $argNode->value instanceof String_
     //         ) {
     //             return true;
     //         }

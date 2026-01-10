@@ -22,6 +22,9 @@ namespace Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector;
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
+/**
+ * @covers \Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector
+ */
 final class RemoveNamespaceRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string

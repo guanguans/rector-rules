@@ -29,6 +29,7 @@ use PhpParser\Node\Scalar\String_;
 use PHPStan\Reflection\ClassReflection;
 use Rector\Config\RectorConfig;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PHPStan\ScopeFetcher;
 use Rector\Testing\Fixture\FixtureSplitter;
 use Symplify\RuleDocGenerator\Contract\CodeSampleInterface;
@@ -37,6 +38,8 @@ use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\clone_node;
 
 /**
+ * @see \Guanguans\RectorRulesTests\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector\UpdateRectorCodeSamplesFromFixturesRectorTest
+ *
  * @internal
  */
 final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
@@ -180,7 +183,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
 
             if ($badCodeNode->value !== $badCode) {
                 $badCodeNode->value = $badCode;
-                $badCodeNode->setAttribute('docLabel', 'PHP');
+                $badCodeNode->setAttribute(AttributeKey::DOC_LABEL, 'PHP');
                 $hasChanged = true;
             }
 
@@ -189,7 +192,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
 
             if ($goodCodeNode->value !== $goodCode) {
                 $goodCodeNode->value = $goodCode;
-                $goodCodeNode->setAttribute('docLabel', 'PHP');
+                $goodCodeNode->setAttribute(AttributeKey::DOC_LABEL, 'PHP');
                 $hasChanged = true;
             }
 
@@ -204,7 +207,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
             if (0 < $index && $arrayNode->items[$index - 1]->getEndLine() === $arrayItemNode->getStartLine()) {
                 // @codeCoverageIgnoreStart
                 $arrayItemNode->setAttribute(
-                    'comments',
+                    AttributeKey::COMMENTS,
                     collect($arrayItemNode->getComments())->prepend(new Comment(''))->all()
                 );
                 $hasChanged = true;
