@@ -28,7 +28,7 @@ composer require guanguans/rector-rules --dev --ansi -v
 ### In your rector configuration register rules
 
 ```php
-use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
+use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
@@ -42,7 +42,7 @@ return RectorConfig::configure()
     ])
     // ...
     ->withRules([
-        SimplifyListIndexRector::class,
+        SortFileFunctionStmtRector::class,
         // ...
     ]);
 ```

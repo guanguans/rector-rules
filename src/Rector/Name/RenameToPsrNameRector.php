@@ -79,23 +79,23 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         'true',
 
         /** @see https://www.php.net/manual/zh/reserved.variables.php */
-        'GLOBALS',
         '_COOKIE',
         '_ENV',
-        'HTTP_ENV_VARS',
         '_FILES',
-        'HTTP_POST_FILES',
         '_GET',
-        'HTTP_GET_VARS',
         '_POST',
-        'HTTP_POST_VARS',
         '_REQUEST',
         '_SERVER',
-        'HTTP_SERVER_VARS',
         '_SESSION',
-        'HTTP_SESSION_VARS',
+        'GLOBALS',
+        'HTTP_ENV_VARS',
+        'HTTP_GET_VARS',
+        'HTTP_POST_FILES',
+        'HTTP_POST_VARS',
         'HTTP_RAW_POST_DATA',
         'http_response_header',
+        'HTTP_SERVER_VARS',
+        'HTTP_SESSION_VARS',
         'php_errormsg',
 
         /** @see https://www.php.net/streamwrapper */
@@ -145,7 +145,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                     && $rectorStyle->isDebug()
                     && 'console' === $input->getParameterOption('--output-format', 'console', true)
                 ) {
-                    $rectorStyle->comment(
+                    $rectorStyle->warning(
                         collect($this->collecting->getErrors())
                             ->map(static fn (Error $error): string => $error->getRawMessage())
                             // ->map(static fn (Error $error): string => $error->getMessage())
