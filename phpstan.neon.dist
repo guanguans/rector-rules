@@ -103,7 +103,6 @@ parameters:
 #        - identifier: logicalOr.resultUnused
 #        - identifier: method.childParameterType
 #        - identifier: method.dynamicName
-#        - identifier: method.nonObject
 #        - identifier: missingType.generics
 #        - identifier: missingType.iterableValue
 #        - identifier: new.static
@@ -127,7 +126,6 @@ parameters:
         - identifier: cast.int
         - identifier: encapsedStringPart.nonString
         - identifier: method.childParameterType
-        - identifier: method.nonObject
         - identifier: return.type
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.forbiddenArrayMethodCall

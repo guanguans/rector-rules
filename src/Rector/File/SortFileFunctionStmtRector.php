@@ -78,7 +78,7 @@ final class SortFileFunctionStmtRector extends AbstractRector
         $sortedStmts = collect($rootNode->stmts)
             ->sort(
                 fn (Stmt $a, Stmt $b): int => ($aName = $this->parseFuncName($a)) && ($bName = $this->parseFuncName($b))
-                    ? strcmp($aName, $bName)
+                    ? $aName <=> $bName
                     : 0
             )
             // ->values()

@@ -22,5 +22,9 @@ use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameTypeRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->rule(SortListItemOfSameTypeRector::class);
+    $rectorConfig->ruleWithConfiguration(SortListItemOfSameTypeRector::class, [
+        'ignore_comment' => true,
+        'ignore_docblock' => true,
+        'sort_callback' => static fn ($a, $b): int => $a <=> $b,
+    ]);
 };

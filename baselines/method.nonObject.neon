@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Cannot call method all\(\) on mixed\.$#'
+            count: 1
+            path: ../src/Rector/Array_/SimplifyListIndexRector.php
+
+        -
+            message: '#^Cannot call method getParameterOption\(\) on mixed\.$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToPsrNameRector.php

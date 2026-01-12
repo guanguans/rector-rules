@@ -21,6 +21,8 @@ use Rector\Rector\AbstractRector;
 
 /**
  * @see \PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException
+ *
+ * @property \Rector\ValueObject\Application\File $file
  */
 final class RectorErrorException extends Error implements ThrowableContract
 {

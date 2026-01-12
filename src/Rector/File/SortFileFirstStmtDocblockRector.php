@@ -56,7 +56,7 @@ final class SortFileFirstStmtDocblockRector extends AbstractRector
                     return 1;
                 }
 
-                return strcmp($a->getText(), $b->getText());
+                return $a->getText() <=> $b->getText();
             })
             ->all();
 

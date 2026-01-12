@@ -40,6 +40,8 @@ Simplify list index
 
 Sort list item of same type
 
+:wrench: **configure it!**
+
 - class: [`Guanguans\RectorRules\Rector\Array_\SortListItemOfSameTypeRector`](../src/Rector/Array_/SortListItemOfSameTypeRector.php)
 
 ```diff

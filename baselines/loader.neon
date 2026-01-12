@@ -1,5 +1,6 @@
-# total 2 errors
+# total 4 errors
 
 includes:
     - complexity.functionLike.neon
+    - method.nonObject.neon
     - symplify.preferredClass.neon

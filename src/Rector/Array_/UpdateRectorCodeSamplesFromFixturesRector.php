@@ -26,10 +26,13 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor\FirstFindingVisitor;
 use PHPStan\Reflection\ClassReflection;
 use Rector\Config\RectorConfig;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\NodeTypeResolver\Node\AttributeKey;
+use Rector\PhpParser\Parser\SimplePhpParser;
 use Rector\PHPStan\ScopeFetcher;
 use Rector\Testing\Fixture\FixtureSplitter;
 use Symplify\RuleDocGenerator\Contract\CodeSampleInterface;
@@ -44,13 +47,13 @@ use function Guanguans\RectorRules\Support\clone_node;
  */
 final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
 {
-    private RectorConfig $rectorConfig;
+    private SimplePhpParser $simplePhpParser;
 
-    public function __construct(RectorConfig $rectorConfig)
+    public function __construct(SimplePhpParser $simplePhpParser)
     {
-        $this->rectorConfig = $rectorConfig;
         // $this->rectorConfig = clone $rectorConfig;
         // $this->rectorConfig = unserialize(serialize($rectorConfig), ['allowed_classes' => true]);
+        $this->simplePhpParser = $simplePhpParser;
     }
 
     public function getNodeTypes(): array
@@ -234,23 +237,38 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
             return null;
         }
 
-        /** @var list<string> $importedConfigFiles */
-        static $importedConfigFiles = [];
+        // /** @var list<string> $importedConfigFiles */
+        // static $importedConfigFiles = [];
+        //
+        // if (!\in_array($configFile, $importedConfigFiles, true)) {
+        //     $this->rectorConfig->import($configFile);
+        //     $importedConfigFiles[] = $configFile;
+        // }
+        //
+        // $ruleConfigurations = $this->rectorConfig->getRuleConfigurations();
+        // $class = $classReflection->getNativeReflection()->getName();
+        // \assert(\is_string($class));
+        //
+        // // if (!isset($ruleConfigurations[$class])) {
+        // //     return null;
+        // // }
+        //
+        // return $this->nodeFactory->createArray(array_filter(
+        //     $ruleConfigurations[$class],
+        //     static fn ($value): bool => null === $value || \is_scalar($value) || \is_array($value)
+        // ));
 
-        if (!\in_array($configFile, $importedConfigFiles, true)) {
-            $this->rectorConfig->import($configFile);
-            $importedConfigFiles[] = $configFile;
+        /** @var array<string, Array_> $configurationNodes */
+        static $configurationNodes = [];
+
+        if (!isset($configurationNodes[$configFile])) {
+            (new NodeTraverser($firstFindingVisitor = new FirstFindingVisitor(
+                static fn (Node $node): bool => $node instanceof Array_
+            )))->traverse($this->simplePhpParser->parseFile($configFile));
+            $configurationNodes[$configFile] = $firstFindingVisitor->getFoundNode();
         }
 
-        $ruleConfigurations = $this->rectorConfig->getRuleConfigurations();
-        $class = $classReflection->getNativeReflection()->getName();
-        \assert(\is_string($class));
-
-        // if (!isset($ruleConfigurations[$class])) {
-        //     return null;
-        // }
-
-        return $this->nodeFactory->createArray($ruleConfigurations[$class]);
+        return $configurationNodes[$configFile];
     }
 
     private function parseConfigFile(ClassReflection $classReflection): string

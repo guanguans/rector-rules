@@ -16,22 +16,31 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\Array_;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\PhpParser\Node\Value\ValueResolver;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 
 /**
  * @see \Guanguans\RectorRulesTests\Rector\Array_\SortListItemOfSameTypeRector\SortListItemOfSameTypeRectorTest
  */
-final class SortListItemOfSameTypeRector extends AbstractRector
+final class SortListItemOfSameTypeRector extends AbstractRector implements ConfigurableRectorInterface
 {
+    /** @var array{ignore_comment: bool, ignore_docblock: bool, sort_callback: callable} */
+    private array $configuration;
     private ValueResolver $valueResolver;
 
     public function __construct(ValueResolver $valueResolver)
     {
+        $this->configuration = [
+            'ignore_comment' => true,
+            'ignore_docblock' => true,
+            'sort_callback' => static fn ($a, $b): int => $a <=> $b,
+        ];
         $this->valueResolver = $valueResolver;
     }
 
@@ -47,10 +56,12 @@ final class SortListItemOfSameTypeRector extends AbstractRector
      */
     public function refactor(Node $node): ?Node
     {
-        // Skip non-list.
+        // Skip non-list or non-empty-comments of array items.
         if (
             collect($node->items)->contains(
-                static fn (ArrayItem $arrayItemNode): bool => $arrayItemNode->key instanceof Expr
+                fn (ArrayItem $arrayItemNode): bool => $arrayItemNode->key instanceof Expr
+                    || (!$this->configuration['ignore_comment'] && $arrayItemNode->getComments())
+                    || (!$this->configuration['ignore_docblock'] && $arrayItemNode->getDocComment() instanceof Doc)
             )
         ) {
             return null;
@@ -92,12 +103,22 @@ final class SortListItemOfSameTypeRector extends AbstractRector
     }
 
     /**
-     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample>
+     * @param array{ignore_comment: bool, ignore_docblock: bool, sort_callback: callable} $configuration
+     */
+    public function configure(array $configuration): void
+    {
+        $this->configuration = $configuration + $this->configuration;
+    }
+
+    /**
+     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
+     *
+     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample>
      */
     protected function codeSamples(): array
     {
         return [
-            new CodeSample(
+            new ConfiguredCodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
                     [
@@ -118,6 +139,11 @@ final class SortListItemOfSameTypeRector extends AbstractRector
                         'c',
                     ];
                     PHP,
+                [
+                    'ignore_comment' => true,
+                    'ignore_docblock' => true,
+                    'sort_callback' => static fn ($a, $b): int => $a <=> $b,
+                ]
             ),
         ];
     }

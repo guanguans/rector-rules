@@ -136,14 +136,17 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
             function (SymfonyStyleFactory $symfonyStyleFactory): void { // @codeCoverageIgnoreStart
                 $rectorStyle = $symfonyStyleFactory->create();
 
-                $reflectionProperty = (new \ReflectionObject($rectorStyle))->getParentClass()->getProperty('input');
+                $reflectionClass = (new \ReflectionObject($rectorStyle))->getParentClass();
+                \assert($reflectionClass instanceof \ReflectionClass);
+                $reflectionProperty = $reflectionClass->getProperty('input');
                 \PHP_VERSION_ID < 80100 and $reflectionProperty->setAccessible(true);
                 $input = $reflectionProperty->getValue($rectorStyle);
+                // \assert($input instanceof \Symfony\Component\Console\Input\InputInterface);
 
                 if (
                     $this->collecting->hasErrors()
                     && $rectorStyle->isDebug()
-                    && 'console' === $input->getParameterOption('--output-format', 'console', true)
+                    && $input->getParameterOption('--output-format', $default = 'console', true) === $default
                 ) {
                     $rectorStyle->warning(
                         collect($this->collecting->getErrors())
@@ -469,6 +472,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function shouldLowerSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
+        \assert($parent instanceof Node || null === $parent);
         $grandparent = $parent ? $parent->getAttribute('parent') : null;
 
         // function function_name(){}
@@ -513,6 +517,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function shouldUcfirstCamelName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
+        \assert($parent instanceof Node || null === $parent);
         $grandparent = $parent ? $parent->getAttribute('parent') : null;
 
         if (
@@ -620,6 +625,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     private function shouldUpperSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
+        \assert($parent instanceof Node || null === $parent);
         $grandparent = $parent ? $parent->getAttribute('parent') : null;
 
         if (
