@@ -1,10 +1,10 @@
-# 9 Rules Overview
+# 10 Rules Overview
 
 <br>
 
 ## Categories
 
-- [Array](#array) (2)
+- [Array](#array) (3)
 
 - [Class](#class) (1)
 
@@ -32,6 +32,29 @@ Simplify list index
 -[0 => 'foo', 'bar', 2 => 'baz'];
 +['foo', 'bar', 'baz'];
 +['foo', 'bar', 'baz'];
+```
+
+<br>
+
+### SortListItemOfSameTypeRector
+
+Sort list item of same type
+
+- class: [`Guanguans\RectorRules\Rector\Array_\SortListItemOfSameTypeRector`](../src/Rector/Array_/SortListItemOfSameTypeRector.php)
+
+```diff
+ /** @noinspection ALL */
+ [
++    'A',
++    'C',
++    'a',
++    'b',
+     'c',
+-    'b',
+-    'a',
+-    'C',
+-    'A',
+ ];
 ```
 
 <br>

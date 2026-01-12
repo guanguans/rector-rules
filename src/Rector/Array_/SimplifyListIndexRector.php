@@ -50,7 +50,11 @@ final class SimplifyListIndexRector extends AbstractRector
     {
         $keys = collect($node->items)
             ->pluck('key')
-            ->map(fn (?Expr $expr) => $expr instanceof Expr ? $this->valueResolver->getValue($expr) : null);
+            ->map(
+                fn (?Expr $exprNodeOrNull) => $exprNodeOrNull instanceof Expr
+                    ? $this->valueResolver->getValue($exprNodeOrNull)
+                    : null
+            );
 
         if (
             $keys->filter(static fn ($key): bool => null !== $key && !\is_int($key))->isNotEmpty()
@@ -58,7 +62,7 @@ final class SimplifyListIndexRector extends AbstractRector
                 $keys
                     ->reduce(
                         static fn (Collection $carry, ?int $key): Collection => $carry->put(
-                            $key ?? (int) $carry->keys()->sortDesc(\SORT_NUMERIC)->first(null, -1) + 1,
+                            $key ?? (int) $carry->keys()->last(null, -1) + 1,
                             $key
                         ),
                         collect()

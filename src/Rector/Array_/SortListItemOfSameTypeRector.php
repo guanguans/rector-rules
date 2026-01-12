@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\Array_;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
-use Illuminate\Support\Collection;
 use PhpParser\Node;
 use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr;
@@ -48,58 +47,39 @@ final class SortListItemOfSameTypeRector extends AbstractRector
      */
     public function refactor(Node $node): ?Node
     {
-        $keys = collect($node->items)
-            ->pluck('key')
-            ->map(fn (?Expr $expr) => $expr instanceof Expr ? $this->valueResolver->getValue($expr) : null);
-
+        // Skip non-list.
         if (
-            $keys->filter(static fn ($key): bool => null !== $key && !\is_int($key))->isNotEmpty()
-            || !array_is_list(
-                $keys
-                    ->reduce(
-                        static fn (Collection $carry, ?int $key): Collection => $carry->put(
-                            $key ?? (int) $carry->keys()->sortDesc(\SORT_NUMERIC)->first(null, -1) + 1,
-                            $key
-                        ),
-                        collect()
-                    )
-                    ->all()
+            collect($node->items)->contains(
+                static fn (ArrayItem $arrayItemNode): bool => $arrayItemNode->key instanceof Expr
             )
         ) {
             return null;
         }
 
-        $values = collect($node->items)->pluck('value');
+        $valueNodes = collect($node->items)->pluck('value');
 
+        /** @noinspection NotOptimalIfConditionsInspection */
         if (
-            $values
+            // Skip non-same value node type.
+            !$valueNodes
                 ->map(static fn (Expr $exprNode): string => \get_class($exprNode))
                 ->unique()
-                ->count() > 1
-            || $values
-                ->map(fn (Expr $exprNode) => $this->valueResolver->getValue($exprNode))
-                ->reject(static fn ($value): bool => null !== $value || !\is_scalar($value))
-                ->isNotEmpty()
-            || $values
-                ->map(fn (Expr $exprNode) => $this->valueResolver->getValue($exprNode))
-                ->map(static fn ($value): string => \gettype($value))
-                ->unique()
-                ->count() > 1
+                // ->containsManyItems()
+                ->containsOneItem()
+            // Skip non-scalar value.
+            || $valueNodes->contains(
+                fn (Expr $exprNode): bool => !\is_scalar($this->valueResolver->getValue($exprNode))
+            )
         ) {
             return null;
         }
 
+        /** @var list<ArrayItem> $newItems */
         $newItems = collect($node->items)
-            ->sort(function (ArrayItem $a, ArrayItem $b): int {
-                $aValue = $this->valueResolver->getValue($a->value);
-                $bValue = $this->valueResolver->getValue($b->value);
-
-                if (\is_string($aValue) && \is_string($bValue)) {
-                    return strcmp($aValue, $bValue);
-                }
-
-                return $aValue <=> $bValue;
-            })
+            ->sort(fn (
+                ArrayItem $a,
+                ArrayItem $b
+            ): int => $this->valueResolver->getValue($a->value) <=> $this->valueResolver->getValue($b->value))
             ->all();
 
         if ($newItems === $node->items) {
@@ -120,13 +100,23 @@ final class SortListItemOfSameTypeRector extends AbstractRector
             new CodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
-                    [0 => 'foo', 1 => 'bar', 2 => 'baz'];
-                    [0 => 'foo', 'bar', 2 => 'baz'];
+                    [
+                        'c',
+                        'b',
+                        'a',
+                        'C',
+                        'A',
+                    ];
                     PHP,
                 <<<'PHP'
                     /** @noinspection ALL */
-                    ['foo', 'bar', 'baz'];
-                    ['foo', 'bar', 'baz'];
+                    [
+                        'A',
+                        'C',
+                        'a',
+                        'b',
+                        'c',
+                    ];
                     PHP,
             ),
         ];
