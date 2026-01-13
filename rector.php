@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\RectorRules\Contract\ThrowableContract;
+use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
@@ -152,6 +153,10 @@ return RectorConfig::configure()
     ->withConfiguredRule(RenameToPsrNameRector::class, [
         'MIT',
     ])
+    // ->withConfiguredRule(SortListItemOfSameTypeRector::class, [
+    //     'ignore_comment' => false,
+    //     'ignore_docblock' => false,
+    // ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',
         'inheritDoc',

@@ -24,23 +24,47 @@ use PhpParser\Node\Expr\Array_;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
+use Webmozart\Assert\Assert;
 
 /**
  * @see \Guanguans\RectorRulesTests\Rector\Array_\SortListItemOfSameTypeRector\SortListItemOfSameTypeRectorTest
  */
 final class SortListItemOfSameTypeRector extends AbstractRector implements ConfigurableRectorInterface
 {
-    /** @var array{ignore_comment: bool, ignore_docblock: bool, sort_callback: callable} */
+    private const SORT_DIRECTION_MAP = [
+        'asc' => 1,
+        'desc' => -1,
+    ];
+
+    /**
+     * @var array{
+     *     ignore_comment: bool,
+     *     ignore_docblock: bool,
+     *     sort_comparator: callable(string, string): int,
+     *     sort_direction: key-of<self::SORT_DIRECTION_MAP>,
+     * }
+     */
     private array $configuration;
+
+    /** @var callable(string, string): int */
+    private $comparator;
     private ValueResolver $valueResolver;
 
+    /**
+     * @see \SORT_ASC
+     * @see \SORT_DESC
+     * @see \Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector
+     * @see \Symfony\Component\Finder\Iterator\SortableIterator
+     */
     public function __construct(ValueResolver $valueResolver)
     {
         $this->configuration = [
             'ignore_comment' => true,
             'ignore_docblock' => true,
-            'sort_callback' => static fn ($a, $b): int => $a <=> $b,
+            'sort_comparator' => static fn (string $a, string $b): int => $a <=> $b,
+            'sort_direction' => 'asc',
         ];
+        $this->setComparator();
         $this->valueResolver = $valueResolver;
     }
 
@@ -87,10 +111,10 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
 
         /** @var list<ArrayItem> $newItems */
         $newItems = collect($node->items)
-            ->sort(fn (
-                ArrayItem $a,
-                ArrayItem $b
-            ): int => $this->valueResolver->getValue($a->value) <=> $this->valueResolver->getValue($b->value))
+            ->sort(fn (ArrayItem $a, ArrayItem $b): int => ($this->comparator)(
+                (string) $this->valueResolver->getValue($a->value),
+                (string) $this->valueResolver->getValue($b->value)
+            ))
             ->all();
 
         if ($newItems === $node->items) {
@@ -103,11 +127,29 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
     }
 
     /**
-     * @param array{ignore_comment: bool, ignore_docblock: bool, sort_callback: callable} $configuration
+     * @param array{
+     *     ignore_comment: bool,
+     *     ignore_docblock: bool,
+     *     sort_comparator: callable(string, string): int,
+     *     sort_direction: key-of<self::SORT_DIRECTION_MAP>,
+     * } $configuration
      */
     public function configure(array $configuration): void
     {
+        foreach (array_keys($configuration) as $key) {
+            Assert::keyExists($this->configuration, $key);
+        }
+
+        \array_key_exists('ignore_comment', $configuration) and Assert::boolean($configuration['ignore_comment']);
+        \array_key_exists('ignore_docblock', $configuration) and Assert::boolean($configuration['ignore_docblock']);
+        \array_key_exists('sort_comparator', $configuration) and Assert::isCallable($configuration['sort_comparator']);
+        \array_key_exists('sort_direction', $configuration) and Assert::inArray(
+            $configuration['sort_direction'],
+            array_keys(self::SORT_DIRECTION_MAP)
+        );
+
         $this->configuration = $configuration + $this->configuration;
+        $this->setComparator();
     }
 
     /**
@@ -139,12 +181,17 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
                         'c',
                     ];
                     PHP,
-                [
-                    'ignore_comment' => true,
-                    'ignore_docblock' => true,
-                    'sort_callback' => static fn ($a, $b): int => $a <=> $b,
-                ]
+                ['ignore_comment' => true, 'ignore_docblock' => true, 'sort_comparator' => static fn (string $a, string $b): int => $a <=> $b, 'sort_direction' => 'asc']
             ),
         ];
+    }
+
+    private function setComparator(): void
+    {
+        $this->comparator = fn (
+            string $a,
+            string $b
+        ): int => self::SORT_DIRECTION_MAP[$this->configuration['sort_direction']]
+            * ($this->configuration['sort_comparator'])($a, $b);
     }
 }

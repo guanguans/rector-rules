@@ -25,6 +25,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->ruleWithConfiguration(SortListItemOfSameTypeRector::class, [
         'ignore_comment' => true,
         'ignore_docblock' => true,
-        'sort_callback' => static fn ($a, $b): int => $a <=> $b,
+        'sort_comparator' => static fn (string $a, string $b): int => $a <=> $b,
+        'sort_direction' => 'asc',
     ]);
 };
