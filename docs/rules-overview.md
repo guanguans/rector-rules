@@ -36,26 +36,30 @@ Simplify list index
 
 <br>
 
-### SortListItemOfSameTypeRector
+### SortListItemOfSameScalarTypeRector
 
-Sort list item of same type
+Sort list item of same scalar type
 
 :wrench: **configure it!**
 
-- class: [`Guanguans\RectorRules\Rector\Array_\SortListItemOfSameTypeRector`](../src/Rector/Array_/SortListItemOfSameTypeRector.php)
+- class: [`Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector`](../src/Rector/Array_/SortListItemOfSameScalarTypeRector.php)
 
 ```diff
  /** @noinspection ALL */
  [
+-    'c',
+-    'b',
 +    'A',
 +    'C',
-+    'a',
-+    'b',
-     'c',
--    'b',
--    'a',
+     'a',
+-    'a10',
+     'a8',
+     'a9',
 -    'C',
 -    'A',
++    'a10',
++    'b',
++    'c',
  ];
 ```
 

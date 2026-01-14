@@ -23,6 +23,8 @@ use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsException
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
+    // Ensure that using the default configuration is valid.
+    $rectorConfig->rule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class);
     $rectorConfig->ruleWithConfiguration(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [
         ThrowableContract::class,
     ]);

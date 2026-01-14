@@ -18,14 +18,14 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-namespace Guanguans\RectorRulesTests\Rector\Array_\SortListItemOfSameTypeRector;
+namespace Guanguans\RectorRulesTests\Rector\Array_\SortListItemOfSameScalarTypeRector;
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
- * @covers \Guanguans\RectorRules\Rector\Array_\SortListItemOfSameTypeRector
+ * @covers \Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector
  */
-final class SortListItemOfSameTypeRectorTest extends AbstractRectorTestCase
+final class SortListItemOfSameScalarTypeRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string
     {

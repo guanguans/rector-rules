@@ -44,6 +44,8 @@ return static function (RectorConfig $rectorConfig): void {
     // $rectorConfig->singleton($registeredService->getClassName());
     // $rectorConfig->tag($registeredService->getClassName(), $registeredService->getTag());
 
+    // Ensure that using the default configuration is valid.
+    $rectorConfig->rule(RenameToPsrNameRector::class);
     $rectorConfig->ruleWithConfiguration(RenameToPsrNameRector::class, [
         'afterAll',
         'afterEach',

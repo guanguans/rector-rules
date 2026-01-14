@@ -5,3 +5,8 @@
     new stdClass(),
     new Exception(),
 ];
+
+[
+    null,
+    null,
+];

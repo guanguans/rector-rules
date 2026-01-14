@@ -14,7 +14,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
-use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameTypeRector;
+use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
@@ -27,6 +27,6 @@ return static function (RectorConfig $rectorConfig): void {
         SimplifyListIndexRector::class,
         SortFileFirstStmtDocblockRector::class,
         SortFileFunctionStmtRector::class,
-        // SortListItemOfSameTypeRector::class,
+        // SortListItemOfSameScalarTypeRector::class,
     ]);
 };

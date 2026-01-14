@@ -22,6 +22,8 @@ use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRect
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
+    // Ensure that using the default configuration is valid.
+    $rectorConfig->rule(AddNoinspectionDocblockToFileFirstStmtRector::class);
     $rectorConfig->ruleWithConfiguration(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/Fixture/fixture.php' => [
             'AnonymousFunctionStaticInspection',

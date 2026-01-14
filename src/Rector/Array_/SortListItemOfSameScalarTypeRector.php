@@ -27,9 +27,9 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 
 /**
- * @see \Guanguans\RectorRulesTests\Rector\Array_\SortListItemOfSameTypeRector\SortListItemOfSameTypeRectorTest
+ * @see \Guanguans\RectorRulesTests\Rector\Array_\SortListItemOfSameScalarTypeRector\SortListItemOfSameScalarTypeRectorTest
  */
-final class SortListItemOfSameTypeRector extends AbstractRector implements ConfigurableRectorInterface
+final class SortListItemOfSameScalarTypeRector extends AbstractRector implements ConfigurableRectorInterface
 {
     private const SORT_DIRECTION_MAP = [
         'asc' => 1,
@@ -58,13 +58,12 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
      */
     public function __construct(ValueResolver $valueResolver)
     {
-        $this->configuration = [
+        $this->rawConfigure([
             'ignore_comment' => true,
             'ignore_docblock' => true,
-            'sort_comparator' => static fn (string $a, string $b): int => $a <=> $b,
+            'sort_comparator' => 'strnatcmp',
             'sort_direction' => 'asc',
-        ];
-        $this->setComparator();
+        ]);
         $this->valueResolver = $valueResolver;
     }
 
@@ -80,12 +79,14 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
      */
     public function refactor(Node $node): ?Node
     {
-        // Skip non-list or non-empty-comments of array items.
         if (
             collect($node->items)->contains(
+                // Skip non-list
                 fn (ArrayItem $arrayItemNode): bool => $arrayItemNode->key instanceof Expr
-                    || (!$this->configuration['ignore_comment'] && $arrayItemNode->getComments())
+                    // If non-ignore-docblock, skip non-empty-docblock
                     || (!$this->configuration['ignore_docblock'] && $arrayItemNode->getDocComment() instanceof Doc)
+                    // If non-ignore-comment, skip non-empty-comment
+                    || (!$this->configuration['ignore_comment'] && $arrayItemNode->getComments())
             )
         ) {
             return null;
@@ -112,8 +113,8 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
         /** @var list<ArrayItem> $newItems */
         $newItems = collect($node->items)
             ->sort(fn (ArrayItem $a, ArrayItem $b): int => ($this->comparator)(
-                (string) $this->valueResolver->getValue($a->value),
-                (string) $this->valueResolver->getValue($b->value)
+                $this->getScalarArrayItemStringValue($a),
+                $this->getScalarArrayItemStringValue($b)
             ))
             ->all();
 
@@ -136,20 +137,7 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
      */
     public function configure(array $configuration): void
     {
-        foreach (array_keys($configuration) as $key) {
-            Assert::keyExists($this->configuration, $key);
-        }
-
-        \array_key_exists('ignore_comment', $configuration) and Assert::boolean($configuration['ignore_comment']);
-        \array_key_exists('ignore_docblock', $configuration) and Assert::boolean($configuration['ignore_docblock']);
-        \array_key_exists('sort_comparator', $configuration) and Assert::isCallable($configuration['sort_comparator']);
-        \array_key_exists('sort_direction', $configuration) and Assert::inArray(
-            $configuration['sort_direction'],
-            array_keys(self::SORT_DIRECTION_MAP)
-        );
-
-        $this->configuration = $configuration + $this->configuration;
-        $this->setComparator();
+        $this->rawConfigure($configuration, false);
     }
 
     /**
@@ -167,6 +155,9 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
                         'c',
                         'b',
                         'a',
+                        'a10',
+                        'a8',
+                        'a9',
                         'C',
                         'A',
                     ];
@@ -177,17 +168,73 @@ final class SortListItemOfSameTypeRector extends AbstractRector implements Confi
                         'A',
                         'C',
                         'a',
+                        'a8',
+                        'a9',
+                        'a10',
                         'b',
                         'c',
                     ];
                     PHP,
-                ['ignore_comment' => true, 'ignore_docblock' => true, 'sort_comparator' => static fn (string $a, string $b): int => $a <=> $b, 'sort_direction' => 'asc']
+                [
+                    'ignore_comment' => false,
+                    'ignore_docblock' => false,
+                    // 'sort_comparator' => static fn (string $a, string $b): int => $a <=> $b,
+                    // 'sort_comparator' => 'strcasecmp',
+                    // 'sort_comparator' => 'strcmp',
+                    // 'sort_comparator' => 'strnatcasecmp',
+                    'sort_comparator' => 'strnatcmp',
+                    // 'sort_direction' => 'desc',
+                    'sort_direction' => 'asc',
+                ]
             ),
         ];
     }
 
-    private function setComparator(): void
+    /**
+     * @throws \JsonException
+     */
+    private function getScalarArrayItemStringValue(ArrayItem $arrayItemNode): string
     {
+        $value = $this->valueResolver->getValue($arrayItemNode->value);
+        Assert::scalar($value);
+
+        return \is_string($value) ? $value : json_encode($value, \JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * @param array{
+     *     ignore_comment: bool,
+     *     ignore_docblock: bool,
+     *     sort_comparator: callable(string, string): int,
+     *     sort_direction: key-of<self::SORT_DIRECTION_MAP>,
+     * } $configuration
+     */
+    private function rawConfigure(array $configuration, bool $isInitialized = true): void
+    {
+        if ($isInitialized) {
+            Assert::keyExists($configuration, 'ignore_comment');
+            Assert::keyExists($configuration, 'ignore_docblock');
+            Assert::keyExists($configuration, 'sort_comparator');
+            Assert::keyExists($configuration, 'sort_direction');
+            $this->configuration = $configuration;
+            $this->rawConfigure($configuration, false);
+
+            return;
+        }
+
+        foreach (array_keys($configuration) as $key) {
+            Assert::keyExists($this->configuration, $key);
+        }
+
+        \array_key_exists('ignore_comment', $configuration) and Assert::boolean($configuration['ignore_comment']);
+        \array_key_exists('ignore_docblock', $configuration) and Assert::boolean($configuration['ignore_docblock']);
+        \array_key_exists('sort_comparator', $configuration) and Assert::isCallable($configuration['sort_comparator']);
+        \array_key_exists('sort_direction', $configuration) and Assert::inArray(
+            $configuration['sort_direction'],
+            array_keys(self::SORT_DIRECTION_MAP)
+        );
+
+        $this->configuration = $configuration + $this->configuration;
         $this->comparator = fn (
             string $a,
             string $b
