@@ -8,6 +8,25 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.3.0"></a>
+## [1.3.0] - 2026-01-14
+### ✨ Features
+- **array:** Add SortListItemOfSameTypeRector for sorting array items ([202e6e4](https://github.com/guanguans/rector-rules/commit/202e6e4))
+
+### 🐞 Bug Fixes
+- **array:** Remove unnecessary Collection dependency and improve key check ([7e70eef](https://github.com/guanguans/rector-rules/commit/7e70eef))
+
+### 📖 Documents
+- **README:** Update usage example in README ([0e00f3d](https://github.com/guanguans/rector-rules/commit/0e00f3d))
+
+### 💅 Code Refactorings
+- **SetList:** Rename all.php to common.php and add rector.php ([3b9fea3](https://github.com/guanguans/rector-rules/commit/3b9fea3))
+- **array:** Improve array item handling in SortListItemOfSameTypeRector ([60baf4a](https://github.com/guanguans/rector-rules/commit/60baf4a))
+- **array:** Rename sort_callback to sort_comparator and add sort_direction ([ffb87fb](https://github.com/guanguans/rector-rules/commit/ffb87fb))
+- **array:** Replace strcmp with spaceship operator for comparisons ([64095a5](https://github.com/guanguans/rector-rules/commit/64095a5))
+- **common:** Remove unused imports and update README example ([e7ee465](https://github.com/guanguans/rector-rules/commit/e7ee465))
+
+
 <a name="1.2.1"></a>
 ## [1.2.1] - 2026-01-10
 ### ✨ Features
@@ -78,7 +97,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.2.1...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/guanguans/rector-rules/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/guanguans/rector-rules/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/guanguans/rector-rules/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/guanguans/rector-rules/compare/1.0.1...1.1.0
