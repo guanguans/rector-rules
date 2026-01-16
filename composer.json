@@ -1,6 +1,6 @@
 {
     "name": "guanguans/rector-rules",
-    "description": "A set of rector/rector rules. - 一套 rector/rector 规则。",
+    "description": "A set of additional rules for rector/rector. - 一套针对 `rector/rector` 的附加规则。",
     "license": "MIT",
     "type": "library",
     "keywords": [

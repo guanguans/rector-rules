@@ -1,7 +1,7 @@
 # rector-rules
 
 > [!NOTE]
-> A set of rector/rector rules. - 一套 rector/rector 规则。
+> A set of additional rules for rector/rector. - 一套针对 `rector/rector` 的附加规则。
 
 [![tests](https://github.com/guanguans/rector-rules/actions/workflows/tests.yml/badge.svg)](https://github.com/guanguans/rector-rules/actions/workflows/tests.yml)
 [![php-cs-fixer](https://github.com/guanguans/rector-rules/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/rector-rules/actions/workflows/php-cs-fixer.yml)
