@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Function "method_exists\(\)" cannot be used/left in the code$#'
+            count: 1
+            path: ../src/Rector/Class_/UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector.php
+
+        -
+            message: '#^Function "method_exists\(\)" cannot be used/left in the code\: use ReflectionProvider\-\>has\*\(\) instead$#'
+            count: 1
+            path: ../src/Rector/Class_/UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector.php

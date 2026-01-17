@@ -13,14 +13,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Set\SetList;
+use Guanguans\RectorRules\Rector\Class_\UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
-    $rectorConfig->sets([
-        SetList::COMMON,
-        SetList::PHPSTAN,
-        SetList::RECTOR,
+    $rectorConfig->rules([
+        UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector::class,
     ]);
 };

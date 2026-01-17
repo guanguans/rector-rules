@@ -1,7 +1,8 @@
-# total 5 errors
+# total 7 errors
 
 includes:
     - complexity.functionLike.neon
     - method.nonObject.neon
     - rector.noClassReflectionStaticReflection.neon
+    - symplify.forbiddenFuncCall.neon
     - symplify.preferredClass.neon

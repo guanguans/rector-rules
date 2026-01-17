@@ -55,6 +55,7 @@
         "ergebnis/rector-rules": "^1.9",
         "fakerphp/faker": "^1.24",
         "guanguans/php-cs-fixer-custom-fixers": "^1.0",
+        "guanguans/phpstan-rules": "^1.0",
         "mockery/mockery": "^1.6",
         "nette/utils": "^3.2 || ^4.0",
         "pestphp/pest": "^1.23 || ^2.0 || ^3.0 || ^4.0",

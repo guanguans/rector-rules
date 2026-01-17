@@ -1,4 +1,4 @@
-# 10 Rules Overview
+# 11 Rules Overview
 
 <br>
 
@@ -6,7 +6,7 @@
 
 - [Array](#array) (3)
 
-- [Class](#class) (1)
+- [Class](#class) (2)
 
 - [File](#file) (3)
 
@@ -105,6 +105,40 @@ Update rector code samples from fixtures
 <br>
 
 ## Class
+
+### UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector
+
+Update p h p stan method node param docblock from node types
+
+- class: [`Guanguans\RectorRules\Rector\Class_\UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector`](../src/Rector/Class_/UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\PHPStanRules\Rule;
+
+ use PhpParser\Node;
+ use PHPStan\Analyser\Scope;
+ use PHPStan\Node\FunctionLike;
+ use PHPStan\Rules\Rule;
+
+ final class ForbiddenSideEffectsFunctionLikeRule extends Rule
+ {
+     public function getNodeType(): string
+     {
+         return FunctionLike::class;
+     }
+
++    /**
++     * @param \PhpParser\Node\FunctionLike $node
++     */
+     public function processNode(Node $node, Scope $scope): array
+     {
+         return [];
+     }
+ }
+```
+
+<br>
 
 ### UpdateRectorRefactorParamDocblockFromNodeTypesRector
 
