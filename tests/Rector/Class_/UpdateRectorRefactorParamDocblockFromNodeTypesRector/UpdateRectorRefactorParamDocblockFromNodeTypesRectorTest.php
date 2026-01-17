@@ -23,6 +23,7 @@ namespace Guanguans\RectorRulesTests\Rector\Class_\UpdateRectorRefactorParamDocb
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
+ * @covers \Guanguans\RectorRules\Rector\Class_\AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector
  * @covers \Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector
  */
 final class UpdateRectorRefactorParamDocblockFromNodeTypesRectorTest extends AbstractRectorTestCase

@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Instead of "new ClassReflection\(\)" use ReflectionProvider service or "\(new PHPStan\\Reflection\\ClassReflection\(\<desired_type\>\)\)" for static reflection to work$#'
+            count: 1
+            path: ../src/Rector/Class_/AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector.php
