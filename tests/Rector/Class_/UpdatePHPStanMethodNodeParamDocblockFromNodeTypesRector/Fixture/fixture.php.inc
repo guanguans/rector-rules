@@ -1,18 +1,18 @@
 <?php
 
 /** @noinspection ALL */
-namespace Guanguans\PHPStanRules\Rule;
+namespace Guanguans\PHPStanRules\Rule\File;
 
+use Guanguans\PHPStanRules\Rule\AbstractRule;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
-use PHPStan\Node\FunctionLike;
-use PHPStan\Rules\Rule;
+use PHPStan\Node\FileNode;
 
-final class ForbiddenSideEffectsFunctionLikeRule extends Rule
+final class ForbiddenSideEffectsRule extends AbstractRule
 {
     public function getNodeType(): string
     {
-        return FunctionLike::class;
+        return FileNode::class;
     }
 
     public function processNode(Node $node, Scope $scope): array
@@ -26,22 +26,22 @@ final class ForbiddenSideEffectsFunctionLikeRule extends Rule
 <?php
 
 /** @noinspection ALL */
-namespace Guanguans\PHPStanRules\Rule;
+namespace Guanguans\PHPStanRules\Rule\File;
 
+use Guanguans\PHPStanRules\Rule\AbstractRule;
 use PhpParser\Node;
 use PHPStan\Analyser\Scope;
-use PHPStan\Node\FunctionLike;
-use PHPStan\Rules\Rule;
+use PHPStan\Node\FileNode;
 
-final class ForbiddenSideEffectsFunctionLikeRule extends Rule
+final class ForbiddenSideEffectsRule extends AbstractRule
 {
     public function getNodeType(): string
     {
-        return FunctionLike::class;
+        return FileNode::class;
     }
 
     /**
-     * @param \PhpParser\Node\FunctionLike $node
+     * @param \PHPStan\Node\FileNode $node
      */
     public function processNode(Node $node, Scope $scope): array
     {

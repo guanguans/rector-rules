@@ -54,7 +54,7 @@
         "ergebnis/php-cs-fixer-config": "^6.58",
         "ergebnis/rector-rules": "^1.9",
         "fakerphp/faker": "^1.24",
-        "guanguans/php-cs-fixer-custom-fixers": "^1.0",
+        "guanguans/php-cs-fixer-custom-fixers": "^1.1",
         "guanguans/phpstan-rules": "^1.0",
         "mockery/mockery": "^1.6",
         "nette/utils": "^3.2 || ^4.0",
@@ -193,7 +193,6 @@
             "@lint-md",
             "@peck",
             "@php-cs-fixer:custom-fix-dry-run",
-            "@php-cs-fixer:custom-ln-config",
             "@rule-doc-generator:generate",
             "@typos",
             "@zhlint"

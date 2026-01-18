@@ -35,18 +35,18 @@ final class UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector extends Abst
             new CodeSample(
                 <<<'PHP_WRAP'
                     /** @noinspection ALL */
-                    namespace Guanguans\PHPStanRules\Rule;
+                    namespace Guanguans\PHPStanRules\Rule\File;
 
+                    use Guanguans\PHPStanRules\Rule\AbstractRule;
                     use PhpParser\Node;
                     use PHPStan\Analyser\Scope;
-                    use PHPStan\Node\FunctionLike;
-                    use PHPStan\Rules\Rule;
+                    use PHPStan\Node\FileNode;
 
-                    final class ForbiddenSideEffectsFunctionLikeRule extends Rule
+                    final class ForbiddenSideEffectsRule extends AbstractRule
                     {
                         public function getNodeType(): string
                         {
-                            return FunctionLike::class;
+                            return FileNode::class;
                         }
 
                         public function processNode(Node $node, Scope $scope): array
@@ -57,22 +57,22 @@ final class UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector extends Abst
                     PHP_WRAP,
                 <<<'PHP_WRAP'
                     /** @noinspection ALL */
-                    namespace Guanguans\PHPStanRules\Rule;
+                    namespace Guanguans\PHPStanRules\Rule\File;
 
+                    use Guanguans\PHPStanRules\Rule\AbstractRule;
                     use PhpParser\Node;
                     use PHPStan\Analyser\Scope;
-                    use PHPStan\Node\FunctionLike;
-                    use PHPStan\Rules\Rule;
+                    use PHPStan\Node\FileNode;
 
-                    final class ForbiddenSideEffectsFunctionLikeRule extends Rule
+                    final class ForbiddenSideEffectsRule extends AbstractRule
                     {
                         public function getNodeType(): string
                         {
-                            return FunctionLike::class;
+                            return FileNode::class;
                         }
 
                         /**
-                         * @param \PhpParser\Node\FunctionLike $node
+                         * @param \PHPStan\Node\FileNode $node
                          */
                         public function processNode(Node $node, Scope $scope): array
                         {
@@ -111,6 +111,13 @@ final class UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector extends Abst
     {
         $rule = $reflectionClass->newInstanceWithoutConstructor();
 
-        return method_exists($rule, 'getNodeTypes') ? $rule->getNodeTypes() : (array) $rule->getNodeType();
+        if (method_exists($rule, $methodName = 'getNodeTypes')) {
+            $reflectionMethod = $reflectionClass->getMethod($methodName);
+            \PHP_VERSION_ID < 80100 and $reflectionMethod->setAccessible(true);
+
+            return $reflectionMethod->invoke($rule);
+        }
+
+        return (array) $rule->getNodeType();
     }
 }

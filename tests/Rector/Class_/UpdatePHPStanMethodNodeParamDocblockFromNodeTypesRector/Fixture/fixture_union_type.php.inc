@@ -1,21 +1,26 @@
 <?php
 
 /** @noinspection ALL */
-namespace Guanguans\PHPStanRules\Rule;
+namespace Guanguans\PHPStanRules\Rule\Class_;
 
+use Guanguans\PHPStanRules\Rule\AbstractMixedNodeTypeRule;
 use PhpParser\Node;
+use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Node\FunctionLike;
-use PHPStan\Rules\Rule;
 
-final class ForbiddenSideEffectsFunctionLikeRule extends Rule
+
+final class ExceptionMustImplementNativeThrowableRule extends AbstractMixedNodeTypeRule
 {
-    public function getNodeType(): string
+    protected function getNodeTypes(): array
     {
-        return FunctionLike::class;
+        return [
+            Class_::class,
+            New_::class,
+        ];
     }
 
-    public function processNode(Node $node, Scope $scope): array
+    protected function rawProcessNode(Node $node, Scope $scope): array
     {
         return [];
     }
@@ -26,24 +31,29 @@ final class ForbiddenSideEffectsFunctionLikeRule extends Rule
 <?php
 
 /** @noinspection ALL */
-namespace Guanguans\PHPStanRules\Rule;
+namespace Guanguans\PHPStanRules\Rule\Class_;
 
+use Guanguans\PHPStanRules\Rule\AbstractMixedNodeTypeRule;
 use PhpParser\Node;
+use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Node\FunctionLike;
-use PHPStan\Rules\Rule;
 
-final class ForbiddenSideEffectsFunctionLikeRule extends Rule
+
+final class ExceptionMustImplementNativeThrowableRule extends AbstractMixedNodeTypeRule
 {
-    public function getNodeType(): string
+    protected function getNodeTypes(): array
     {
-        return FunctionLike::class;
+        return [
+            Class_::class,
+            New_::class,
+        ];
     }
 
     /**
-     * @param \PhpParser\Node\FunctionLike $node
+     * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Stmt\Class_ $node
      */
-    public function processNode(Node $node, Scope $scope): array
+    protected function rawProcessNode(Node $node, Scope $scope): array
     {
         return [];
     }
