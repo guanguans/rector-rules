@@ -140,11 +140,11 @@ Update p h p stan method node param docblock from node types
 
 <br>
 
-### UpdateRectorRefactorParamDocblockFromNodeTypesRector
+### UpdateRectorMethodNodeParamDocblockFromNodeTypesRector
 
-Update rector refactor param docblock from node types
+Update rector method node param docblock from node types
 
-- class: [`Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector`](../src/Rector/Class_/UpdateRectorRefactorParamDocblockFromNodeTypesRector.php)
+- class: [`Guanguans\RectorRules\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector`](../src/Rector/Class_/UpdateRectorMethodNodeParamDocblockFromNodeTypesRector.php)
 
 ```diff
  /** @noinspection ALL */
@@ -154,7 +154,7 @@ Update rector refactor param docblock from node types
  use PhpParser\Node;
  use PhpParser\Node\Stmt\Class_;
 
- final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractRector
+ final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends AbstractRector
  {
      public function getNodeTypes(): array
      {

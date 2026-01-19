@@ -14,13 +14,13 @@ declare(strict_types=1);
  */
 
 use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector;
-use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
+use Guanguans\RectorRules\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->rules([
         UpdateRectorCodeSamplesFromFixturesRector::class,
-        UpdateRectorRefactorParamDocblockFromNodeTypesRector::class,
+        UpdateRectorMethodNodeParamDocblockFromNodeTypesRector::class,
     ]);
 };

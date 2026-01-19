@@ -18,9 +18,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
+use Guanguans\RectorRules\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->rule(UpdateRectorRefactorParamDocblockFromNodeTypesRector::class);
+    $rectorConfig->rule(UpdateRectorMethodNodeParamDocblockFromNodeTypesRector::class);
 };

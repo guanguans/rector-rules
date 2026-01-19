@@ -59,8 +59,10 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
     final public function testRectorTestCaseClassName(): void
     {
         self::assertSame(
-            Str::replaceLast('Test', '', (new \ReflectionClass(static::class))->getShortName()),
-            static::rectorReflectionClass()->getShortName()
+            static::class,
+            (string) Str::of(static::rectorClass())
+                ->replace('RectorRules', 'RectorRulesTests')
+                ->append('\\', static::rectorReflectionClass()->getShortName(), 'Test')
         );
     }
 

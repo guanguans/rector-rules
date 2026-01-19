@@ -7,7 +7,7 @@ use Guanguans\RectorRules\Rector\AbstractRector;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 
-final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractRector
+final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends AbstractRector
 {
     public function getNodeTypes(): array
     {
@@ -33,7 +33,7 @@ use Guanguans\RectorRules\Rector\AbstractRector;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 
-final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractRector
+final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends AbstractRector
 {
     public function getNodeTypes(): array
     {

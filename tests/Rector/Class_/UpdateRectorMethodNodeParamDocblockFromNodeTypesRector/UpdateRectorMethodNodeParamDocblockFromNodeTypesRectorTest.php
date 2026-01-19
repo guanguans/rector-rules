@@ -18,15 +18,15 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-namespace Guanguans\RectorRulesTests\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
+namespace Guanguans\RectorRulesTests\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector;
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
  * @covers \Guanguans\RectorRules\Rector\Class_\AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector
- * @covers \Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector
+ * @covers \Guanguans\RectorRules\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector
  */
-final class UpdateRectorRefactorParamDocblockFromNodeTypesRectorTest extends AbstractRectorTestCase
+final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRectorTest extends AbstractRectorTestCase
 {
     protected static function directory(): string
     {

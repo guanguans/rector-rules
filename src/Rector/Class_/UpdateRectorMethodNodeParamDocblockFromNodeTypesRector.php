@@ -22,9 +22,9 @@ use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
 /**
- * @see \Guanguans\RectorRulesTests\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector\UpdateRectorRefactorParamDocblockFromNodeTypesRectorTest
+ * @see \Guanguans\RectorRulesTests\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector\UpdateRectorMethodNodeParamDocblockFromNodeTypesRectorTest
  */
-final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector
+final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector
 {
     /**
      * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample>
@@ -41,7 +41,7 @@ final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends Abstrac
                     use PhpParser\Node;
                     use PhpParser\Node\Stmt\Class_;
 
-                    final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractRector
+                    final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends AbstractRector
                     {
                         public function getNodeTypes(): array
                         {
@@ -64,7 +64,7 @@ final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends Abstrac
                     use PhpParser\Node;
                     use PhpParser\Node\Stmt\Class_;
 
-                    final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractRector
+                    final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends AbstractRector
                     {
                         public function getNodeTypes(): array
                         {

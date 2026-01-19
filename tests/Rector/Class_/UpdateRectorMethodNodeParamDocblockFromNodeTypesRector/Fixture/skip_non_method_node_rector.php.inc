@@ -7,7 +7,7 @@ use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use Rector\Rector\AbstractRector;
 
-final class UpdateRectorRefactorParamDocblockFromNodeTypesRector extends AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector
+final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector
 {
     protected function classType(): string
     {
