@@ -8,6 +8,20 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.4.0"></a>
+## [1.4.0] - 2026-01-19
+### ✨ Features
+- **class:** Add UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector ([4b0c168](https://github.com/guanguans/rector-rules/commit/4b0c168))
+- **class:** Add UpdateClassMethodNodeParamDocblockFromNodeTypesRector ([1a40dae](https://github.com/guanguans/rector-rules/commit/1a40dae))
+
+### 📖 Documents
+- Update project description for clarity ([e3894b3](https://github.com/guanguans/rector-rules/commit/e3894b3))
+
+### 💅 Code Refactorings
+- **class:** Rename UpdateRectorRefactorParamDocblockFromNodeTypesRector ([7d2003e](https://github.com/guanguans/rector-rules/commit/7d2003e))
+- **rule:** Rename and restructure ForbiddenSideEffectsRule ([6a20b41](https://github.com/guanguans/rector-rules/commit/6a20b41))
+
+
 <a name="1.3.0"></a>
 ## [1.3.0] - 2026-01-14
 ### ✨ Features
@@ -97,7 +111,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/guanguans/rector-rules/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/guanguans/rector-rules/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/guanguans/rector-rules/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/guanguans/rector-rules/compare/1.1.0...1.2.0
