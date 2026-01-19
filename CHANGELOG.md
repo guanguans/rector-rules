@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.4.1"></a>
+## [1.4.1] - 2026-01-19
+### 🐞 Bug Fixes
+- **UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector:** Swap method retrieval order in UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector ([12cdfea](https://github.com/guanguans/rector-rules/commit/12cdfea))
+
+
 <a name="1.4.0"></a>
 ## [1.4.0] - 2026-01-19
 ### ✨ Features
@@ -111,7 +117,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.4.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.4.1...HEAD
+[1.4.1]: https://github.com/guanguans/rector-rules/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/guanguans/rector-rules/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/guanguans/rector-rules/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/guanguans/rector-rules/compare/1.2.0...1.2.1
