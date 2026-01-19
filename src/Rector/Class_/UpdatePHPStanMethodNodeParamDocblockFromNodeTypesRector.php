@@ -97,7 +97,7 @@ final class UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector extends Abst
      */
     protected function classMethodNode(Class_ $classNode): ?ClassMethod
     {
-        return $classNode->getMethod('rawProcessNode') ?? $classNode->getMethod('processNode');
+        return $classNode->getMethod('processNode') ?? $classNode->getMethod('rawProcessNode');
     }
 
     /**
