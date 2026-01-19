@@ -19,6 +19,7 @@ namespace Guanguans\RectorRules\Rector\Class_;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PHPStan\Rules\Rule;
+use Rector\ValueObject\PhpVersion;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
 /**
@@ -113,7 +114,7 @@ final class UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector extends Abst
 
         if (method_exists($rule, $methodName = 'getNodeTypes')) {
             $reflectionMethod = $reflectionClass->getMethod($methodName);
-            \PHP_VERSION_ID < 80100 and $reflectionMethod->setAccessible(true);
+            \PHP_VERSION_ID < PhpVersion::PHP_81 and $reflectionMethod->setAccessible(true);
 
             return $reflectionMethod->invoke($rule);
         }

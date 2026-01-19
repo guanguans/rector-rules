@@ -25,6 +25,14 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 ### :monocle_face: [Rules Overview](docs/rules-overview.md)
 
+### :monocle_face: [Sets Overview](config/set/)
+
+* [`Guanguans\RectorRules\Set\SetList::ALL`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::COMMON`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::PHPBENCH`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::PHPSTAN`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::RECTOR`](src/Set/SetList.php)
+
 ### In your rector configuration register rules
 
 ```php
@@ -34,6 +42,11 @@ use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
+    ->withSets([
+        Guanguans\RectorRules\Set\SetList::ALL,
+        // ...
+    ])
+    // ...
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToPsrNameRector::class, [
         'assertMatches*Snapshot',

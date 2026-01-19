@@ -23,10 +23,6 @@ use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRect
 use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
 use Illuminate\Support\Str;
-use PhpParser\Node\Expr\ClassConstFetch;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Name\FullyQualified;
-use PhpParser\Node\Scalar\String_;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -48,17 +44,14 @@ use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
-use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
-use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
-use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use Rector\ValueObject\PhpVersion;
 use Rector\ValueObject\Visibility;
@@ -164,15 +157,6 @@ return RectorConfig::configure()
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
-    ->withConfiguredRule(
-        ScalarValueToConstFetchRector::class,
-        collect((new ReflectionClass(AttributeKey::class))->getConstants())
-            ->map(static fn (string $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-                new String_($value),
-                new ClassConstFetch(new FullyQualified(AttributeKey::class), new Identifier($name))
-            ))
-            ->all()
-    )
     ->withConfiguredRule(StaticCallToFuncCallRector::class, [
         // new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])

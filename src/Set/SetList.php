@@ -20,6 +20,7 @@ final class SetList
 {
     public const ALL = __DIR__.'/../../config/set/all.php';
     public const COMMON = __DIR__.'/../../config/set/common.php';
+    public const PHPBENCH = __DIR__.'/../../config/set/phpbench.php';
     public const PHPSTAN = __DIR__.'/../../config/set/phpstan.php';
     public const RECTOR = __DIR__.'/../../config/set/rector.php';
 }

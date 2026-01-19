@@ -55,6 +55,7 @@ use Rector\Console\Style\SymfonyStyleFactory;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PHPStan\ScopeFetcher;
+use Rector\ValueObject\PhpVersion;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_instance_of_any;
@@ -139,7 +140,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
                 $reflectionClass = (new \ReflectionObject($rectorStyle))->getParentClass();
                 \assert($reflectionClass instanceof \ReflectionClass);
                 $reflectionProperty = $reflectionClass->getProperty('input');
-                \PHP_VERSION_ID < 80100 and $reflectionProperty->setAccessible(true);
+                \PHP_VERSION_ID < PhpVersion::PHP_81 and $reflectionProperty->setAccessible(true);
                 $input = $reflectionProperty->getValue($rectorStyle);
                 // \assert($input instanceof \Symfony\Component\Console\Input\InputInterface);
 

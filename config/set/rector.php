@@ -15,7 +15,16 @@ declare(strict_types=1);
 
 use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRector;
 use Guanguans\RectorRules\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector;
+use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name\FullyQualified;
+use PhpParser\Node\Scalar\Int_;
+use PhpParser\Node\Scalar\String_;
 use Rector\Config\RectorConfig;
+use Rector\NodeTypeResolver\Node\AttributeKey;
+use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
+use Rector\Transform\ValueObject\ScalarValueToConstFetch;
+use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
@@ -23,4 +32,24 @@ return static function (RectorConfig $rectorConfig): void {
         UpdateRectorCodeSamplesFromFixturesRector::class,
         UpdateRectorMethodNodeParamDocblockFromNodeTypesRector::class,
     ]);
+
+    $rectorConfig->ruleWithConfiguration(
+        ScalarValueToConstFetchRector::class,
+        collect((new ReflectionClass(AttributeKey::class))->getConstants())
+            ->map(static fn (string $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
+                new String_($value),
+                new ClassConstFetch(new FullyQualified(AttributeKey::class), new Identifier($name))
+            ))
+            ->all()
+    );
+
+    $rectorConfig->ruleWithConfiguration(
+        ScalarValueToConstFetchRector::class,
+        collect((new ReflectionClass(PhpVersion::class))->getConstants())
+            ->map(static fn (int $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
+                new Int_($value),
+                new ClassConstFetch(new FullyQualified(PhpVersion::class), new Identifier($name))
+            ))
+            ->all()
+    );
 };

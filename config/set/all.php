@@ -20,6 +20,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->sets([
         SetList::COMMON,
+        SetList::PHPBENCH,
         SetList::PHPSTAN,
         SetList::RECTOR,
     ]);
