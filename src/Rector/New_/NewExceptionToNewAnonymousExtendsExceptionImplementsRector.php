@@ -30,6 +30,8 @@ use function Guanguans\RectorRules\Support\is_subclass_of_all;
 
 /**
  * @see \Guanguans\RectorRulesTests\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector\NewExceptionToNewAnonymousExtendsExceptionImplementsRectorTest
+ *
+ * @deprecated Use `Guanguans\PHPStanRules\Rule\Class_\ExceptionMustImplementNativeThrowableRule` instead
  */
 final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends AbstractRector implements ConfigurableRectorInterface, MinPhpVersionInterface
 {

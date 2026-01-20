@@ -68,6 +68,7 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
     /** @var list<string> */
     private array $except = [
         '*_',
+        '_',
         '_*',
 
         // 'class',
@@ -80,23 +81,23 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
         'true',
 
         /** @see https://www.php.net/manual/zh/reserved.variables.php */
-        '_COOKIE',
-        '_ENV',
-        '_FILES',
-        '_GET',
-        '_POST',
-        '_REQUEST',
-        '_SERVER',
-        '_SESSION',
+        // '_COOKIE',
+        // '_ENV',
+        // '_FILES',
+        // '_GET',
+        // '_POST',
+        // '_REQUEST',
+        // '_SERVER',
+        // '_SESSION',
         'GLOBALS',
         'HTTP_ENV_VARS',
         'HTTP_GET_VARS',
         'HTTP_POST_FILES',
         'HTTP_POST_VARS',
         'HTTP_RAW_POST_DATA',
-        'http_response_header',
         'HTTP_SERVER_VARS',
         'HTTP_SESSION_VARS',
+        'http_response_header',
         'php_errormsg',
 
         /** @see https://www.php.net/streamwrapper */
@@ -175,6 +176,11 @@ final class RenameToPsrNameRector extends AbstractRector implements Configurable
 
     /**
      * @see https://github.com/jawira/case-converter
+     *
+     * ConventionalizeCaseName
+     * ConventionalizeName
+     * RenameToConventionalCaseName
+     * RenameToConventionalName
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *

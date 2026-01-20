@@ -1,4 +1,4 @@
-# 11 Rules Overview
+# 10 Rules Overview
 
 <br>
 
@@ -13,8 +13,6 @@
 - [Name](#name) (1)
 
 - [Namespace](#namespace) (1)
-
-- [New](#new) (1)
 
 <br>
 
@@ -391,26 +389,6 @@ Remove namespace
  it('is true', function (): void {
      expect(true)->toBeTrue();
  });
-```
-
-<br>
-
-## New
-
-### NewExceptionToNewAnonymousExtendsExceptionImplementsRector
-
-New exception to new anonymous extends exception implements
-
-:wrench: **configure it!**
-
-- class: [`Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector`](../src/Rector/New_/NewExceptionToNewAnonymousExtendsExceptionImplementsRector.php)
-
-```diff
- /** @noinspection ALL */
--new Exception('Testing');
-+new class('Testing') extends Exception implements \Guanguans\RectorRules\Contract\ThrowableContract
-+{
-+};
 ```
 
 <br>
