@@ -17,12 +17,10 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\RectorRules\Contract\ThrowableContract;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
-use Illuminate\Support\Str;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -49,10 +47,6 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
-use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
-use Rector\Transform\ValueObject\FuncCallToStaticCall;
-use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use Rector\ValueObject\PhpVersion;
 use Rector\ValueObject\Visibility;
 use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
@@ -103,6 +97,7 @@ return RectorConfig::configure()
     // )
     ->withSets([
         Guanguans\RectorRules\Set\SetList::ALL,
+        Guanguans\RectorRules\Set\SetList::LARAVEL_80,
         PHPUnitSetList::PHPUNIT_90,
         DowngradeLevelSetList::DOWN_TO_PHP_74,
         SetList::DEAD_CODE,
@@ -141,7 +136,6 @@ return RectorConfig::configure()
             'StaticClosureCanBeUsedInspection',
         ],
     ])
-    ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [ThrowableContract::class])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
         'MIT',
@@ -156,12 +150,6 @@ return RectorConfig::configure()
         'phpstan-ignore',
         'phpstan-ignore-next-line',
         'psalm-suppress',
-    ])
-    ->withConfiguredRule(StaticCallToFuncCallRector::class, [
-        // new StaticCallToFuncCall(Str::class, 'of', 'str'),
-    ])
-    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
-        new FuncCallToStaticCall('str', Str::class, 'of'),
     ])
     ->withConfiguredRule(
         ChangeMethodVisibilityRector::class,

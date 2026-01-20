@@ -49,9 +49,9 @@ return RectorConfig::configure()
     // ...
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
-        'assertMatches*Snapshot',
-        'beforeEach',
-        'PDO',
+        'assertMatches*Snapshot', // Exclude `spatie/pest-plugin-snapshots` function name
+        'beforeEach', // Exclude `pestphp/pest` function name
+        'PDO', // Exclude `ext-pdo` class name
     ])
     // ...
     ->withRules([
