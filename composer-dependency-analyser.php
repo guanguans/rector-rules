@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 use ShipMonk\ComposerDependencyAnalyser\Config\Configuration;
 use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
 return (new Configuration)
     ->addPathsToScan(
@@ -26,7 +27,7 @@ return (new Configuration)
         __DIR__.'/tests/',
     ])
     ->ignoreUnknownClasses([
-        // \SensitiveParameter::class,
+        CodeSample::class,
     ])
     /** @see \ShipMonk\ComposerDependencyAnalyser\Analyser::CORE_EXTENSIONS */
     ->ignoreErrorsOnExtensions(
