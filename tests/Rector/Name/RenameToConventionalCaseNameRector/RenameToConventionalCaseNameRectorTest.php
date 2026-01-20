@@ -18,15 +18,15 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-namespace Guanguans\RectorRulesTests\Rector\Name\RenameToPsrNameRector;
+namespace Guanguans\RectorRulesTests\Rector\Name\RenameToConventionalCaseNameRector;
 
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
  * @covers \Guanguans\RectorRules\Exception\RectorErrorException
- * @covers \Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector
+ * @covers \Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector
  */
-final class RenameToPsrNameRectorTest extends AbstractRectorTestCase
+final class RenameToConventionalCaseNameRectorTest extends AbstractRectorTestCase
 {
     protected function setUp(): void
     {

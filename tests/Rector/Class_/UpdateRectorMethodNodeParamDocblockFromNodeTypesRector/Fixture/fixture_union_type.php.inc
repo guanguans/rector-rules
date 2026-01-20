@@ -10,7 +10,7 @@ use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 
-final class RenameToPsrNameRector extends AbstractRector
+final class RenameToConventionalCaseNameRector extends AbstractRector
 {
     public function getNodeTypes(): array
     {
@@ -42,7 +42,7 @@ use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name;
 
-final class RenameToPsrNameRector extends AbstractRector
+final class RenameToConventionalCaseNameRector extends AbstractRector
 {
     public function getNodeTypes(): array
     {

@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRulesTests\Rector;
 
-use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
+use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Illuminate\Support\Str;
 use PhpCsFixer\FileRemoval;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
@@ -37,7 +37,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
      */
     final public static function setUpBeforeClass(): void
     {
-        // if (RenameToPsrNameRector::class !== static::rectorClass()) {
+        // if (RenameToConventionalCaseNameRector::class !== static::rectorClass()) {
         //     return;
         // }
 

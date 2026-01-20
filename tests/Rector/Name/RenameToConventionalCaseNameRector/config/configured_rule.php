@@ -19,7 +19,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
+use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
 use Rector\Config\RegisteredService;
@@ -32,7 +32,7 @@ use Rector\Contract\PhpParser\DecoratingNodeVisitorInterface;
 //  */
 // return RectorConfig::configure()
 //     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-//     ->withConfiguredRule(RenameToPsrNameRector::class, [
+//     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
 //     ]);
 
 return static function (RectorConfig $rectorConfig): void {
@@ -45,8 +45,8 @@ return static function (RectorConfig $rectorConfig): void {
     // $rectorConfig->tag($registeredService->getClassName(), $registeredService->getTag());
 
     // Ensure that using the default configuration is valid.
-    $rectorConfig->rule(RenameToPsrNameRector::class);
-    $rectorConfig->ruleWithConfiguration(RenameToPsrNameRector::class, [
+    $rectorConfig->rule(RenameToConventionalCaseNameRector::class);
+    $rectorConfig->ruleWithConfiguration(RenameToConventionalCaseNameRector::class, [
         'afterAll',
         'afterEach',
         'assertMatches*Snapshot',

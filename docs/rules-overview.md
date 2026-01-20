@@ -248,13 +248,13 @@ Sort file function stmt
 
 ## Name
 
-### RenameToPsrNameRector
+### RenameToConventionalCaseNameRector
 
-Rename to psr name
+Rename to conventional case name
 
 :wrench: **configure it!**
 
-- class: [`Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector`](../src/Rector/Name/RenameToPsrNameRector.php)
+- class: [`Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector`](../src/Rector/Name/RenameToConventionalCaseNameRector.php)
 
 ```diff
  /** @noinspection ALL */

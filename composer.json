@@ -388,7 +388,7 @@
         "rule-doc-generator:validate": "@rule-doc-generator validate src/Rector/ src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php",
         "sk": "@php vendor/bin/swiss-knife --ansi -vv",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",
-        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5 --skip-file=src/Support/helpers.php --skip-file=src/Rector/Name/RenameToPsrNameRector.php --skip-file=src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php --skip-file=src/Rector/Class_/AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector.php",
+        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5 --skip-file=src/Support/helpers.php --skip-file=src/Rector/Name/RenameToConventionalCaseNameRector.php --skip-file=src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php --skip-file=src/Rector/Class_/AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector.php",
         "sk:check-conflicts": "@sk check-conflicts src/",
         "sk:dump-editorconfig": "@sk dump-editorconfig",
         "sk:finalize-classes": "@sk finalize-classes src/",

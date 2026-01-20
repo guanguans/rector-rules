@@ -37,7 +37,7 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 ```php
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
-use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
+use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
 
@@ -48,7 +48,7 @@ return RectorConfig::configure()
     ])
     // ...
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToPsrNameRector::class, [
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
         'assertMatches*Snapshot',
         'beforeEach',
         'PDO',

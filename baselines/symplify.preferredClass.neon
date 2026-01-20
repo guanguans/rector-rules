@@ -5,4 +5,4 @@ parameters:
         -
             message: '#^Instead of "Closure" class/interface use "PhpParser\\Node\\Expr\\Closure"$#'
             count: 1
-            path: ../src/Rector/Name/RenameToPsrNameRector.php
+            path: ../src/Rector/Name/RenameToConventionalCaseNameRector.php

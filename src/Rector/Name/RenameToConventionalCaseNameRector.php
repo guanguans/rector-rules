@@ -61,9 +61,9 @@ use Webmozart\Assert\Assert;
 use function Guanguans\RectorRules\Support\is_instance_of_any;
 
 /**
- * @see \Guanguans\RectorRulesTests\Rector\Name\RenameToPsrNameRector\RenameToPsrNameRectorTest
+ * @see \Guanguans\RectorRulesTests\Rector\Name\RenameToConventionalCaseNameRector\RenameToConventionalCaseNameRectorTest
  */
-final class RenameToPsrNameRector extends AbstractRector implements ConfigurableRectorInterface
+final class RenameToConventionalCaseNameRector extends AbstractRector implements ConfigurableRectorInterface
 {
     /** @var list<string> */
     private array $except = [
