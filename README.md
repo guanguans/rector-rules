@@ -29,9 +29,9 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 * [`Guanguans\RectorRules\Set\SetList::ALL`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::COMMON`](src/Set/SetList.php)
-* [`Guanguans\RectorRules\Set\SetList::LARAVEL_80`](src/Set/SetList.php)
-* [`Guanguans\RectorRules\Set\SetList::LARAVEL_90`](src/Set/SetList.php)
-* [`Guanguans\RectorRules\Set\SetList::LARAVEL_COMMON`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::GUZZLE`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::LARAVEL`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::PEST`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::PHPBENCH`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::PHPSTAN`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::RECTOR`](src/Set/SetList.php)
@@ -47,7 +47,7 @@ use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withSets([
-        Guanguans\RectorRules\Set\SetList::COMMON,
+        Guanguans\RectorRules\Set\SetList::ALL,
         // ...
     ])
     // ...

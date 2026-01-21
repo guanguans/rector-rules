@@ -47,7 +47,7 @@ use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
+use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\ValueObject\PhpVersion;
 use Rector\ValueObject\Visibility;
 use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
@@ -98,7 +98,6 @@ return RectorConfig::configure()
     // )
     ->withSets([
         Guanguans\RectorRules\Set\SetList::ALL,
-        Guanguans\RectorRules\Set\SetList::LARAVEL_80,
         PHPUnitSetList::PHPUNIT_90,
         DowngradeLevelSetList::DOWN_TO_PHP_74,
         SetList::DEAD_CODE,
@@ -200,9 +199,6 @@ return RectorConfig::configure()
         RenameVariableToMatchNewTypeRector::class => [
             __DIR__.'/src/Rector/Namespace_/RemoveNamespaceRector.php',
         ],
-        ScalarValueToConstFetchRector::class => [
-            __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
-        ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src/',
             __DIR__.'/tests/',
@@ -211,4 +207,7 @@ return RectorConfig::configure()
             __DIR__.'/tests/',
         ],
         StaticClosureRector::class => $staticClosureSkipPaths,
+        StringToClassConstantRector::class => [
+            __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
+        ],
     ]);

@@ -14,17 +14,21 @@ declare(strict_types=1);
  */
 
 use PhpBench\Attributes\AbstractMethodsAttribute;
+use PhpBench\PhpBench;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 use Rector\Php80\ValueObject\AnnotationToAttribute;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
+    if (!class_exists(PhpBench::class)) {
+        return;
+    }
+
     $rectorConfig->import(__DIR__.'/../config.php');
 
     if (\PHP_VERSION_ID >= PhpVersion::PHP_80 && class_exists(AbstractMethodsAttribute::class)) {
         $reflectionClass = new ReflectionClass(AbstractMethodsAttribute::class);
-
         $rectorConfig->ruleWithConfiguration(
             AnnotationToAttributeRector::class,
             array_reduce(

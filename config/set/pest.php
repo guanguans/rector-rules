@@ -13,11 +13,17 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
+use Pest\Expectation;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 
 return static function (RectorConfig $rectorConfig): void {
+    if (!class_exists(Expectation::class)) {
+        return;
+    }
+
     $rectorConfig->import(__DIR__.'/../config.php');
+
     $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [
         'test' => 'it',
     ]);

@@ -14,9 +14,14 @@ declare(strict_types=1);
  */
 
 use Guanguans\RectorRules\Rector\Class_\UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector;
+use PHPStan\Rules\Rule;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
+    if (!class_exists(Rule::class)) {
+        return;
+    }
+
     $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->rules([
         UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector::class,

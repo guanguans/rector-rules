@@ -20,11 +20,11 @@ final class SetList
 {
     public const ALL = __DIR__.'/../../config/set/all.php';
     public const COMMON = __DIR__.'/../../config/set/common.php';
-    public const LARAVEL_80 = __DIR__.'/../../config/set/laravel/laravel-80.php';
-    public const LARAVEL_90 = __DIR__.'/../../config/set/laravel/laravel-90.php';
-    public const LARAVEL_COMMON = __DIR__.'/../../config/set/laravel/laravel-common.php';
+    public const GUZZLE = __DIR__.'/../../config/set/guzzle.php';
+    public const LARAVEL = __DIR__.'/../../config/set/laravel.php';
     public const PEST = __DIR__.'/../../config/set/pest.php';
     public const PHPBENCH = __DIR__.'/../../config/set/phpbench.php';
     public const PHPSTAN = __DIR__.'/../../config/set/phpstan.php';
     public const RECTOR = __DIR__.'/../../config/set/rector.php';
+    public const SYMFONY = __DIR__.'/../../config/set/symfony.php';
 }

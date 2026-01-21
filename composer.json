@@ -60,7 +60,6 @@
         "nette/utils": "^3.2 || ^4.0",
         "pestphp/pest": "^1.23 || ^2.0 || ^3.0 || ^4.0",
         "php-mock/php-mock-phpunit": "^2.14",
-        "phpbench/phpbench": "^1.2",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",

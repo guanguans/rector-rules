@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpUnusedAliasInspection */
 /** @noinspection PhpInternalEntityUsedInspection */
 
 declare(strict_types=1);
@@ -19,7 +20,6 @@ use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\Int_;
-use PhpParser\Node\Scalar\String_;
 use PhpParser\NodeFinder;
 use PhpParser\PrettyPrinter\Standard;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
@@ -35,12 +35,19 @@ use Rector\PhpParser\Node\BetterNodeFinder;
 use Rector\PhpParser\Parser\RectorParser;
 use Rector\PhpParser\Parser\SimplePhpParser;
 use Rector\PhpParser\Printer\BetterStandardPrinter;
+use Rector\Rector\AbstractRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
+use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\Transform\ValueObject\ScalarValueToConstFetch;
+use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
+    if (!class_exists(AbstractRector::class)) {
+        return;
+    }
+
     $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->skip([__FILE__]);
     $rectorConfig->rules([
@@ -57,25 +64,24 @@ return static function (RectorConfig $rectorConfig): void {
         TokenIterator::class => BetterTokenIterator::class,
     ]);
 
-    $rectorConfig->ruleWithConfiguration(
-        ScalarValueToConstFetchRector::class,
-        collect((new ReflectionClass(AttributeKey::class))->getConstants())
-            ->map(static fn (string $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-                new String_($value),
-                new ClassConstFetch(new FullyQualified(AttributeKey::class), new Identifier($name))
-            ))
-            ->all()
-    );
-
-    $rectorConfig->ruleWithConfiguration(
-        ScalarValueToConstFetchRector::class,
-        collect((new ReflectionClass(PhpDocAttributeKey::class))->getConstants())
-            ->map(static fn (string $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-                new String_($value),
-                new ClassConstFetch(new FullyQualified(PhpDocAttributeKey::class), new Identifier($name))
-            ))
-            ->all()
-    );
+    $rectorConfig->ruleWithConfiguration(StringToClassConstantRector::class, array_reduce(
+        [
+            AttributeKey::class,
+            PhpDocAttributeKey::class,
+        ],
+        static fn (array $carry, string $class): array => array_merge(
+            $carry,
+            array_map(
+                static fn (
+                    string $string,
+                    string $constant
+                ): StringToClassConstant => new StringToClassConstant($string, $class, $constant),
+                $constants = (new ReflectionClass($class))->getConstants(),
+                array_keys($constants),
+            ),
+        ),
+        [],
+    ));
 
     $rectorConfig->ruleWithConfiguration(
         ScalarValueToConstFetchRector::class,
