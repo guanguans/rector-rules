@@ -10,7 +10,7 @@ parameters:
         -
             message: '#^Cannot call method all\(\) on mixed\.$#'
             count: 1
-            path: ../src/Rector/FunctionLike/RenameGarbageVariableNameRector.php
+            path: ../src/Rector/FunctionLike/RenameGarbageParamNameRector.php
 
         -
             message: '#^Cannot call method getParameterOption\(\) on mixed\.$#'

@@ -250,11 +250,11 @@ Sort file function stmt
 
 ## FunctionLike
 
-### RenameGarbageVariableNameRector
+### RenameGarbageParamNameRector
 
-Rename garbage variable name
+Rename garbage param name
 
-- class: [`Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageVariableNameRector`](../src/Rector/FunctionLike/RenameGarbageVariableNameRector.php)
+- class: [`Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector`](../src/Rector/FunctionLike/RenameGarbageParamNameRector.php)
 
 ```diff
  /** @noinspection ALL */

@@ -18,9 +18,17 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageVariableNameRector;
-use Rector\Config\RectorConfig;
+namespace Guanguans\RectorRulesTests\Rector\FunctionLike\RenameGarbageParamNameRector;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->rule(RenameGarbageVariableNameRector::class);
-};
+use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
+
+/**
+ * @covers \Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector
+ */
+final class RenameGarbageParamNameRectorTest extends AbstractRectorTestCase
+{
+    protected static function directory(): string
+    {
+        return __DIR__;
+    }
+}

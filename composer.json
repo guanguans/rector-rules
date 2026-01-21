@@ -378,7 +378,7 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
-        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\FunctionLike\\RenameGarbageVariableNameRector",
+        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\FunctionLike\\RenameGarbageParamNameRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "rule-doc-generator": [
             "@putenv:php",
@@ -388,7 +388,7 @@
         "rule-doc-generator:validate": "@rule-doc-generator validate src/Rector/ src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php",
         "sk": "@php vendor/bin/swiss-knife --ansi -vv",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",
-        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5 --skip-file=src/Support/helpers.php --skip-file=src/Rector/Name/RenameToConventionalCaseNameRector.php --skip-file=src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php --skip-file=src/Rector/Class_/AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector.php --skip-file=src/Rector/FunctionLike/RenameGarbageVariableNameRector.php",
+        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5 --skip-file=src/Support/helpers.php --skip-file=src/Rector/Name/RenameToConventionalCaseNameRector.php --skip-file=src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php --skip-file=src/Rector/Class_/AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector.php --skip-file=src/Rector/FunctionLike/RenameGarbageParamNameRector.php",
         "sk:check-conflicts": "@sk check-conflicts src/",
         "sk:dump-editorconfig": "@sk dump-editorconfig",
         "sk:finalize-classes": "@sk finalize-classes src/",

@@ -37,9 +37,9 @@ use Rector\PhpParser\Node\BetterNodeFinder;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
 /**
- * @see \Guanguans\RectorRulesTests\Rector\FunctionLike\RenameGarbageVariableNameRector\RenameGarbageVariableNameRectorTest
+ * @see \Guanguans\RectorRulesTests\Rector\FunctionLike\RenameGarbageParamNameRector\RenameGarbageParamNameRectorTest
  */
-final class RenameGarbageVariableNameRector extends AbstractRector
+final class RenameGarbageParamNameRector extends AbstractRector
 {
     private const GARBAGE_VARIABLE_NAME = '_';
     private BetterNodeFinder $betterNodeFinder;

@@ -15,9 +15,9 @@ parameters:
         -
             message: '#^Function "property_exists\(\)" cannot be used/left in the code$#'
             count: 1
-            path: ../src/Rector/FunctionLike/RenameGarbageVariableNameRector.php
+            path: ../src/Rector/FunctionLike/RenameGarbageParamNameRector.php
 
         -
             message: '#^Function "property_exists\(\)" cannot be used/left in the code\: use ReflectionProvider\-\>has\*\(\) instead$#'
             count: 1
-            path: ../src/Rector/FunctionLike/RenameGarbageVariableNameRector.php
+            path: ../src/Rector/FunctionLike/RenameGarbageParamNameRector.php

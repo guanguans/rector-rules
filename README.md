@@ -29,6 +29,9 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 * [`Guanguans\RectorRules\Set\SetList::ALL`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::COMMON`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::LARAVEL_80`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::LARAVEL_90`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::LARAVEL_COMMON`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::PHPBENCH`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::PHPSTAN`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::RECTOR`](src/Set/SetList.php)
@@ -37,13 +40,14 @@ composer require guanguans/rector-rules --dev --ansi -v
 
 ```php
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
+use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withSets([
-        Guanguans\RectorRules\Set\SetList::ALL,
+        Guanguans\RectorRules\Set\SetList::COMMON,
         // ...
     ])
     // ...
@@ -55,6 +59,7 @@ return RectorConfig::configure()
     ])
     // ...
     ->withRules([
+        RenameGarbageParamNameRector::class,
         SortFileFunctionStmtRector::class,
         // ...
     ]);

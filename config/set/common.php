@@ -17,7 +17,7 @@ use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
-use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageVariableNameRector;
+use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Rector\Config\RectorConfig;
 
@@ -25,7 +25,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->rules([
         RemoveNamespaceRector::class,
-        RenameGarbageVariableNameRector::class,
+        RenameGarbageParamNameRector::class,
         SimplifyListIndexRector::class,
         SortFileFirstStmtDocblockRector::class,
         SortFileFunctionStmtRector::class,
