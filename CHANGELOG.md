@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.5.1"></a>
+## [1.5.1] - 2026-01-21
+### ✨ Features
+- **guzzle:** Add Guzzle configuration for Rector ([2a5d837](https://github.com/guanguans/rector-rules/commit/2a5d837))
+- **renaming:** Add RenameAppFunctionToResolveFunctionRector ([57196c2](https://github.com/guanguans/rector-rules/commit/57196c2))
+- **set:** Add Pest testing set configuration ([8496097](https://github.com/guanguans/rector-rules/commit/8496097))
+
+
 <a name="1.5.0"></a>
 ## [1.5.0] - 2026-01-21
 ### ✨ Features
@@ -136,7 +144,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.5.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.5.1...HEAD
+[1.5.1]: https://github.com/guanguans/rector-rules/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/guanguans/rector-rules/compare/1.4.2...1.5.0
 [1.4.2]: https://github.com/guanguans/rector-rules/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/guanguans/rector-rules/compare/1.4.0...1.4.1
