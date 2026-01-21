@@ -1,4 +1,4 @@
-# 11 Rules Overview
+# 12 Rules Overview
 
 <br>
 
@@ -9,6 +9,8 @@
 - [Class](#class) (2)
 
 - [File](#file) (3)
+
+- [FuncCall](#funccall) (1)
 
 - [FunctionLike](#functionlike) (1)
 
@@ -244,6 +246,29 @@ Sort file function stmt
  function b(): void {}
 -function a(): void {}
 +function c(): void {}
+```
+
+<br>
+
+## FuncCall
+
+### RenameAppFunctionToResolveFunctionRector
+
+Rename app function to resolve function
+
+- class: [`Guanguans\RectorRules\Rector\FuncCall\RenameAppFunctionToResolveFunctionRector`](../src/Rector/FuncCall/RenameAppFunctionToResolveFunctionRector.php)
+
+```diff
+ /** @noinspection ALL */
+ app();
+-app('request');
+-app(\Illuminate\Http\Request::class);
+-app(\Illuminate\Log\Logger::class, [
++resolve('request');
++resolve(\Illuminate\Http\Request::class);
++resolve(\Illuminate\Log\Logger::class, [
+     'logger' => new \Psr\Log\NullLogger(),
+ ]);
 ```
 
 <br>

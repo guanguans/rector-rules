@@ -35,6 +35,7 @@ composer require guanguans/rector-rules --dev --ansi -v
 * [`Guanguans\RectorRules\Set\SetList::PHPBENCH`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::PHPSTAN`](src/Set/SetList.php)
 * [`Guanguans\RectorRules\Set\SetList::RECTOR`](src/Set/SetList.php)
+* [`Guanguans\RectorRules\Set\SetList::SYMFONY`](src/Set/SetList.php)
 
 ### In your rector configuration register rules
 

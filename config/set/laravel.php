@@ -14,6 +14,7 @@ declare(strict_types=1);
  */
 
 use Carbon\Carbon;
+use Guanguans\RectorRules\Rector\FuncCall\RenameAppFunctionToResolveFunctionRector;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Carbon as IlluminateCarbon;
 use Illuminate\Support\Str;
@@ -32,14 +33,18 @@ return static function (RectorConfig $rectorConfig): void {
      * @required laravel/framework
      */
     if (class_exists(Application::class)) {
+        $rectorConfig->rules([
+            RenameAppFunctionToResolveFunctionRector::class,
+        ]);
+
         $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
             Carbon::class => IlluminateCarbon::class,
         ]);
 
         $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [
+            // 'faker' => 'fake',
             'Pest\Faker\fake' => 'fake',
             'Pest\Faker\faker' => 'fake',
-            'faker' => 'fake',
         ]);
     }
 

@@ -3,6 +3,7 @@
     "ignore": {
         "words": [
             "docblock",
+            "func",
             "noinspection",
             "param",
             "stmt",
