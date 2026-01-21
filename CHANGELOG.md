@@ -8,6 +8,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.5.0"></a>
+## [1.5.0] - 2026-01-21
+### ✨ Features
+- **config:** Add Laravel configuration files for version 8.0 and 9.0 ([b7efd3e](https://github.com/guanguans/rector-rules/commit/b7efd3e))
+- **refactor:** Add RenameGarbageVariableNameRector class ([4573a65](https://github.com/guanguans/rector-rules/commit/4573a65))
+
+### 💅 Code Refactorings
+- **RenameGarbageVariableNameRector:** Improve parameter name handling ([6194e51](https://github.com/guanguans/rector-rules/commit/6194e51))
+- **docblock:** Simplify parameter names in closures ([f168f2d](https://github.com/guanguans/rector-rules/commit/f168f2d))
+- **name:** Rename PsrNameRector to ConventionalCaseNameRector ([c751fd7](https://github.com/guanguans/rector-rules/commit/c751fd7))
+- **rules:** Rename rule from RenameGarbageVariableNameRector to RenameGarbageParamNameRector ([76ec726](https://github.com/guanguans/rector-rules/commit/76ec726))
+
+
 <a name="1.4.2"></a>
 ## [1.4.2] - 2026-01-19
 ### ✨ Features
@@ -123,7 +136,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.4.2...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/guanguans/rector-rules/compare/1.4.2...1.5.0
 [1.4.2]: https://github.com/guanguans/rector-rules/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/guanguans/rector-rules/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/guanguans/rector-rules/compare/1.3.0...1.4.0
