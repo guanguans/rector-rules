@@ -27,7 +27,7 @@ return (new Configuration)
         __DIR__.'/tests/',
     ])
     ->ignoreUnknownClasses([
-        CodeSample::class,
+        // CodeSample::class,
     ])
     /** @see \ShipMonk\ComposerDependencyAnalyser\Analyser::CORE_EXTENSIONS */
     ->ignoreErrorsOnExtensions(

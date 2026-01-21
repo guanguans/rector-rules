@@ -1,7 +1,7 @@
 <?php
 
 /** @noinspection ALL */
-static fn(string $class, string $file): bool => true;
+// static fn(string $class, string $file): bool => true;
 
 abstract class Foo
 {

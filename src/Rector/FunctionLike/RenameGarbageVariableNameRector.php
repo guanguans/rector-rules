@@ -16,22 +16,21 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\FunctionLike;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use Illuminate\Support\Collection;
 use PhpParser\Node;
+use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\ArrowFunction;
 use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Foreach_;
-use PhpParser\NodeFinder;
-use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\FirstFindingVisitor;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
+use Rector\BetterPhpDocParser\ValueObject\PhpDocAttributeKey;
 use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\DeadCode\NodeAnalyzer\ExprUsedInNodeAnalyzer;
-use Rector\NodeManipulator\StmtsManipulator;
 use Rector\PhpParser\Enum\NodeGroup;
 use Rector\PhpParser\Node\BetterNodeFinder;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -45,24 +44,18 @@ final class RenameGarbageVariableNameRector extends AbstractRector
     private BetterNodeFinder $betterNodeFinder;
     private DocBlockUpdater $docBlockUpdater;
     private ExprUsedInNodeAnalyzer $exprUsedInNodeAnalyzer;
-    private NodeFinder $nodeFinder;
     private PhpDocInfoFactory $phpDocInfoFactory;
-    private StmtsManipulator $stmtsManipulator;
 
     public function __construct(
         BetterNodeFinder $betterNodeFinder,
         DocBlockUpdater $docBlockUpdater,
         ExprUsedInNodeAnalyzer $exprUsedInNodeAnalyzer,
-        NodeFinder $nodeFinder,
-        PhpDocInfoFactory $phpDocInfoFactory,
-        StmtsManipulator $stmtsManipulator
+        PhpDocInfoFactory $phpDocInfoFactory
     ) {
         $this->betterNodeFinder = $betterNodeFinder;
         $this->docBlockUpdater = $docBlockUpdater;
         $this->exprUsedInNodeAnalyzer = $exprUsedInNodeAnalyzer;
-        $this->nodeFinder = $nodeFinder;
         $this->phpDocInfoFactory = $phpDocInfoFactory;
-        $this->stmtsManipulator = $stmtsManipulator;
     }
 
     public function getNodeTypes(): array
@@ -84,13 +77,11 @@ final class RenameGarbageVariableNameRector extends AbstractRector
      * @see \Rector\DeadCode\Rector\If_\RemoveUnusedNonEmptyArrayBeforeForeachRector
      * @see \Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector
      *
-     * @param \PhpParser\Node\FunctionLike $node
+     * @param \PhpParser\Node\FunctionLike|\PhpParser\Node\Stmt\Foreach_ $node
      */
     public function refactor(Node $node): ?Node
     {
-        return $node instanceof Foreach_
-            ? $this->refactorForeach($node)
-            : $this->refactorFunctionLike($node);
+        return $node instanceof Foreach_ ? $this->refactorForeach($node) : $this->refactorFunctionLike($node);
     }
 
     /**
@@ -102,9 +93,17 @@ final class RenameGarbageVariableNameRector extends AbstractRector
             new CodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
-                    collect($array)->filter(static function (string $value, int $key): bool {
+                    collect($array)->filter(static function ($value, int $key): bool {
                         return 2 === $key;
                     });
+
+                    /**
+                     * @param  mixed  $value
+                     */
+                    function filter($value, int $key): bool
+                    {
+                        return 2 === $key;
+                    }
 
                     function array_is_list(array $array): bool
                     {
@@ -121,9 +120,17 @@ final class RenameGarbageVariableNameRector extends AbstractRector
                     PHP,
                 <<<'PHP'
                     /** @noinspection ALL */
-                    collect($array)->filter(static function (string $_, int $key): bool {
+                    collect($array)->filter(static function ($_, int $key): bool {
                         return 2 === $key;
                     });
+
+                    /**
+                     * @param mixed $_
+                     */
+                    function filter($_, int $key): bool
+                    {
+                        return 2 === $key;
+                    }
 
                     function array_is_list(array $array): bool
                     {
@@ -142,99 +149,116 @@ final class RenameGarbageVariableNameRector extends AbstractRector
         ];
     }
 
+    /**
+     * @noinspection PhpParamsInspection
+     */
     private function refactorForeach(Foreach_ $foreachNode): ?Foreach_
     {
-        if (
-            !$foreachNode->keyVar instanceof Variable
-            || !$foreachNode->valueVar instanceof Variable
-            || !$this->isUsedVariable($foreachNode, $foreachNode->keyVar)
-            || $this->isUsedVariable($foreachNode, $foreachNode->valueVar)
-        ) {
-            return null;
-        }
+        // if (
+        //     !$foreachNode->keyVar instanceof Variable
+        //     || !$foreachNode->valueVar instanceof Variable
+        //     || !$this->isUsedVariable($foreachNode, $foreachNode->keyVar)
+        //     || $this->isUsedVariable($foreachNode, $foreachNode->valueVar)
+        // ) {
+        //     return null;
+        // }
+        //
+        // $hasChanged = false;
+        //
+        // if (self::GARBAGE_VARIABLE_NAME !== $foreachNode->valueVar->name) {
+        //     $foreachNode->valueVar->name = self::GARBAGE_VARIABLE_NAME;
+        //     $hasChanged = true;
+        // }
+        //
+        // return $hasChanged ? $foreachNode : null;
 
-        $hasChanged = false;
-
-        if (self::GARBAGE_VARIABLE_NAME !== $foreachNode->valueVar->name) {
-            $foreachNode->valueVar->name = self::GARBAGE_VARIABLE_NAME;
-            $hasChanged = true;
-        }
-
-        return $hasChanged ? $foreachNode : null;
+        // Convert Foreach_ to Closure to reuse refactorFunctionLike() logic.
+        return $this->refactorFunctionLike(new Closure(
+            [
+                'params' => collect([new Param($foreachNode->valueVar)])
+                    ->when(
+                        $foreachNode->keyVar,
+                        static fn (Collection $paramNodes, Expr $keyVarNode): Collection => $paramNodes->push(new Param($keyVarNode))
+                    )
+                    ->all(),
+                'stmts' => $foreachNode->stmts,
+            ],
+            $foreachNode->getAttributes()
+        )) ? $foreachNode : null;
     }
 
-    private function refactorFunctionLike(FunctionLike $node): ?FunctionLike
+    private function refactorFunctionLike(FunctionLike $functionLikeNode): ?FunctionLike
     {
-        $lastParamNode = array_last($node->getParams());
-
-        if (
-            !$lastParamNode->var instanceof Variable
-            || !$this->isUsedVariable($node, $lastParamNode->var)
-        ) {
-            return null;
-        }
-
-        $paramsNode = collect($node->getParams())
-            ->slice(0, -1)
-            ->filter(
-                fn (Param $paramNode): bool => $paramNode->var instanceof Variable
-                    && !$this->isUsedVariable($node, $paramNode->var)
-            );
-
         $hasChanged = false;
+        $docHasChanged = false;
         $newName = self::GARBAGE_VARIABLE_NAME;
-        $phpDocInfo = $this->phpDocInfoFactory->createFromNode($node);
+        $phpDocInfo = $this->phpDocInfoFactory->createFromNode($functionLikeNode);
 
-        foreach ($paramsNode as $paramNode) {
-            if ($newName !== $paramNode->var->name) {
-                $oldName = $paramNode->var->name;
+        foreach ($functionLikeNode->getParams() as $paramNode) {
+            if (
+                !$paramNode->var instanceof Variable
+                || $this->isUsedVariable($functionLikeNode, $paramNode->var)
+            ) {
+                continue;
+            }
+
+            $name = $paramNode->var->name;
+
+            if ($newName !== $name) {
                 $paramNode->var->name = $newName;
                 $hasChanged = true;
-
-                if (!$phpDocInfo instanceof PhpDocInfo) {
-                    continue;
-                }
-
-                $paramTagValues = $phpDocInfo->getPhpDocNode()->getParamTagValues();
-
-                /**
-                 * @see \Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector
-                 */
-                foreach ($paramTagValues as $paramTagValue) {
-                    if ('$'.$oldName === $paramTagValue->parameterName) {
-                        $paramTagValue->parameterName = '$'.$newName;
-                        $phpDocInfo->removeByType(ParamTagValueNode::class, $oldName);
-                        $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($node);
-                    }
-                }
+                $this->updateParamTagValueNodeParameterName($phpDocInfo, $name, $newName) and $docHasChanged = true;
             }
 
             $newName .= self::GARBAGE_VARIABLE_NAME;
         }
 
-        return $hasChanged ? $node : null;
+        $docHasChanged and $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($functionLikeNode);
+
+        return $hasChanged ? $functionLikeNode : null;
     }
 
-    private function isUsedVariable(Node $node, Variable $variableNode): bool
+    private function isUsedVariable(FunctionLike $node, Variable $variableNode): bool
     {
-        // $variableName = $this->getName($variableNode);
-        // $nodeTraverser = new NodeTraverser($firstFindingVisitor = new FirstFindingVisitor(
-        //     function (Node $node) use ($variableName, $variableNode): bool {
-        //         if (
-        //             !$node instanceof Variable
-        //             || !$this->isName($node, $variableName)
-        //         ) {
-        //             return false;
-        //         }
-        //
-        //         return $node !== $variableNode;
-        //     }
-        // ));
-        // $nodeTraverser->traverse([$node]);
-        // return $firstFindingVisitor->getFoundNode();
+        // Skip abstract, interface, empty body function like and foreach.
+        if (property_exists($node, 'stmts') && empty($node->stmts)) {
+            return true;
+        }
+
         return (bool) $this->betterNodeFinder->findFirst(
-            $node->stmts ?? [],
-            fn (Node $subNode): bool => $this->exprUsedInNodeAnalyzer->isUsed($subNode, $variableNode)
+            $node,
+            fn (Node $subNode): bool => $subNode !== $variableNode && $this->exprUsedInNodeAnalyzer->isUsed(
+                $subNode,
+                $variableNode
+            )
         );
+    }
+
+    private function updateParamTagValueNodeParameterName(?PhpDocInfo $phpDocInfo, string $name, string $newName): bool
+    {
+        if (!$phpDocInfo instanceof PhpDocInfo) {
+            return false;
+        }
+
+        $paramTagValueNode = $phpDocInfo->getParamTagValueByName($name);
+
+        if (!$paramTagValueNode instanceof ParamTagValueNode) {
+            return false;
+        }
+
+        $phpDocTagNodes = $phpDocInfo->getTagsByName('param');
+
+        foreach ($phpDocTagNodes as $phpDocTagNode) {
+            if ($phpDocTagNode->value === $paramTagValueNode) {
+                $paramTagValueNode->parameterName = '$'.$newName;
+
+                /** @see \Rector\BetterPhpDocParser\Printer\PhpDocInfoPrinter::printDocChildNode() */
+                $phpDocTagNode->setAttribute(PhpDocAttributeKey::START_AND_END, null);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

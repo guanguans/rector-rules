@@ -20,6 +20,7 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\String_;
+use Rector\BetterPhpDocParser\ValueObject\PhpDocAttributeKey;
 use Rector\Config\RectorConfig;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
@@ -39,6 +40,16 @@ return static function (RectorConfig $rectorConfig): void {
             ->map(static fn (string $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
                 new String_($value),
                 new ClassConstFetch(new FullyQualified(AttributeKey::class), new Identifier($name))
+            ))
+            ->all()
+    );
+
+    $rectorConfig->ruleWithConfiguration(
+        ScalarValueToConstFetchRector::class,
+        collect((new ReflectionClass(PhpDocAttributeKey::class))->getConstants())
+            ->map(static fn (string $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
+                new String_($value),
+                new ClassConstFetch(new FullyQualified(PhpDocAttributeKey::class), new Identifier($name))
             ))
             ->all()
     );

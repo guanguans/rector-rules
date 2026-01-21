@@ -1,4 +1,4 @@
-# 10 Rules Overview
+# 11 Rules Overview
 
 <br>
 
@@ -9,6 +9,8 @@
 - [Class](#class) (2)
 
 - [File](#file) (3)
+
+- [FunctionLike](#functionlike) (1)
 
 - [Name](#name) (1)
 
@@ -242,6 +244,48 @@ Sort file function stmt
  function b(): void {}
 -function a(): void {}
 +function c(): void {}
+```
+
+<br>
+
+## FunctionLike
+
+### RenameGarbageVariableNameRector
+
+Rename garbage variable name
+
+- class: [`Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageVariableNameRector`](../src/Rector/FunctionLike/RenameGarbageVariableNameRector.php)
+
+```diff
+ /** @noinspection ALL */
+-collect($array)->filter(static function ($value, int $key): bool {
++collect($array)->filter(static function ($_, int $key): bool {
+     return 2 === $key;
+ });
+
+ /**
+- * @param  mixed  $value
++ * @param mixed $_
+  */
+-function filter($value, int $key): bool
++function filter($_, int $key): bool
+ {
+     return 2 === $key;
+ }
+
+ function array_is_list(array $array): bool
+ {
+     $nextKey = -1;
+
+-    foreach ($array as $key => $value) {
++    foreach ($array as $key => $_) {
+         if ($key !== ++$nextKey) {
+             return false;
+         }
+     }
+
+     return true;
+ }
 ```
 
 <br>

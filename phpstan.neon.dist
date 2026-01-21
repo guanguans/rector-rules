@@ -130,6 +130,7 @@ parameters:
         - identifier: argument.type
         - identifier: cast.int
 #        - identifier: cast.string
+        - identifier: empty.notAllowed
         - identifier: encapsedStringPart.nonString
         - identifier: method.childParameterType
         - identifier: return.type

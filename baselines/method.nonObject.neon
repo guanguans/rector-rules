@@ -1,4 +1,4 @@
-# total 2 errors
+# total 3 errors
 
 parameters:
     ignoreErrors:
@@ -6,6 +6,11 @@ parameters:
             message: '#^Cannot call method all\(\) on mixed\.$#'
             count: 1
             path: ../src/Rector/Array_/SimplifyListIndexRector.php
+
+        -
+            message: '#^Cannot call method all\(\) on mixed\.$#'
+            count: 1
+            path: ../src/Rector/FunctionLike/RenameGarbageVariableNameRector.php
 
         -
             message: '#^Cannot call method getParameterOption\(\) on mixed\.$#'
