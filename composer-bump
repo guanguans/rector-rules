@@ -307,7 +307,7 @@ final class ComposerBump
         $process = Process::fromShellCommandline(implode(' ', array_merge([$command], $options)), $cwd, $env, $input, $timeout);
         $this->symfonyStyle->warning("The command [{$process->getCommandLine()}] is running in the working directory [$cwd] .");
 
-        return $process->mustRun(function (string $type, string $buffer): void {
+        return $process->mustRun(function (string $_, string $buffer): void {
             $this->symfonyStyle->isVerbose() and $this->symfonyStyle->write($buffer);
         });
     }

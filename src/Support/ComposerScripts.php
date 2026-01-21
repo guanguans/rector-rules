@@ -69,6 +69,9 @@ final class ComposerScripts
      * @see \Rector\PostRector\Rector\
      * @see \Rector\Renaming\NodeManipulator\ClassRenamer
      *
+     * @throws \ErrorException
+     * @throws \ReflectionException
+     *
      * @return int<0>|never-returns<1>
      *
      * @noinspection PhpDocSignatureInspection
@@ -81,9 +84,10 @@ final class ComposerScripts
 
         classes(
             static fn (string $class, string $file): bool => Str::of($class)->startsWith('Rector\\')
-                && Str::of($class)->endsWith([
-                    'Factory',
-                    'Resolver',
+                && Str::of($class)->afterLast('\\')->contains([
+                    'Better',
+                    // 'Factory',
+                    // 'Resolver',
                     // 'er',
                     // 'Renamer',
                 ])

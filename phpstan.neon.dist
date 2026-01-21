@@ -149,6 +149,9 @@ parameters:
             path: src/Rector/Name/RenameToConventionalCaseNameRector.php
 
         -
+            identifier: guanguans.exceptionMustImplementNativeThrowable
+            path: src/Support/helpers.php
+        -
             identifier: rector.noClassReflectionStaticReflection
             path: src/Support/helpers.php
         -

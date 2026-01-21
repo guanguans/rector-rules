@@ -26,12 +26,11 @@ use PhpParser\Node\Expr\Array_;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
-use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\FirstFindingVisitor;
 use PHPStan\Reflection\ClassReflection;
 use Rector\Config\RectorConfig;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\NodeTypeResolver\Node\AttributeKey;
+use Rector\PhpParser\Node\BetterNodeFinder;
 use Rector\PhpParser\Parser\SimplePhpParser;
 use Rector\PHPStan\ScopeFetcher;
 use Rector\Testing\Fixture\FixtureSplitter;
@@ -47,12 +46,16 @@ use function Guanguans\RectorRules\Support\clone_node;
  */
 final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
 {
+    private BetterNodeFinder $betterNodeFinder;
     private SimplePhpParser $simplePhpParser;
 
-    public function __construct(SimplePhpParser $simplePhpParser)
-    {
+    public function __construct(
+        BetterNodeFinder $betterNodeFinder,
+        SimplePhpParser $simplePhpParser
+    ) {
         // $this->rectorConfig = clone $rectorConfig;
         // $this->rectorConfig = unserialize(serialize($rectorConfig), ['allowed_classes' => true]);
+        $this->betterNodeFinder = $betterNodeFinder;
         $this->simplePhpParser = $simplePhpParser;
     }
 
@@ -262,10 +265,10 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         static $configurationNodes = [];
 
         if (!isset($configurationNodes[$configFile])) {
-            (new NodeTraverser($firstFindingVisitor = new FirstFindingVisitor(
-                static fn (Node $node): bool => $node instanceof Array_
-            )))->traverse($this->simplePhpParser->parseFile($configFile));
-            $configurationNodes[$configFile] = $firstFindingVisitor->getFoundNode();
+            $configurationNodes[$configFile] = $this->betterNodeFinder->findFirstInstanceOf(
+                $this->simplePhpParser->parseFile($configFile),
+                Array_::class
+            );
         }
 
         return $configurationNodes[$configFile];

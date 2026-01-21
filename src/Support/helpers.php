@@ -29,8 +29,10 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
      * @see \get_declared_classes()
      * @see \get_declared_interfaces()
      * @see \get_declared_traits()
-     * @see \DG\BypassFinals::enable()
      * @see \Composer\Util\ErrorHandler
+     * @see \Composer\Util\Silencer::call()
+     * @see \DG\BypassFinals::enable()
+     * @see \Illuminate\Foundation\Bootstrap\HandleExceptions::bootstrap()
      * @see \Monolog\ErrorHandler
      * @see \PhpCsFixer\ExecutorWithoutErrorHandler
      * @see \Phrity\Util\ErrorHandler
@@ -41,29 +43,74 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
      *
      * @param null|(callable(class-string<TObject>, string): bool) $filter
      *
-     * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>|\Throwable>
+     * @throws \ErrorException
+     * @throws \ReflectionException
+     *
+     * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>>
      *
      * @noinspection PhpUndefinedNamespaceInspection
      */
     function classes(?callable $filter = null): Collection
     {
-        $filter ??= static fn (string $class, string $file): bool => true;
+        $func = __FUNCTION__;
+        $errorMessenger = static fn (
+            string $file,
+            string $class
+        ): string => "Failed to reflect the class [$class] in the file [$file]. "
+            ."You may need to filter out the class or file using the callback parameter of the function [$func()].";
 
-        /** @var null|\Illuminate\Support\Collection $classes */
+        /** @var null|array{file: string, class: class-string<TObject>, line: int} $context */
+        static $context = null;
+        static $registered = false;
+
+        if (!$registered) {
+            register_shutdown_function(
+                static function () use (&$context, $errorMessenger): void {
+                    // @codeCoverageIgnoreStart
+                    if (
+                        null === $context
+                        || null === ($error = error_get_last())
+                        || !\in_array($error['type'], [\E_COMPILE_ERROR, \E_CORE_ERROR, \E_ERROR, \E_PARSE], true)
+                    ) {
+                        return;
+                    }
+
+                    // trigger_error($errorMessenger($context['file'], $context['class']), \E_USER_ERROR);
+                    throw new \ErrorException(
+                        $errorMessenger($context['file'], $context['class']),
+                        0,
+                        $error['type'],
+                        __FILE__,
+                        $context['line'],
+                        new \ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line'])
+                    );
+                    // @codeCoverageIgnoreEnd
+                }
+            );
+            $registered = true;
+        }
+
+        /** @var null|\Illuminate\Support\Collection<string, class-string> $classes */
         static $classes;
         $classes ??= collect(spl_autoload_functions())->flatMap(
             static fn (callable $loader): array => \is_array($loader) && $loader[0] instanceof ClassLoader
                 ? $loader[0]->getClassMap()
                 : []
         );
+        $filter ??= static fn (string $_, string $__): bool => true;
 
         return $classes
             ->filter(static fn (string $file, string $class): bool => $filter($class, $file))
-            ->mapWithKeys(static function (string $file, string $class): array {
+            ->mapWithKeys(static function (string $file, string $class) use (&$context, $errorMessenger): array {
                 try {
+                    $context = ['file' => $file, 'class' => $class, 'line' => __LINE__ + 2];
+
                     return [$class => new \ReflectionClass($class)];
                 } catch (\Throwable $throwable) {
-                    return [$class => $throwable];
+                    // return [$class => $throwable];
+                    throw new \ReflectionException($errorMessenger($file, $class), 0, $throwable);
+                } finally {
+                    $context = null;
                 }
             });
     }

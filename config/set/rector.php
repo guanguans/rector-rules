@@ -20,18 +20,41 @@ use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\String_;
+use PhpParser\NodeFinder;
+use PhpParser\PrettyPrinter\Standard;
+use PHPStan\PhpDocParser\Parser\PhpDocParser;
+use PHPStan\PhpDocParser\Parser\TokenIterator;
+use PHPStan\Reflection\BetterReflection\BetterReflectionSourceLocatorFactory;
+use Rector\BetterPhpDocParser\PhpDocParser\BetterPhpDocParser;
+use Rector\BetterPhpDocParser\ValueObject\Parser\BetterTokenIterator;
 use Rector\BetterPhpDocParser\ValueObject\PhpDocAttributeKey;
 use Rector\Config\RectorConfig;
 use Rector\NodeTypeResolver\Node\AttributeKey;
+use Rector\NodeTypeResolver\Reflection\BetterReflection\RectorBetterReflectionSourceLocatorFactory;
+use Rector\PhpParser\Node\BetterNodeFinder;
+use Rector\PhpParser\Parser\RectorParser;
+use Rector\PhpParser\Parser\SimplePhpParser;
+use Rector\PhpParser\Printer\BetterStandardPrinter;
+use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Transform\Rector\Scalar\ScalarValueToConstFetchRector;
 use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
+    $rectorConfig->skip([__FILE__]);
     $rectorConfig->rules([
         UpdateRectorCodeSamplesFromFixturesRector::class,
         UpdateRectorMethodNodeParamDocblockFromNodeTypesRector::class,
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
+        BetterReflectionSourceLocatorFactory::class => RectorBetterReflectionSourceLocatorFactory::class,
+        NodeFinder::class => BetterNodeFinder::class,
+        PhpDocParser::class => BetterPhpDocParser::class,
+        // SimplePhpParser::class => RectorParser::class,
+        Standard::class => BetterStandardPrinter::class,
+        TokenIterator::class => BetterTokenIterator::class,
     ]);
 
     $rectorConfig->ruleWithConfiguration(

@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
+/** @noinspection EfferentObjectCouplingInspection */
 /** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
@@ -93,14 +94,22 @@ final class RenameGarbageVariableNameRector extends AbstractRector
             new CodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
-                    collect($array)->filter(static function ($value, int $key): bool {
+                    collect($array)->filter(static function (string $value, int $key): bool {
                         return 2 === $key;
                     });
 
                     /**
-                     * @param  mixed  $value
+                     * @param mixed $value
                      */
-                    function filter($value, int $key): bool
+                    function filter($value, $key): bool
+                    {
+                        return 2 === $key;
+                    }
+
+                    /**
+                     * @param mixed $key
+                     */
+                    function filter($value, $key): bool
                     {
                         return 2 === $key;
                     }
@@ -120,14 +129,22 @@ final class RenameGarbageVariableNameRector extends AbstractRector
                     PHP,
                 <<<'PHP'
                     /** @noinspection ALL */
-                    collect($array)->filter(static function ($_, int $key): bool {
+                    collect($array)->filter(static function (string $_, int $key): bool {
                         return 2 === $key;
                     });
 
                     /**
                      * @param mixed $_
                      */
-                    function filter($_, int $key): bool
+                    function filter($_, $key): bool
+                    {
+                        return 2 === $key;
+                    }
+
+                    /**
+                     * @param mixed $key
+                     */
+                    function filter($_, $key): bool
                     {
                         return 2 === $key;
                     }
@@ -240,17 +257,13 @@ final class RenameGarbageVariableNameRector extends AbstractRector
             return false;
         }
 
-        $paramTagValueNode = $phpDocInfo->getParamTagValueByName($name);
-
-        if (!$paramTagValueNode instanceof ParamTagValueNode) {
-            return false;
-        }
-
         $phpDocTagNodes = $phpDocInfo->getTagsByName('param');
 
         foreach ($phpDocTagNodes as $phpDocTagNode) {
-            if ($phpDocTagNode->value === $paramTagValueNode) {
-                $paramTagValueNode->parameterName = '$'.$newName;
+            \assert($phpDocTagNode->value instanceof ParamTagValueNode);
+
+            if ('$'.$name === $phpDocTagNode->value->parameterName) {
+                $phpDocTagNode->value->parameterName = '$'.$newName;
 
                 /** @see \Rector\BetterPhpDocParser\Printer\PhpDocInfoPrinter::printDocChildNode() */
                 $phpDocTagNode->setAttribute(PhpDocAttributeKey::START_AND_END, null);

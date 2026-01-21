@@ -154,7 +154,7 @@ return RectorConfig::configure()
     ])
     ->withConfiguredRule(
         ChangeMethodVisibilityRector::class,
-        classes(static fn (string $class, string $file): bool => str_starts_with($class, 'Guanguans\RectorRules'))
+        classes(static fn (string $class): bool => str_starts_with($class, 'Guanguans\RectorRules'))
             ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isTrait())
             ->map(
                 static fn (ReflectionClass $reflectionClass): array => collect($reflectionClass->getMethods(ReflectionMethod::IS_PRIVATE))

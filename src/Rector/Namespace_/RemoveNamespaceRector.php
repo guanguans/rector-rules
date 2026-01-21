@@ -21,17 +21,22 @@ use PhpParser\Node\Stmt\Const_;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Nop;
-use PhpParser\NodeTraverser;
-use PhpParser\NodeVisitor\FirstFindingVisitor;
 use Rector\NodeTypeResolver\Node\AttributeKey;
+use Rector\PhpParser\Node\BetterNodeFinder;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
-use function Guanguans\RectorRules\Support\is_instance_of_any;
 
 /**
  * @see \Guanguans\RectorRulesTests\Rector\Namespace_\RemoveNamespaceRector\RemoveNamespaceRectorTest
  */
 final class RemoveNamespaceRector extends AbstractRector
 {
+    private BetterNodeFinder $betterNodeFinder;
+
+    public function __construct(BetterNodeFinder $betterNodeFinder)
+    {
+        $this->betterNodeFinder = $betterNodeFinder;
+    }
+
     public function getNodeTypes(): array
     {
         return [
@@ -46,7 +51,12 @@ final class RemoveNamespaceRector extends AbstractRector
      */
     public function refactor(Node $node): ?array
     {
-        if ($this->findFirstSkippedNode($node) instanceof Node) {
+        if ($this->betterNodeFinder->hasInstancesOf($node, [
+            /** ClassLike(Attribute、Class、Enum、Interface、Trait)、Constant、Function. */
+            ClassLike::class,
+            Const_::class,
+            Function_::class,
+        ])) {
             return null;
         }
 
@@ -84,26 +94,5 @@ final class RemoveNamespaceRector extends AbstractRector
                     PHP,
             ),
         ];
-    }
-
-    /**
-     * @see \PhpParser\NodeVisitor\
-     * @see \PhpParser\NodeVisitor\FirstFindingVisitor
-     *
-     * @return null|\PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Stmt\Function_
-     */
-    private function findFirstSkippedNode(Namespace_ $namespaceNode): ?Node
-    {
-        $nodeTraverser = new NodeTraverser($firstFindingVisitor = new FirstFindingVisitor(
-            static fn (Node $node): bool => is_instance_of_any($node, [
-                /** ClassLike(Attribute、Class、Enum、Interface、Trait)、Constant、Function. */
-                ClassLike::class,
-                Const_::class,
-                Function_::class,
-            ])
-        ));
-        $nodeTraverser->traverse([$namespaceNode]);
-
-        return $firstFindingVisitor->getFoundNode();
     }
 }

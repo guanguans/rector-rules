@@ -1,14 +1,22 @@
 <?php
 
 /** @noinspection ALL */
-collect($array)->filter(static function ($value, int $key): bool {
+collect($array)->filter(static function (string $value, int $key): bool {
     return 2 === $key;
 });
 
 /**
- * @param  mixed  $value
+ * @param mixed $value
  */
-function filter($value, int $key): bool
+function filter($value, $key): bool
+{
+    return 2 === $key;
+}
+
+/**
+ * @param mixed $key
+ */
+function filter($value, $key): bool
 {
     return 2 === $key;
 }
@@ -31,14 +39,22 @@ function array_is_list(array $array): bool
 <?php
 
 /** @noinspection ALL */
-collect($array)->filter(static function ($_, int $key): bool {
+collect($array)->filter(static function (string $_, int $key): bool {
     return 2 === $key;
 });
 
 /**
  * @param mixed $_
  */
-function filter($_, int $key): bool
+function filter($_, $key): bool
+{
+    return 2 === $key;
+}
+
+/**
+ * @param mixed $key
+ */
+function filter($_, $key): bool
 {
     return 2 === $key;
 }

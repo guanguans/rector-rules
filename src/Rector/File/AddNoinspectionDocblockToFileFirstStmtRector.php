@@ -158,7 +158,7 @@ final class AddNoinspectionDocblockToFileFirstStmtRector extends AbstractRector 
         static $inspectionsMap = [];
 
         $inspectionsMap[$this->file->getFilePath()] ??= collect($this->inspectionsMap)
-            ->filter(fn (array $inspections, string $path) => Str::is($path, $this->file->getFilePath()))
+            ->filter(fn (array $_, string $path) => Str::is($path, $this->file->getFilePath()))
             // ->flatten()
             ->collapse()
             ->unique()
