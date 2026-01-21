@@ -16,11 +16,17 @@ declare(strict_types=1);
 use Carbon\Carbon;
 use Illuminate\Support\Carbon as IlluminateCarbon;
 use Rector\Config\RectorConfig;
+use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../../config.php');
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         Carbon::class => IlluminateCarbon::class,
+    ]);
+    $rectorConfig->ruleWithConfiguration(RenameFunctionRector::class, [
+        'faker' => 'fake',
+        'Pest\Faker\fake' => 'fake',
+        'Pest\Faker\faker' => 'fake',
     ]);
 };

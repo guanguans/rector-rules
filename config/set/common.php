@@ -20,6 +20,7 @@ use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Rector\Config\RectorConfig;
+use Rector\Php82\Rector\Param\AddSensitiveParameterAttributeRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
@@ -30,5 +31,20 @@ return static function (RectorConfig $rectorConfig): void {
         SortFileFirstStmtDocblockRector::class,
         SortFileFunctionStmtRector::class,
         // SortListItemOfSameScalarTypeRector::class,
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(AddSensitiveParameterAttributeRector::class, [
+        AddSensitiveParameterAttributeRector::SENSITIVE_PARAMETERS => [
+            'accessToken',
+            'apiKey',
+            'botApiKey',
+            'key',
+            'password',
+            'pushKey',
+            'secret',
+            'tempKey',
+            'token',
+            'webHook',
+        ],
     ]);
 };
