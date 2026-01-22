@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.5.2"></a>
+## [1.5.2] - 2026-01-22
+### 🐞 Bug Fixes
+- **rename:** Enhance renaming logic for class constants and methods ([2ebec01](https://github.com/guanguans/rector-rules/commit/2ebec01))
+- **renaming:** Ensure scope attribute is set for variable nodes ([379d638](https://github.com/guanguans/rector-rules/commit/379d638))
+- **symfony:** Update class existence check for Response ([a40a6d3](https://github.com/guanguans/rector-rules/commit/a40a6d3))
+
+
 <a name="1.5.1"></a>
 ## [1.5.1] - 2026-01-21
 ### ✨ Features
@@ -144,7 +152,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.5.1...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.5.2...HEAD
+[1.5.2]: https://github.com/guanguans/rector-rules/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/guanguans/rector-rules/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/guanguans/rector-rules/compare/1.4.2...1.5.0
 [1.4.2]: https://github.com/guanguans/rector-rules/compare/1.4.1...1.4.2
