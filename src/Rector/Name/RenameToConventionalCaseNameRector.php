@@ -184,6 +184,8 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      *
+     * @throws \Rector\Exception\ShouldNotHappenException
+     *
      * @noinspection BadExceptionsProcessingInspection
      */
     public function refactor(Node $node): ?Node
@@ -376,6 +378,8 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
      * @see \Rector\Renaming\Collector\RenamedNameCollector
      *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
+     *
+     * @throws \Rector\Exception\ShouldNotHappenException
      */
     private function rename(Node $node, callable $renamer): ?Node
     {
@@ -404,21 +408,26 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
             }
 
             /**
-             * In the `\PhpParser\Node\FunctionLike` parameter,
-             * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute,
-             * and even if it is renamed, `rector` will report an error.
-             *
-             * "System error: "Node "PhpParser\Node\Expr\Variable" with is missing scope required for scope refresh"
              * ```
              * function func_name($var_name): void {}
+             * ```
+             * In the `\PhpParser\Node\FunctionLike` parameter,
+             * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute,
+             * and even if it is renamed, `rector` will report an error:
+             * ```
+             * System error: "Node "PhpParser\Node\Expr\Variable" with is missing scope required for scope refresh
              * ```.
+             *
+             * So we fetch from parent node to set the scope attribute.
              */
             if ($node instanceof Variable && !$node->getAttribute(AttributeKey::SCOPE) instanceof Scope) {
-                throw new RectorErrorException(
-                    $this,
-                    "The variable name [$node->name] cannot be renamed to [$newName] because of missing scope.",
-                    $node->getAttributes()
-                );
+                // throw new RectorErrorException(
+                //     $this,
+                //     "The variable name [$node->name] cannot be renamed to [$newName] because of missing scope.",
+                //     $node->getAttributes()
+                // );
+                $parent = $node->getAttribute('parent');
+                $parent instanceof Node and $node->setAttribute(AttributeKey::SCOPE, ScopeFetcher::fetch($parent));
             }
 
             $node->name = $newName;
@@ -757,7 +766,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
                 }
 
                 // if the name is all uppercase letters, convert it to lowercase letters.
-                if (ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name))) {
+                if (preg_match('/^[A-Z_]+$/', $name)) {
                     return Str::lower($name);
                 }
 

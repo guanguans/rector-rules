@@ -4,8 +4,7 @@
 
 /**
  * In the `\PhpParser\Node\FunctionLike` parameter,
- * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute,
- * and even if it is renamed, `rector` will report an error.
+ * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute.
  */
 function func_name(string $var_name): string
 {
@@ -22,10 +21,9 @@ function func_name(string $var_name): string
 
 /**
  * In the `\PhpParser\Node\FunctionLike` parameter,
- * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute,
- * and even if it is renamed, `rector` will report an error.
+ * the `\PhpParser\Node\Expr\Variable` node does not have a scope attribute.
  */
-function func_name(string $var_name): string
+function func_name(string $varName): string
 {
     $newVarName = $varName;
 
