@@ -13,7 +13,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Illuminate\Foundation\Application;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
@@ -29,7 +28,7 @@ return static function (RectorConfig $rectorConfig): void {
     /**
      * @required symfony/http-foundation
      */
-    if (class_exists(Application::class)) {
+    if (class_exists(Response::class)) {
         $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchRector::class, array_map(
             static fn (int $value, string $constant): ScalarValueToConstFetch => new ScalarValueToConstFetch(
                 new Int_($value),
