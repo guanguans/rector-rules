@@ -117,7 +117,7 @@ Foo::CONST_NAME;
 define('CONST_NAME', 'const');
 defined('CONST_NAME');
 constant('CONST_NAME');
-constant('FOO::CONST_NAME');
+constant('Foo::CONST_NAME');
 \CONST_NAME;
 
 // lcfirst camel

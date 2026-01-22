@@ -1,4 +1,4 @@
-# total 1 error
+# total 2 errors
 
 parameters:
     ignoreErrors:
@@ -6,3 +6,8 @@ parameters:
             message: '#^Instead of using Rector rule to setAttribute\("start_and_end"\) to be used later, create a service extending "DecoratingNodeVisitorInterface"\. This ensures attribute decoration and node changes are in 2 separated steps\.$#'
             count: 1
             path: ../src/Rector/FunctionLike/RenameGarbageParamNameRector.php
+
+        -
+            message: '#^Instead of using Rector rule to setAttribute\("scope"\) to be used later, create a service extending "DecoratingNodeVisitorInterface"\. This ensures attribute decoration and node changes are in 2 separated steps\.$#'
+            count: 1
+            path: ../src/Rector/Name/RenameToConventionalCaseNameRector.php

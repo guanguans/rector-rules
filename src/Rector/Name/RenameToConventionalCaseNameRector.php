@@ -351,7 +351,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
                     define('CONST_NAME', 'const');
                     defined('CONST_NAME');
                     constant('CONST_NAME');
-                    constant('FOO::CONST_NAME');
+                    constant('Foo::CONST_NAME');
                     \CONST_NAME;
 
                     // lcfirst camel
@@ -759,20 +759,34 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
      */
     private function wrapRenamer(callable $renamer, Node $node): \Closure
     {
-        return fn (string $name): string => $renamer(
-            (function (string $name) use ($node): string {
-                if (Str::is($this->except, $name)) {
-                    throw new RectorErrorException($this, "The name [$name] is skipped.", $node->getAttributes());
-                }
+        return function (string $name) use ($node, $renamer): string {
+            if (str_contains($name, '::')) {
+                [$className, $constantOrMethodName] = Str::of($name)
+                    ->explode('::', 2)
+                    ->map(fn (string $part): string => $this->sanitizeName($part, $node))
+                    ->all();
 
-                // if the name is all uppercase letters, convert it to lowercase letters.
-                if (preg_match('/^[A-Z_]+$/', $name)) {
-                    return Str::lower($name);
-                }
+                $newClassName = Str::of($className)->camel()->ucfirst();
 
-                return $name;
-            })($name)
-        );
+                $newConstOrMethodName = $this->isNames($node, ['define', 'defined', 'constant'])
+                    ? Str::of($constantOrMethodName)->snake()->upper()
+                    : Str::of($constantOrMethodName)->camel()->pipe('lcfirst');
+
+                return "$newClassName::$newConstOrMethodName";
+            }
+
+            return $renamer($this->sanitizeName($name, $node));
+        };
+    }
+
+    private function sanitizeName(string $name, Node $node): string
+    {
+        if (Str::is($this->except, $name)) {
+            throw new RectorErrorException($this, "The name [$name] is skipped.", $node->getAttributes());
+        }
+
+        // if the name is all uppercase letters, convert it to lowercase letters.
+        return ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name)) ? Str::lower($name) : $name;
     }
 
     private function renameFuncCallIndexStringArg(Arg $argNode, callable $renamer): bool
@@ -782,12 +796,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
 
         $newValue = Str::of($stringNode->value)
             ->explode('\\')
-            ->pipe(
-                static fn (Collection $collection): string => $collection
-                    ->slice(0, -1)
-                    ->push($renamer($collection->last()))
-                    ->implode('\\')
-            );
+            ->pipe(static fn (Collection $parts): string => $parts->slice(0, -1)->push($renamer($parts->last()))->implode('\\'));
         \assert(\is_string($newValue));
 
         if ($newValue !== $stringNode->value) {

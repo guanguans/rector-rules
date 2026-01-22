@@ -40,6 +40,7 @@ use Rector\DowngradePhp81\Rector\FuncCall\DowngradeArrayIsListRector;
 use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
+use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
@@ -71,7 +72,7 @@ return RectorConfig::configure()
     // ->withoutParallel()
     ->withParallel()
     // ->withImportNames(importDocBlockNames: false, importShortClasses: false)
-    // ->withImportNames(true, false, false)
+    ->withImportNames(true, false, false)
     // ->withImportNames(importNames: false)
     // ->withEditorUrl()
     ->withFluentCallNewLine()
@@ -195,6 +196,9 @@ return RectorConfig::configure()
     ->withSkip([
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/src/Rector/*Rector.php',
+        ],
+        RenameVariableToMatchMethodCallReturnTypeRector::class => [
+            __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
         ],
         RenameVariableToMatchNewTypeRector::class => [
             __DIR__.'/src/Rector/Namespace_/RemoveNamespaceRector.php',
