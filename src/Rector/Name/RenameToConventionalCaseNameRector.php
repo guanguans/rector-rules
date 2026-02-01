@@ -760,6 +760,14 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
     private function wrapRenamer(callable $renamer, Node $node): \Closure
     {
         return function (string $name) use ($node, $renamer): string {
+            if (
+                $node instanceof Identifier
+                && $node->getAttribute('parent') instanceof Enum_
+                && $this->isNames($node, ['int', 'string'])
+            ) {
+                return $name;
+            }
+
             if (str_contains($name, '::')) {
                 [$className, $constantOrMethodName] = Str::of($name)
                     ->explode('::', 2)

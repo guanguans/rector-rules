@@ -3,15 +3,12 @@
 /** @noinspection ALL */
 // @formatter:off
 // phpcs:ignoreFile
-
 enum Suit: string
 {
     case Heart = 'Heart';
     case Diamond = 'Diamond';
     case Club = 'Club';
-    case Spade = 'Spade';
 }
-
 Suit::Heart;
 
 ?>
@@ -21,15 +18,12 @@ Suit::Heart;
 /** @noinspection ALL */
 // @formatter:off
 // phpcs:ignoreFile
-
 enum Suit: string
 {
     case Heart = 'Heart';
     case Diamond = 'Diamond';
     case Club = 'Club';
-    case Spade = 'Spade';
 }
-
-Suit::Heart;
+Suit::HEART;
 
 ?>
