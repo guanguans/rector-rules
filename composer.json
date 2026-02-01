@@ -46,12 +46,12 @@
     },
     "require-dev": {
         "adamwojs/php-cs-fixer-phpdoc-force-fqcn": "^2.0",
-        "bamarni/composer-bin-plugin": "^1.8",
+        "bamarni/composer-bin-plugin": "^1.9",
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "composer/composer": "^2.9",
-        "ergebnis/composer-normalize": "^2.48",
+        "ergebnis/composer-normalize": "^2.49",
         "ergebnis/license": "^2.7",
-        "ergebnis/php-cs-fixer-config": "^6.58",
+        "ergebnis/php-cs-fixer-config": "^6.59",
         "ergebnis/rector-rules": "^1.9",
         "fakerphp/faker": "^1.24",
         "guanguans/php-cs-fixer-custom-fixers": "^1.1",
@@ -192,6 +192,7 @@
             "@lint-md",
             "@peck",
             "@php-cs-fixer:custom-fix-dry-run",
+            "@php-cs-fixer:custom-ln-config",
             "@rule-doc-generator:generate",
             "@typos",
             "@zhlint"

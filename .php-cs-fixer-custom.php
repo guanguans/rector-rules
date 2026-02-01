@@ -109,7 +109,6 @@ return (new Config)
                 '/\.lock$/',
                 '/\-lock\.json$/',
                 // '/\.php$/',
-                '/\.php\.inc$/',
                 '/(?<!\.blade)\.php$/',
                 // Exclude temporary files created by `zhlint` in the current working directory.
                 '/zhlint\-.*\..*$/',

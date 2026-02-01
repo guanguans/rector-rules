@@ -1,10 +1,10 @@
 {
     "require-dev": {
         "php": ">=8.2",
-        "ergebnis/composer-normalize": "^2.48",
+        "ergebnis/composer-normalize": "^2.49",
         "guanguans/monorepo-builder-worker": "^3.0",
         "guzzlehttp/guzzle": "^7.10",
-        "laravel/framework": "^12.48",
+        "laravel/framework": "^12.49",
         "mrpunyapal/rector-pest": "^0.1",
         "peckphp/peck": "^0.2",
         "phpbench/phpbench": "^1.4",

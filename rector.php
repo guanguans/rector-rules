@@ -45,10 +45,10 @@ use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
-use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Transform\Rector\String_\StringToClassConstantRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
 use Rector\ValueObject\Visibility;
 use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
@@ -119,6 +119,7 @@ return RectorConfig::configure()
     ->withRules([
         // ArraySpreadInsteadOfArrayMergeRector::class,
         JsonThrowOnErrorRector::class,
+        SafeDeclareStrictTypesRector::class,
         SortAssociativeArrayByKeyRector::class,
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
@@ -170,11 +171,6 @@ return RectorConfig::configure()
             // ->dd()
             ->all(),
     )
-    ->withConfiguredRule(RenameFunctionRector::class, [
-        'Pest\Faker\fake' => 'fake',
-        'Pest\Faker\faker' => 'fake',
-        'test' => 'it',
-    ])
     ->withSkip([
         DowngradeArrayFirstLastRector::class,
         DowngradeArrayIsListRector::class,
