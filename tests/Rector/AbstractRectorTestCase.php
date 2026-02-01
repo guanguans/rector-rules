@@ -90,7 +90,13 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
 
     final public static function provideCases(): iterable
     {
-        return self::yieldFilesFromDirectory(static::directory().'/Fixture/');
+        yield from self::yieldFilesFromDirectory(static::directory().'/Fixture/');
+
+        foreach ((array) glob(static::directory().'/Fixture[0-9]*/', \GLOB_ONLYDIR) as $directory) {
+            if ((int) (\PHP_MAJOR_VERSION.\PHP_MINOR_VERSION) >= (int) (string) Str::of($directory)->basename()->substr(7)) {
+                yield from self::yieldFilesFromDirectory($directory);
+            }
+        }
     }
 
     abstract protected static function directory(): string;

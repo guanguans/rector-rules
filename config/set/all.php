@@ -20,6 +20,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->sets([
         SetList::COMMON,
+        SetList::DRIFTINGLY_LARAVEL,
         SetList::GUZZLE,
         SetList::LARAVEL,
         SetList::PEST,

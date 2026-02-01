@@ -13,14 +13,6 @@ interface Bar
     public function run($param): void;
 }
 
-class Baz
-{
-    // Skip promoted property parameter.
-    public function __construct(private Bar $bar)
-    {
-    }
-}
-
 use PhpParser\Node;
 use Rector\Rector\AbstractRector;
 

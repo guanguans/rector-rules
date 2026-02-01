@@ -49,6 +49,7 @@
         "bamarni/composer-bin-plugin": "^1.9",
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "composer/composer": "^2.9",
+        "driftingly/rector-laravel": "^2.1",
         "ergebnis/composer-normalize": "^2.49",
         "ergebnis/license": "^2.7",
         "ergebnis/php-cs-fixer-config": "^6.59",
