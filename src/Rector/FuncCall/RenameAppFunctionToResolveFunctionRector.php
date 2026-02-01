@@ -29,7 +29,7 @@ final class RenameAppFunctionToResolveFunctionRector extends AbstractRector
 
     public function __construct(RenameFunctionRector $renameFunctionRector)
     {
-        $this->renameFunctionRector = $renameFunctionRector;
+        $this->renameFunctionRector = clone $renameFunctionRector;
         $this->renameFunctionRector->configure([
             'app' => 'resolve',
         ]);
@@ -42,13 +42,20 @@ final class RenameAppFunctionToResolveFunctionRector extends AbstractRector
     }
 
     /**
+     * @see https://github.com/driftingly/rector-laravel/blob/main/src/Rector/FuncCall/AppToResolveRector.php
      * @see https://github.com/laravel/framework/commit/8f232a972fd8b4bfa1901a47c1e649e2a1278bd6
      *
      * @param \PhpParser\Node\Expr\FuncCall $node
      */
     public function refactor(Node $node): ?Node
     {
-        return $node->getRawArgs() ? $this->renameFunctionRector->refactor($node) : null;
+        $abstract = $node->getArg('abstract', 0);
+
+        if (null === $abstract || $this->getType($abstract->value)->isNull()->yes()) {
+            return null;
+        }
+
+        return $this->renameFunctionRector->refactor($node);
     }
 
     /**
