@@ -1,4 +1,4 @@
-# 12 Rules Overview
+# 13 Rules Overview
 
 <br>
 
@@ -7,6 +7,8 @@
 - [Array](#array) (3)
 
 - [Class](#class) (2)
+
+- [ClassMethod](#classmethod) (1)
 
 - [File](#file) (3)
 
@@ -171,6 +173,27 @@ Update rector method node param docblock from node types
      public function refactor(Node $node): ?Node
      {
          return null;
+     }
+ }
+```
+
+<br>
+
+## ClassMethod
+
+### PrivateToProtectedVisibilityForTraitRector
+
+Private to protected visibility for trait
+
+- class: [`Guanguans\RectorRules\Rector\ClassMethod\PrivateToProtectedVisibilityForTraitRector`](../src/Rector/ClassMethod/PrivateToProtectedVisibilityForTraitRector.php)
+
+```diff
+ /** @noinspection ALL */
+ trait Foo
+ {
+-    private function run(): void
++    protected function run(): void
+     {
      }
  }
 ```

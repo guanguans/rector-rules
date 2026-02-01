@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
+use Guanguans\RectorRules\Rector\ClassMethod\PrivateToProtectedVisibilityForTraitRector;
 use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
@@ -25,6 +26,7 @@ use Rector\Php82\Rector\Param\AddSensitiveParameterAttributeRector;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->rules([
+        PrivateToProtectedVisibilityForTraitRector::class,
         RemoveNamespaceRector::class,
         RenameGarbageParamNameRector::class,
         SimplifyListIndexRector::class,

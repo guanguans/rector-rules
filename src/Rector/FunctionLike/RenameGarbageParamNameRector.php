@@ -255,13 +255,13 @@ final class RenameGarbageParamNameRector extends AbstractRector
         $classReflection = ScopeFetcher::fetch($functionLikeNode)->getClassReflection();
 
         if (!$classReflection instanceof ClassReflection) {
-            return false;
+            return false; // @codeCoverageIgnore
         }
 
         try {
             return $classReflection->getNativeReflection()->getMethod($this->getName($functionLikeNode))->hasPrototype();
-        } catch (\ReflectionException $reflectionException) {
-            return false;
+        } catch (\ReflectionException $reflectionException) { // @codeCoverageIgnore
+            return false; // @codeCoverageIgnore
         }
     }
 
