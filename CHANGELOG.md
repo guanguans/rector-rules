@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.6.0"></a>
+## [1.6.0] - 2026-02-01
+### ✨ Features
+- **Rector:** Add PrivateToProtectedVisibilityForTraitRector ([e2df0d8](https://github.com/guanguans/rector-rules/commit/e2df0d8))
+
+### 🐞 Bug Fixes
+- **dependencies:** Update composer dependencies for compatibility ([e74aac6](https://github.com/guanguans/rector-rules/commit/e74aac6))
+- **refactor:** Improve refactoring logic for function calls ([2bbd5a1](https://github.com/guanguans/rector-rules/commit/2bbd5a1))
+- **rename:** Enhance parameter renaming logic for promoted variables ([7d80f74](https://github.com/guanguans/rector-rules/commit/7d80f74))
+
+
 <a name="1.5.2"></a>
 ## [1.5.2] - 2026-01-22
 ### 🐞 Bug Fixes
@@ -152,7 +163,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.5.2...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.0...HEAD
+[1.6.0]: https://github.com/guanguans/rector-rules/compare/1.5.2...1.6.0
 [1.5.2]: https://github.com/guanguans/rector-rules/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/guanguans/rector-rules/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/guanguans/rector-rules/compare/1.4.2...1.5.0
