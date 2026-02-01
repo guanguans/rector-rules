@@ -25,8 +25,10 @@ use PhpParser\Node\Expr\Closure;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Param;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Foreach_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
+use PHPStan\Reflection\ClassReflection;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
 use Rector\BetterPhpDocParser\ValueObject\PhpDocAttributeKey;
@@ -34,6 +36,7 @@ use Rector\Comments\NodeDocBlock\DocBlockUpdater;
 use Rector\DeadCode\NodeAnalyzer\ExprUsedInNodeAnalyzer;
 use Rector\PhpParser\Enum\NodeGroup;
 use Rector\PhpParser\Node\BetterNodeFinder;
+use Rector\PHPStan\ScopeFetcher;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
 /**
@@ -204,6 +207,9 @@ final class RenameGarbageParamNameRector extends AbstractRector
         )) ? $foreachNode : null;
     }
 
+    /**
+     * @throws \Rector\Exception\ShouldNotHappenException
+     */
     private function refactorFunctionLike(FunctionLike $functionLikeNode): ?FunctionLike
     {
         $hasChanged = false;
@@ -214,6 +220,8 @@ final class RenameGarbageParamNameRector extends AbstractRector
         foreach ($functionLikeNode->getParams() as $paramNode) {
             if (
                 !$paramNode->var instanceof Variable
+                || $paramNode->isPromoted()
+                || $this->hasPrototypeMethod($functionLikeNode)
                 || $this->isUsedVariable($functionLikeNode, $paramNode->var)
             ) {
                 continue;
@@ -233,6 +241,28 @@ final class RenameGarbageParamNameRector extends AbstractRector
         $docHasChanged and $this->docBlockUpdater->updateRefactoredNodeWithPhpDocInfo($functionLikeNode);
 
         return $hasChanged ? $functionLikeNode : null;
+    }
+
+    /**
+     * @throws \Rector\Exception\ShouldNotHappenException
+     */
+    private function hasPrototypeMethod(FunctionLike $functionLikeNode): bool
+    {
+        if (!$functionLikeNode instanceof ClassMethod) {
+            return false;
+        }
+
+        $classReflection = ScopeFetcher::fetch($functionLikeNode)->getClassReflection();
+
+        if (!$classReflection instanceof ClassReflection) {
+            return false;
+        }
+
+        try {
+            return $classReflection->getNativeReflection()->getMethod($this->getName($functionLikeNode))->hasPrototype();
+        } catch (\ReflectionException $reflectionException) {
+            return false;
+        }
     }
 
     private function isUsedVariable(FunctionLike $node, Variable $variableNode): bool
