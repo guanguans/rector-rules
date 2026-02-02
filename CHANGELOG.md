@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.6.1"></a>
+## [1.6.1] - 2026-02-02
+### ✨ Features
+- **rector:** Add driftingly-laravel configuration ([b548d7e](https://github.com/guanguans/rector-rules/commit/b548d7e))
+
+### 💅 Code Refactorings
+- **name:** Preserve enum member types during renaming ([0e5f03c](https://github.com/guanguans/rector-rules/commit/0e5f03c))
+- **rename:** Update enum names to conventional case ([8779276](https://github.com/guanguans/rector-rules/commit/8779276))
+
+
 <a name="1.6.0"></a>
 ## [1.6.0] - 2026-02-01
 ### ✨ Features
@@ -163,7 +173,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.1...HEAD
+[1.6.1]: https://github.com/guanguans/rector-rules/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/guanguans/rector-rules/compare/1.5.2...1.6.0
 [1.5.2]: https://github.com/guanguans/rector-rules/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/guanguans/rector-rules/compare/1.5.0...1.5.1
