@@ -92,7 +92,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
     {
         yield from self::yieldFilesFromDirectory(static::directory().'/Fixture/');
 
-        foreach ((array) glob(static::directory().'/Fixture[0-9]*/', \GLOB_ONLYDIR) as $directory) {
+        foreach ((array) glob(static::directory().'/Fixture\d*/', \GLOB_ONLYDIR) as $directory) {
             if ((int) (\PHP_MAJOR_VERSION.\PHP_MINOR_VERSION) >= (int) (string) Str::of($directory)->basename()->substr(7)) {
                 yield from self::yieldFilesFromDirectory($directory);
             }

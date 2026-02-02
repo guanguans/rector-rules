@@ -547,8 +547,8 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
                 Trait_::class,
                 // enum EnumName{}
                 Enum_::class,
-                // enum Enum{case CaseName;}
-                EnumCase::class,
+                // // enum Enum{case CaseName;}
+                // EnumCase::class,
             ])
         ) {
             return true;
@@ -653,6 +653,8 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
                 Const_::class,
                 // Foo::CONST_NAME;
                 ClassConstFetch::class,
+                // enum Enum{case CASE_NAME;}
+                EnumCase::class,
             ])
         ) {
             return true;
