@@ -636,6 +636,8 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
     }
 
     /**
+     * @see \Rector\CodingStyle\Rector\Enum_\EnumCaseToPascalCaseRector
+     *
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\Variable|\PhpParser\Node\Identifier|\PhpParser\Node\Name $node
      */
     private function shouldUpperSnakeName(Node $node): bool

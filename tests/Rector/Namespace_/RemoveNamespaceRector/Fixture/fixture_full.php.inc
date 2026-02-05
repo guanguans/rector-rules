@@ -1,6 +1,8 @@
 <?php
 
 /** @noinspection ALL */
+declare(strict_types=1);
+
 /**
  * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
  *
@@ -35,6 +37,7 @@ it('is true', function (): void {
 <?php
 
 /** @noinspection ALL */
+declare(strict_types=1);
 /**
  * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
  *
@@ -43,6 +46,7 @@ it('is true', function (): void {
  *
  * @see https://github.com/guanguans/rector-rules
  */
+
 
 use Guanguans\Notify\DingTalk\Authenticator;
 use Guanguans\Notify\DingTalk\Client;
@@ -61,3 +65,5 @@ it('can send text message', function (): void {
 it('is true', function (): void {
     expect(true)->toBeTrue();
 });
+
+?>

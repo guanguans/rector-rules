@@ -66,12 +66,12 @@ final class RemoveNamespaceRector extends AbstractRector
         }
 
         return collect($node->stmts)
-            ->when($node->getComments(), static function (Collection $stmtNodes, array $comments) {
-                $nopNode = new Nop;
-                $nopNode->setAttribute(AttributeKey::COMMENTS, $comments);
-
-                return $stmtNodes->prepend($nopNode);
-            })
+            ->when(
+                $node->getComments(),
+                static fn (Collection $stmtNodes) => $stmtNodes->prepend(
+                    new Nop(collect($node->getAttributes())->only([AttributeKey::COMMENTS])->all())
+                )
+            )
             ->reduce(
                 static function (Collection $stmtNodes, Stmt $stmtNode): Collection {
                     if (
