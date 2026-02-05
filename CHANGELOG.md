@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.6.2"></a>
+## [1.6.2] - 2026-02-05
+### 🐞 Bug Fixes
+- **file:** Improve function statement sorting logic for better accuracy ([dc37a35](https://github.com/guanguans/rector-rules/commit/dc37a35))
+- **namespace:** Improve handling of comments and spacing in RemoveNamespaceRector ([aa20f21](https://github.com/guanguans/rector-rules/commit/aa20f21))
+
+
 <a name="1.6.1"></a>
 ## [1.6.1] - 2026-02-02
 ### ✨ Features
@@ -173,7 +180,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.1...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.2...HEAD
+[1.6.2]: https://github.com/guanguans/rector-rules/compare/1.6.1...1.6.2
 [1.6.1]: https://github.com/guanguans/rector-rules/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/guanguans/rector-rules/compare/1.5.2...1.6.0
 [1.5.2]: https://github.com/guanguans/rector-rules/compare/1.5.1...1.5.2
