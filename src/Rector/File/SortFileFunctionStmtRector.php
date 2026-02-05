@@ -102,9 +102,9 @@ final class SortFileFunctionStmtRector extends AbstractRector
             )
             ->all();
 
-        if ($rootNode->stmts === $sortedStmts) {
-            return null;
-        }
+        // if ($rootNode->stmts === $sortedStmts) {
+        //     return null;
+        // }
 
         $rootNode->stmts = $sortedStmts;
 

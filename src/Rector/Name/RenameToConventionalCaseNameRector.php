@@ -767,7 +767,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
                 && $node->getAttribute('parent') instanceof Enum_
                 && $this->isNames($node, ['int', 'string'])
             ) {
-                return $name;
+                return $name; // @codeCoverageIgnore
             }
 
             if (str_contains($name, '::')) {

@@ -15,7 +15,9 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\Namespace_;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use Illuminate\Support\Collection;
 use PhpParser\Node;
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\Const_;
 use PhpParser\Node\Stmt\Function_;
@@ -45,6 +47,9 @@ final class RemoveNamespaceRector extends AbstractRector
     }
 
     /**
+     * @see \Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector
+     * @see \Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector
+     *
      * @param \PhpParser\Node\Stmt\Namespace_ $node
      *
      * @return null|list<Node>
@@ -60,14 +65,27 @@ final class RemoveNamespaceRector extends AbstractRector
             return null;
         }
 
-        if ($comments = $node->getComments()) {
-            $nopNode = new Nop;
-            $nopNode->setAttribute(AttributeKey::COMMENTS, $comments);
+        return collect($node->stmts)
+            ->when($node->getComments(), static function (Collection $stmtNodes, array $comments) {
+                $nopNode = new Nop;
+                $nopNode->setAttribute(AttributeKey::COMMENTS, $comments);
 
-            array_unshift($node->stmts, $nopNode, new Nop);
-        }
+                return $stmtNodes->prepend($nopNode);
+            })
+            ->reduce(
+                static function (Collection $stmtNodes, Stmt $stmtNode): Collection {
+                    if (
+                        ($prevStmtNode = $stmtNodes->last()) instanceof Stmt
+                        && $stmtNode->getStartLine() - $prevStmtNode->getEndLine() > 1
+                    ) {
+                        $stmtNodes->push(new Nop);
+                    }
 
-        return $node->stmts;
+                    return $stmtNodes->push($stmtNode);
+                },
+                collect()
+            )
+            ->all();
     }
 
     /**

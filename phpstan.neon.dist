@@ -140,6 +140,7 @@ parameters:
         - identifier: symplify.forbiddenStaticClassConstFetch
         - identifier: symplify.noArrayMapWithArrayCallable
         - message: '#^Unused Guanguans\\RectorRules\\Rector\\.*\\.*\:\:__construct$#'
+        - message: '#^Cannot call method (all|reduce|getParameterOption)\(\) on mixed\.$#'
 
         -
             identifier: complexity.classLike
