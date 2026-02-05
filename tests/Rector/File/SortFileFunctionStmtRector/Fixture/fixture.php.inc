@@ -4,7 +4,9 @@
 namespace Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStmtRector\Fixture;
 
 function c(): void {}
+
 function b(): void {}
+
 function a(): void {}
 
 ?>
@@ -15,7 +17,9 @@ function a(): void {}
 namespace Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStmtRector\Fixture;
 
 function a(): void {}
+
 function b(): void {}
+
 function c(): void {}
 
 ?>

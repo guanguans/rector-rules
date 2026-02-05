@@ -1,4 +1,4 @@
-# total 3 errors
+# total 4 errors
 
 parameters:
     ignoreErrors:
@@ -6,6 +6,11 @@ parameters:
             message: '#^Cannot call method all\(\) on mixed\.$#'
             count: 1
             path: ../src/Rector/Array_/SimplifyListIndexRector.php
+
+        -
+            message: '#^Cannot call method all\(\) on mixed\.$#'
+            count: 1
+            path: ../src/Rector/File/SortFileFunctionStmtRector.php
 
         -
             message: '#^Cannot call method all\(\) on mixed\.$#'

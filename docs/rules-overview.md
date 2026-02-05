@@ -266,7 +266,9 @@ Sort file function stmt
 
 -function c(): void {}
 +function a(): void {}
+
  function b(): void {}
+
 -function a(): void {}
 +function c(): void {}
 ```

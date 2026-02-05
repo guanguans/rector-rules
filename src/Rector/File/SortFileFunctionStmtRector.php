@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\File;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use Illuminate\Support\Collection;
 use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\BooleanNot;
@@ -26,6 +27,7 @@ use PhpParser\Node\Stmt\ClassLike;
 use PhpParser\Node\Stmt\Function_;
 use PhpParser\Node\Stmt\If_;
 use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Nop;
 use Rector\PhpParser\Node\FileNode;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
@@ -70,6 +72,10 @@ final class SortFileFunctionStmtRector extends AbstractRector
             || !collect($rootNode->stmts)->containsStrict(
                 fn (Stmt $stmtNode): ?string => $this->parseFuncName($stmtNode)
             )
+            || collect($rootNode->stmts)
+                ->map(fn (Stmt $stmtNode): ?string => $this->parseFuncName($stmtNode))
+                ->filter()
+                ->pipe(static fn (Collection $funcNames): bool => $funcNames->all() === $funcNames->sort()->all())
         ) {
             return null;
         }
@@ -81,7 +87,19 @@ final class SortFileFunctionStmtRector extends AbstractRector
                     ? $aName <=> $bName
                     : 0
             )
-            // ->values()
+            ->reduce(
+                static function (Collection $stmtNodes, Stmt $stmtNode): Collection {
+                    if (
+                        ($prevStmtNode = $stmtNodes->last()) instanceof Stmt
+                        && $stmtNode->getStartLine() <= $prevStmtNode->getEndLine()
+                    ) {
+                        $stmtNodes->push(new Nop);
+                    }
+
+                    return $stmtNodes->push($stmtNode);
+                },
+                collect()
+            )
             ->all();
 
         if ($rootNode->stmts === $sortedStmts) {
@@ -105,7 +123,9 @@ final class SortFileFunctionStmtRector extends AbstractRector
                     namespace Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStmtRector\Fixture;
 
                     function c(): void {}
+
                     function b(): void {}
+
                     function a(): void {}
                     PHP,
                 <<<'PHP'
@@ -113,7 +133,9 @@ final class SortFileFunctionStmtRector extends AbstractRector
                     namespace Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStmtRector\Fixture;
 
                     function a(): void {}
+
                     function b(): void {}
+
                     function c(): void {}
                     PHP
             ),

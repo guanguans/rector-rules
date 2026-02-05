@@ -35,9 +35,11 @@ if (!function_exists('Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStm
     {
     }
 }
+
 function b(): void
 {
 }
+
 if (!function_exists('Guanguans\RectorRulesTests\Rector\File\SortFileFunctionStmtRector\Fixture\c')) {
     function c(): void
     {
