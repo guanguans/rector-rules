@@ -1,10 +1,21 @@
 <?php
 
 /** @noinspection ALL */
+
+use PhpParser\Node;
+use Rector\Rector\AbstractRector;
+use Symfony\Component\OptionsResolver\OptionsResolver as OptionsResolver;
+
 abstract class Foo
 {
     // Skip abstract method.
     abstract public function run($param): void;
+
+    // Skip nop method.
+    protected function configureOptionsResolver(OptionsResolver $optionsResolver): void
+    {
+        // Configure options resolver...
+    }
 }
 
 interface Bar
@@ -12,9 +23,6 @@ interface Bar
     // Skip interface method.
     public function run($param): void;
 }
-
-use PhpParser\Node;
-use Rector\Rector\AbstractRector;
 
 final class FooRector extends AbstractRector
 {

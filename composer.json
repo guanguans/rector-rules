@@ -373,6 +373,7 @@
             "ls -lr builds/rector-rules.phar"
         ],
         "rector-rules:list-files": "Guanguans\\RectorRules\\Support\\ComposerScripts::listFiles",
+        "rector-rules:phpdoc-parse": "Guanguans\\RectorRules\\Support\\ComposerScripts::phpdocParse",
         "rector:custom-rule": "@rector custom-rule",
         "rector:list-rules": "@rector list-rules",
         "rector:process": "@rector process --ansi",

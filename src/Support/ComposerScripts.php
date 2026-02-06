@@ -19,8 +19,17 @@ namespace Guanguans\RectorRules\Support;
 use Composer\Script\Event;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use PhpParser\Comment\Doc;
+use PhpParser\Node\Stmt\Nop;
+use PHPStan\PhpDocParser\Ast\AbstractNodeVisitor;
+use PHPStan\PhpDocParser\Ast\Attribute;
+use PHPStan\PhpDocParser\Ast\Node;
+use PHPStan\PhpDocParser\Ast\NodeTraverser;
+use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory;
+use Rector\BetterPhpDocParser\ValueObject\PhpDocAttributeKey;
 use Rector\Config\RectorConfig;
 use Rector\DependencyInjection\LazyContainerFactory;
+use Rector\PhpParser\Parser\SimplePhpParser;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -46,6 +55,8 @@ final class ComposerScripts
 
     /**
      * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
+     * @see \PhpParser\Builder\
+     * @see \PhpParser\BuilderHelpers
      * @see \Rector\Application\ChangedNodeScopeRefresher
      * @see \Rector\BetterPhpDocParser\Comment\CommentsMerger
      * @see \Rector\BetterPhpDocParser\PhpDocManipulator\
@@ -114,6 +125,52 @@ final class ComposerScripts
             });
 
         return 0;
+    }
+
+    /**
+     *@see vendor/nikic/php-parser/bin/php-parse
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     *
+     * @noinspection ForgottenDebugOutputInspection
+     * @noinspection DebugFunctionUsageInspection
+     * @noinspection PhpVoidFunctionResultUsedInspection
+     */
+    public static function phpdocParse(Event $event): void
+    {
+        self::requireAutoload($event);
+
+        $rectorConfig = self::makeRectorConfig();
+        $path = self::makeArgvInput()->getParameterOption('--path', false, true);
+
+        if ($path) {
+            $node = $rectorConfig->make(SimplePhpParser::class)->parseFile($path)[0];
+        } else {
+            do {
+                $docComment = $event->getIO()->ask(\sprintf('Please provide a doc comment to parse:%s', \PHP_EOL));
+            } while (blank($docComment));
+
+            $node = tap(new Nop)->setDocComment(new Doc($docComment));
+        }
+
+        $phpDocNode = $rectorConfig->make(PhpDocInfoFactory::class)->createFromNodeOrEmpty($node)->getPhpDocNode();
+        (new NodeTraverser([
+            new class extends AbstractNodeVisitor {
+                /**
+                 * @noinspection PhpMissingParentCallCommonInspection
+                 */
+                public function enterNode(Node $node): Node
+                {
+                    // $node->setAttribute(Attribute::ORIGINAL_NODE, null);
+                    $node->setAttribute(PhpDocAttributeKey::ORIG_NODE, null);
+                    $node->setAttribute(PhpDocAttributeKey::PARENT, null);
+
+                    return $node;
+                }
+            },
+        ]))->traverse($phpDocNode->children);
+
+        dump($phpDocNode, (string) $phpDocNode);
     }
 
     public static function makeRectorConfig(): RectorConfig

@@ -27,6 +27,7 @@ use PhpParser\Node\FunctionLike;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Foreach_;
+use PhpParser\Node\Stmt\Nop;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\Reflection\ClassReflection;
 use Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfo;
@@ -268,7 +269,11 @@ final class RenameGarbageParamNameRector extends AbstractRector
     private function isUsedVariable(FunctionLike $node, Variable $variableNode): bool
     {
         // Skip abstract, interface, empty body function like and foreach.
-        if (property_exists($node, 'stmts') && empty($node->stmts)) {
+        if (
+            property_exists($node, 'stmts') && collect($node->stmts)->every(
+                static fn (Node $stmtNode): bool => $stmtNode instanceof Nop
+            )
+        ) {
             return true;
         }
 
