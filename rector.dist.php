@@ -32,7 +32,6 @@ use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
-use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrContainsRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrEndsWithRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
@@ -44,6 +43,7 @@ use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -95,7 +95,7 @@ return RectorConfig::configure()
     // )
     ->withSets([
         Guanguans\RectorRules\Set\SetList::ALL,
-        PHPUnitSetList::PHPUNIT_90,
+        PHPUnitSetList::PHPUNIT_CODE_QUALITY,
         DowngradeLevelSetList::DOWN_TO_PHP_74,
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
@@ -107,10 +107,9 @@ return RectorConfig::configure()
         SetList::INSTANCEOF,
         SetList::EARLY_RETURN,
         // SetList::CARBON,
-
+        SetList::RECTOR_PRESET,
         SetList::ASSERT,
         SetList::PHP_POLYFILLS,
-        SetList::RECTOR_PRESET,
     ])
     ->withRules([
         // ArraySpreadInsteadOfArrayMergeRector::class,
@@ -142,13 +141,6 @@ return RectorConfig::configure()
     //     'ignore_comment' => false,
     //     'ignore_docblock' => false,
     // ])
-    ->withConfiguredRule(RemoveAnnotationRector::class, [
-        'codeCoverageIgnore',
-        'inheritDoc',
-        'phpstan-ignore',
-        'phpstan-ignore-next-line',
-        'psalm-suppress',
-    ])
     ->withSkip([
         DowngradeArrayFirstLastRector::class,
         DowngradeArrayIsListRector::class,
@@ -161,8 +153,9 @@ return RectorConfig::configure()
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
         LogicalToBooleanRector::class,
-        NewlineAfterStatementRector::class,
+        // NewlineAfterStatementRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
+        PreferPHPUnitThisCallRector::class,
         ReturnBinaryOrToEarlyReturnRector::class,
         SplitDoubleAssignRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,

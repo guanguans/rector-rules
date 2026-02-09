@@ -21,6 +21,7 @@ use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
 use Rector\Php82\Rector\Param\AddSensitiveParameterAttributeRector;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -48,5 +49,13 @@ return static function (RectorConfig $rectorConfig): void {
             'token',
             'webHook',
         ],
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(RemoveAnnotationRector::class, [
+        'codeCoverageIgnore',
+        'inheritDoc',
+        'phpstan-ignore',
+        'phpstan-ignore-next-line',
+        'psalm-suppress',
     ]);
 };
