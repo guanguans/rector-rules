@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.6.3"></a>
+## [1.6.3] - 2026-02-06
+### 🐞 Bug Fixes
+- **RenameGarbageParamName:** Improve detection of unused variables in function bodies ([b5f2a33](https://github.com/guanguans/rector-rules/commit/b5f2a33))
+- **namespace:** Enhance comment handling in RemoveNamespaceRector ([200f20a](https://github.com/guanguans/rector-rules/commit/200f20a))
+
+
 <a name="1.6.2"></a>
 ## [1.6.2] - 2026-02-05
 ### 🐞 Bug Fixes
@@ -180,7 +187,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.2...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.3...HEAD
+[1.6.3]: https://github.com/guanguans/rector-rules/compare/1.6.2...1.6.3
 [1.6.2]: https://github.com/guanguans/rector-rules/compare/1.6.1...1.6.2
 [1.6.1]: https://github.com/guanguans/rector-rules/compare/1.6.0...1.6.1
 [1.6.0]: https://github.com/guanguans/rector-rules/compare/1.5.2...1.6.0
