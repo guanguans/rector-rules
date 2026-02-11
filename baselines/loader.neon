@@ -1,8 +1,11 @@
-# total 9 errors
+# total 13 errors
 
 includes:
     - complexity.functionLike.neon
+    - missingType.return.neon
     - rector.avoidFeatureSetAttributeInRector.neon
     - rector.noClassReflectionStaticReflection.neon
+    - return.unresolvableType.neon
     - symplify.forbiddenFuncCall.neon
     - symplify.preferredClass.neon
+    - typeCoverage.returnTypeCoverage.neon

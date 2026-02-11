@@ -35,10 +35,13 @@ final class RenameAppFunctionToResolveFunctionRector extends AbstractRector
         ]);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function getNodeTypes(): array
     {
         // return $this->renameFunctionRector->getNodeTypes();
-        return [FuncCall::class];
+        return (new \ReflectionClass(RenameFunctionRector::class))->newInstanceWithoutConstructor()->getNodeTypes();
     }
 
     /**
