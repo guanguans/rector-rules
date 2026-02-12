@@ -14,53 +14,16 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRules\Rector\FuncCall;
 
-use Guanguans\RectorRules\Rector\AbstractRector;
+use Guanguans\RectorRules\Rector\AbstractProxyRector;
 use PhpParser\Node;
-use PhpParser\Node\Expr\FuncCall;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
 /**
  * @see \Guanguans\RectorRulesTests\Rector\FuncCall\RenameAppFunctionToResolveFunctionRector\RenameAppFunctionToResolveFunctionRectorTest
  */
-final class RenameAppFunctionToResolveFunctionRector extends AbstractRector
+final class RenameAppFunctionToResolveFunctionRector extends AbstractProxyRector
 {
-    private RenameFunctionRector $renameFunctionRector;
-
-    public function __construct(RenameFunctionRector $renameFunctionRector)
-    {
-        $this->renameFunctionRector = clone $renameFunctionRector;
-        $this->renameFunctionRector->configure([
-            'app' => 'resolve',
-        ]);
-    }
-
-    /**
-     * @throws \ReflectionException
-     */
-    public function getNodeTypes(): array
-    {
-        // return $this->renameFunctionRector->getNodeTypes();
-        return (new \ReflectionClass(RenameFunctionRector::class))->newInstanceWithoutConstructor()->getNodeTypes();
-    }
-
-    /**
-     * @see https://github.com/driftingly/rector-laravel/blob/main/src/Rector/FuncCall/AppToResolveRector.php
-     * @see https://github.com/laravel/framework/commit/8f232a972fd8b4bfa1901a47c1e649e2a1278bd6
-     *
-     * @param \PhpParser\Node\Expr\FuncCall $node
-     */
-    public function refactor(Node $node): ?Node
-    {
-        $abstract = $node->getArg('abstract', 0);
-
-        if (null === $abstract || $this->getType($abstract->value)->isNull()->yes()) {
-            return null;
-        }
-
-        return $this->renameFunctionRector->refactor($node);
-    }
-
     /**
      * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample>
      */
@@ -88,5 +51,33 @@ final class RenameAppFunctionToResolveFunctionRector extends AbstractRector
                     PHP,
             ),
         ];
+    }
+
+    /**
+     * @see https://github.com/driftingly/rector-laravel/blob/main/src/Rector/FuncCall/AppToResolveRector.php
+     * @see https://github.com/laravel/framework/commit/8f232a972fd8b4bfa1901a47c1e649e2a1278bd6
+     *
+     * @param \PhpParser\Node\Expr\FuncCall $node
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    protected function rawRefactor(Node $node): ?Node
+    {
+        $abstract = $node->getArg('abstract', 0);
+
+        if (null === $abstract || $this->getType($abstract->value)->isNull()->yes()) {
+            return null;
+        }
+
+        $this->makeProxyRector()->configure([
+            'app' => 'resolve',
+        ]);
+
+        return parent::rawRefactor($node);
+    }
+
+    protected function proxyRectorClass(): string
+    {
+        return RenameFunctionRector::class;
     }
 }

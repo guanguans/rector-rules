@@ -129,10 +129,10 @@ final class SortListItemOfSameScalarTypeRector extends AbstractRector implements
 
     /**
      * @param array{
-     *     ignore_comment: bool,
-     *     ignore_docblock: bool,
-     *     sort_comparator: callable(string, string): int,
-     *     sort_direction: key-of<self::SORT_DIRECTION_MAP>,
+     *     ignore_comment?: bool,
+     *     ignore_docblock?: bool,
+     *     sort_comparator?: callable(string, string): int,
+     *     sort_direction?: key-of<self::SORT_DIRECTION_MAP>,
      * } $configuration
      */
     public function configure(array $configuration): void

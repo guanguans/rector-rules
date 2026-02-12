@@ -3,6 +3,6 @@
 parameters:
     ignoreErrors:
         -
-            message: '#^Method Guanguans\\RectorRules\\Rector\\AbstractProxyRector\:\:applyRefactor\(\) has no return type specified\.$#'
+            message: '#^Method Guanguans\\RectorRules\\Rector\\AbstractProxyRector\:\:rawRefactor\(\) has no return type specified\.$#'
             count: 1
             path: ../src/Rector/AbstractProxyRector.php

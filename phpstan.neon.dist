@@ -131,15 +131,15 @@ parameters:
         - identifier: cast.int
         - identifier: encapsedStringPart.nonString
         - identifier: method.childParameterType
-        - identifier: method.dynamicName
+#        - identifier: method.dynamicName
         - identifier: return.type
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.forbiddenArrayMethodCall
         - identifier: symplify.forbiddenNode
         - identifier: symplify.forbiddenStaticClassConstFetch
         - identifier: symplify.noArrayMapWithArrayCallable
-        - identifier: symplify.noDynamicName
-#        - message: '#^Unused Guanguans\\RectorRules\\Rector\\.*\\.*\:\:__construct$#'
+#        - identifier: symplify.noDynamicName
+        - message: '#^Unused Guanguans\\RectorRules\\Rector\\.*\\.*\:\:__construct$#'
         - message: '#^Cannot call method (all|reduce|getParameterOption)\(\) on mixed\.$#'
 
         -

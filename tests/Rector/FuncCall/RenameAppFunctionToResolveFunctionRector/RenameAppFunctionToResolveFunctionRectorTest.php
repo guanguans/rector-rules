@@ -23,6 +23,7 @@ namespace Guanguans\RectorRulesTests\Rector\FuncCall\RenameAppFunctionToResolveF
 use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
+ * @covers \Guanguans\RectorRules\Rector\AbstractProxyRector
  * @covers \Guanguans\RectorRules\Rector\FuncCall\RenameAppFunctionToResolveFunctionRector
  */
 final class RenameAppFunctionToResolveFunctionRectorTest extends AbstractRectorTestCase

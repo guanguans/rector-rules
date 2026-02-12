@@ -25,23 +25,21 @@ use PhpCsFixer\Finder;
 require __DIR__.'/vendor/autoload.php';
 
 return Factory::fromRuleSet(Php74::create()
-    ->withHeader(
-        (static function (): string {
-            $mit = MIT::text(
-                __DIR__.'/LICENSE',
-                Range::since(
-                    Year::fromString('2025'),
-                    new DateTimeZone('Asia/Shanghai'),
-                ),
-                Holder::fromString('guanguans<ityaozm@gmail.com>'),
-                Url::fromString('https://github.com/guanguans/rector-rules'),
-            );
+    ->withHeader((static function (): string {
+        $mit = MIT::text(
+            __DIR__.'/LICENSE',
+            Range::since(
+                Year::fromString('2025'),
+                new DateTimeZone('Asia/Shanghai'),
+            ),
+            Holder::fromString('guanguans<ityaozm@gmail.com>'),
+            Url::fromString('https://github.com/guanguans/rector-rules'),
+        );
 
-            $mit->save();
+        $mit->save();
 
-            return $mit->header();
-        })()
-    )
+        return $mit->header();
+    })())
     ->withCustomFixers(Fixers::fromFixers(... require __DIR__.'/vendor/guanguans/php-cs-fixer-custom-fixers/config/custom-fixers.php'))
     ->withRules(Rules::fromArray(require __DIR__.'/vendor/guanguans/php-cs-fixer-custom-fixers/config/custom-rules.php'))
     ->withRules(Rules::fromArray(require __DIR__.'/vendor/guanguans/php-cs-fixer-custom-fixers/config/rules.php'))

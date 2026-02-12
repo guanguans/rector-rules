@@ -96,7 +96,7 @@ final class UpdateRectorMethodNodeParamDocblockFromNodeTypesRector extends Abstr
 
     protected function classMethodNode(Class_ $classNode): ?ClassMethod
     {
-        return $classNode->getMethod('refactor');
+        return $classNode->getMethod('refactor') ?? $classNode->getMethod('rawRefactor');
     }
 
     /**
