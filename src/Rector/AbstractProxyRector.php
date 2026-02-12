@@ -16,19 +16,26 @@ namespace Guanguans\RectorRules\Rector;
 
 use PhpParser\Node;
 use Rector\Config\RectorConfig;
+use Rector\DependencyInjection\LazyContainerFactory;
 
 /**
  * @see \PhpCsFixer\AbstractProxyFixer
  */
 abstract class AbstractProxyRector extends AbstractRector
 {
+    protected RectorConfig $rectorConfig;
     protected \Rector\Rector\AbstractRector $proxyRector;
 
     /**
+     * @see \Rector\Testing\PHPUnit\AbstractLazyTestCase::getContainer()
+     *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function __construct(RectorConfig $rectorConfig)
+    public function __construct()
     {
+        $rectorConfig = (new LazyContainerFactory)->create();
+        $rectorConfig->boot();
+        $this->rectorConfig = $rectorConfig;
         $this->proxyRector = clone $rectorConfig->make($this->proxyRectorClass());
     }
 
