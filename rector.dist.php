@@ -62,6 +62,8 @@ return RectorConfig::configure()
     ->withSkip([
         '**/Fixtures/*',
         __DIR__.'/_ide_helper.php',
+        __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
+        __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
         // __DIR__.'/tests.php',
     ])
     ->withCache(__DIR__.'/.build/rector/')
