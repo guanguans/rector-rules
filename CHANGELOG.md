@@ -8,6 +8,26 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.7.0"></a>
+## [1.7.0] - 2026-03-18
+### ✨ Features
+- **deps:** Update dependencies for compatibility and improvements ([1f5ced0](https://github.com/guanguans/rector-rules/commit/1f5ced0))
+- **proxy:** Add AbstractProxyRector class to facilitate proxy rector creation ([bd09d1e](https://github.com/guanguans/rector-rules/commit/bd09d1e))
+
+### 🐞 Bug Fixes
+- **config:** Add RemoveAnnotationRector rule with specific annotations ([f3f9139](https://github.com/guanguans/rector-rules/commit/f3f9139))
+- **proxy:** Initialize RectorConfig in AbstractProxyRector constructor ([7cae1bb](https://github.com/guanguans/rector-rules/commit/7cae1bb))
+
+### 💅 Code Refactorings
+- **FuncCall:** Update RenameAppFunctionToResolveFunctionRector ([5e6c323](https://github.com/guanguans/rector-rules/commit/5e6c323))
+
+### 📦 Builds
+- **deps-dev:** Update shipmonk/dead-code-detector requirement || ^0.15 ([a4c4102](https://github.com/guanguans/rector-rules/commit/a4c4102))
+
+### Pull Requests
+- Merge pull request [#2](https://github.com/guanguans/rector-rules/issues/2) from guanguans/dependabot/composer/shipmonk/dead-code-detector-tw-0.14or-tw-0.15
+
+
 <a name="1.6.3"></a>
 ## [1.6.3] - 2026-02-06
 ### 🐞 Bug Fixes
@@ -187,7 +207,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.6.3...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.7.0...HEAD
+[1.7.0]: https://github.com/guanguans/rector-rules/compare/1.6.3...1.7.0
 [1.6.3]: https://github.com/guanguans/rector-rules/compare/1.6.2...1.6.3
 [1.6.2]: https://github.com/guanguans/rector-rules/compare/1.6.1...1.6.2
 [1.6.1]: https://github.com/guanguans/rector-rules/compare/1.6.0...1.6.1
