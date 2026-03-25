@@ -23,12 +23,10 @@ namespace Guanguans\RectorRulesTests;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use phpmock\phpunit\PHPMock;
-use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    use MatchesSnapshots;
     use MockeryPHPUnitIntegration;
     use PHPMock;
     use VarDumperTestTrait;

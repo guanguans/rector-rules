@@ -1,4 +1,4 @@
-# total 13 errors
+# total 15 errors
 
 includes:
     - complexity.functionLike.neon
@@ -6,6 +6,7 @@ includes:
     - rector.avoidFeatureSetAttributeInRector.neon
     - rector.noClassReflectionStaticReflection.neon
     - return.unresolvableType.neon
+    - shipmonk.unusedParameter.neon
     - symplify.forbiddenFuncCall.neon
     - symplify.preferredClass.neon
     - typeCoverage.returnTypeCoverage.neon

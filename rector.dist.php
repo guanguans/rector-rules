@@ -17,20 +17,20 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
+use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
+use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
-use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
+use Rector\CodingStyle\Rector\Enum_\EnumCaseToPascalCaseRector;
 use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
-use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrContainsRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrEndsWithRector;
@@ -43,10 +43,10 @@ use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
-use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
+use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
@@ -61,7 +61,6 @@ return RectorConfig::configure()
     ->withRootFiles()
     ->withSkip([
         '**/Fixtures/*',
-        __DIR__.'/_ide_helper.php',
         __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
         __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
         // __DIR__.'/tests.php',
@@ -93,11 +92,14 @@ return RectorConfig::configure()
     //     naming: true,
     //     instanceOf: true,
     //     earlyReturn: true,
+    //     // strictBooleans: true,
     //     // carbon: true,
+    //     rectorPreset: true,
+    //     phpunitCodeQuality: true,
     // )
     ->withSets([
         Guanguans\RectorRules\Set\SetList::ALL,
-        PHPUnitSetList::PHPUNIT_CODE_QUALITY,
+        PHPUnitSetList::PHPUNIT_90,
         DowngradeLevelSetList::DOWN_TO_PHP_74,
         SetList::DEAD_CODE,
         SetList::CODE_QUALITY,
@@ -109,12 +111,14 @@ return RectorConfig::configure()
         SetList::INSTANCEOF,
         SetList::EARLY_RETURN,
         // SetList::CARBON,
-        SetList::RECTOR_PRESET,
         SetList::ASSERT,
         SetList::PHP_POLYFILLS,
+        SetList::RECTOR_PRESET,
     ])
     ->withRules([
         // ArraySpreadInsteadOfArrayMergeRector::class,
+        EnumCaseToPascalCaseRector::class,
+        GeneratorPropertyFetchToMethodCallRector::class,
         JsonThrowOnErrorRector::class,
         SafeDeclareStrictTypesRector::class,
         SortAssociativeArrayByKeyRector::class,
@@ -136,13 +140,16 @@ return RectorConfig::configure()
         ],
     ])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
-        'MIT',
-    ])
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT'])
     // ->withConfiguredRule(SortListItemOfSameScalarTypeRector::class, [
     //     'ignore_comment' => false,
     //     'ignore_docblock' => false,
     // ])
+    ->withConfiguredRule(ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector::class, [
+        'namespacePrefixes' => [
+            // 'Guanguans\\RectorRules',
+        ],
+    ])
     ->withSkip([
         DowngradeArrayFirstLastRector::class,
         DowngradeArrayIsListRector::class,
@@ -152,14 +159,12 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         ChangeOrIfContinueToMultiContinueRector::class,
+        DisallowedEmptyRuleFixerRector::class,
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
         LogicalToBooleanRector::class,
-        // NewlineAfterStatementRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
-        PreferPHPUnitThisCallRector::class,
         ReturnBinaryOrToEarlyReturnRector::class,
-        SplitDoubleAssignRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
@@ -177,7 +182,8 @@ return RectorConfig::configure()
             __DIR__.'/tests/',
         ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
-            __DIR__.'/tests/',
+            __DIR__.'/tests/*Test.php',
+            __DIR__.'/tests/Pest.php',
         ],
         StaticClosureRector::class => $staticClosureSkipPaths,
         StringToClassConstantRector::class => [

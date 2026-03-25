@@ -9,6 +9,9 @@
             "stmt",
             "utils"
         ],
-        "paths": []
+        "paths": [
+            "vendor/",
+            "vendor-bin/"
+        ]
     }
 }

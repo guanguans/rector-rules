@@ -1,0 +1,13 @@
+# total 2 errors
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^Arrow function parameter \$_ is unused$#'
+            count: 1
+            path: ../src/Support/helpers.php
+
+        -
+            message: '#^Arrow function parameter \$__ is unused$#'
+            count: 1
+            path: ../src/Support/helpers.php
