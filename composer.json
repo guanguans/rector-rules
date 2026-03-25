@@ -49,20 +49,20 @@
         "bamarni/composer-bin-plugin": "^1.9",
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "composer/composer": "^2.9",
-        "driftingly/rector-laravel": "^2.1",
+        "driftingly/rector-laravel": "^2.2",
         "ergebnis/composer-normalize": "^2.50",
         "ergebnis/license": "^2.7",
         "ergebnis/php-cs-fixer-config": "^6.60",
-        "ergebnis/rector-rules": "^1.14",
+        "ergebnis/phpstan-rules": "^2.13",
+        "ergebnis/rector-rules": "^1.15",
         "fakerphp/faker": "^1.24",
-        "guanguans/php-cs-fixer-custom-fixers": "^1.1",
-        "guanguans/phpstan-rules": "^1.0",
+        "guanguans/php-cs-fixer-custom-fixers": "^1.2",
+        "guanguans/phpstan-rules": "^1.1",
         "mockery/mockery": "^1.6",
         "nette/utils": "^3.2 || ^4.0",
         "pestphp/pest": "^1.23 || ^2.0 || ^3.0 || ^4.0",
         "php-mock/php-mock-phpunit": "^2.15",
         "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-mockery": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
@@ -77,8 +77,9 @@
         "shipmonk/dead-code-detector": "^0.15",
         "shipmonk/name-collision-detector": "^2.1",
         "shipmonk/phpstan-baseline-per-identifier": "^2.3",
-        "spatie/pest-plugin-snapshots": "^1.1 || ^2.0",
+        "shipmonk/phpstan-rules": "^4.3",
         "spaze/phpstan-disallowed-calls": "^4.9",
+        "staabm/annotate-pull-request-from-checkstyle": "^1.8",
         "staabm/phpstan-todo-by": "^0.3",
         "symfony/thanks": "^1.3",
         "symfony/var-dumper": "^5.4 || ^6.0 || ^7.0 || ^8.0",
@@ -166,6 +167,7 @@
         ],
         "checks:optional": [
             "@putenv:xdebug-off",
+            "@composer:unlink",
             "@class-leak:check",
             "@composer-dependency-analyser",
             "@composer:normalize-dry-run",
@@ -183,7 +185,6 @@
             "@sk:finalize-classes-dry-run",
             "@sk:find-multi-classes",
             "@sk:namespace-to-psr-4",
-            "@sk:namespace-to-psr-4-tests",
             "@sk:privatize-constants",
             "@sk:spot-lazy-traits",
             "@todo-lint",
@@ -233,8 +234,14 @@
         "composer:diff": "@composer diff --with-platform --ansi -vv",
         "composer:normalize": "@composer normalize --diff --ansi -vv",
         "composer:normalize-dry-run": "@composer:normalize --dry-run",
+        "composer:unlink": "@php -r \"@unlink('vendor/bin/composer');\"",
         "composer:validate": "@composer validate --check-lock --strict --ansi -vv",
         "detect-collisions": "@php vendor/bin/detect-collisions src/",
+        "ecs": "@php vendor/bin/ecs --ansi -vv",
+        "ecs:check": "@ecs check",
+        "ecs:check-output-format-json": "@ecs:check --output-format=json",
+        "ecs:fix": "@ecs:check --fix",
+        "ecs:list-checkers": "@ecs list-checkers",
         "facade:lint": "@facade:update --lint",
         "facade:update": "@php -f vendor/bin/facade.php -- Guanguans\\\\SoarPHP\\\\Facades\\\\SoarPHP",
         "git-chglog": "git-chglog $(git describe --tags $(git rev-list --tags --max-count=1))",
@@ -298,6 +305,7 @@
             "@putenv:xdebug-off"
         ],
         "pest:coverage": "@pest --coverage-html=.build/phpunit/ --coverage-clover=.build/phpunit/clover.xml",
+        "pest:generate-baseline": "@pest --generate-baseline=phpunit-baseline.xml",
         "pest:highest": [
             "@putenv:php",
             "@putenv:xdebug-on",
@@ -324,6 +332,7 @@
         ],
         "php-cs-fixer:fix": "@php-cs-fixer fix --show-progress=dots --diff",
         "php-cs-fixer:fix-dry-run": "@php-cs-fixer:fix --dry-run",
+        "php-cs-fixer:fix-dry-run-format-annotate-pull-request": "@php vendor/bin/php-cs-fixer --ansi -vv 'fix' '--show-progress=dots' '--diff' '--dry-run' --format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize",
         "php-cs-fixer:list-files": "@php-cs-fixer list-files",
         "php-cs-fixer:list-sets": "@php-cs-fixer list-sets --ansi -vv",
         "php-lint": [
@@ -335,6 +344,14 @@
         "phpmnd": "@php vendor/bin/phpmnd src/ --exclude-path=Support/helpers.phpp --ignore-numbers=2,-1 --hint --progress --ansi -vv",
         "phpstan": "@php vendor/bin/phpstan --ansi -vv",
         "phpstan:analyse": "@phpstan analyse",
+        "phpstan:analyse-error-format-annotate-pull-request": "@php vendor/bin/phpstan --ansi -vv 'analyse' --error-format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize",
+        "phpstan:analyse-error-format-checkstyle": "@phpstan:analyse --error-format=checkstyle",
+        "phpstan:analyse-error-format-github": "@phpstan:analyse --error-format=github",
+        "phpstan:analyse-error-format-llm": "@phpstan:analyse --error-format=llm",
+        "phpstan:analyse-error-format-sarif": [
+            "[ -d .build/phpstan/ ] || mkdir -p .build/phpstan/",
+            "@php vendor/bin/phpstan --ansi -vv 'analyse' --error-format=sarif > .build/phpstan/results.sarif"
+        ],
         "phpstan:analyse-generate-baseline": "@phpstan:analyse --generate-baseline --allow-empty-baseline",
         "phpstan:analyse-split-baseline": [
             "@phpstan:analyse --generate-baseline=baselines/loader.neon --allow-empty-baseline",
@@ -348,6 +365,10 @@
             "@php vendor/bin/pint --ansi -vv"
         ],
         "pint:test": "@pint --test",
+        "pint:test-format-annotate-pull-request": [
+            "@putenv:xdebug-off",
+            "@php vendor/bin/pint --ansi -vv '--test' --format=checkstyle | vendor/bin/cs2pr --notices-as-warnings --colorize"
+        ],
         "putenv:composer-memory-unlimited": "@putenv COMPOSER_MEMORY_LIMIT=-1",
         "putenv:php": [
             "@putenv PHP74=/opt/homebrew/opt/php@7.4/bin/php",
@@ -364,14 +385,6 @@
             "@putenv XDEBUG_SESSION=1"
         ],
         "rector": "@php vendor/bin/rector",
-        "rector-rules": "@php rector-rules --ansi -vv",
-        "rector-rules:app-build": [
-            "@composer install --no-dev --no-scripts --ansi -vv",
-            "@php rector-rules app:build rector-rules.phar --build-version=main --ansi",
-            "@php builds/rector-rules.phar list --ansi -vv",
-            "ls -lh builds/rector-rules.phar",
-            "ls -lr builds/rector-rules.phar"
-        ],
         "rector-rules:list-files": "Guanguans\\RectorRules\\Support\\ComposerScripts::listFiles",
         "rector-rules:phpdoc-parse": "Guanguans\\RectorRules\\Support\\ComposerScripts::phpdocParse",
         "rector:custom-rule": "@rector custom-rule",
@@ -380,8 +393,14 @@
         "rector:process-clear-cache": "@rector:process --clear-cache",
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
+        "rector:process-dry-run-output-format-github": "@rector:process-dry-run --output-format=github",
         "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\ClassMethod\\PrivateToProtectedVisibilityForTraitRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
+        "roave-backward-compatibility-check": [
+            "@putenv:php",
+            "$PHP82 vendor/bin/roave-backward-compatibility-check --install-development-dependencies --ansi -vv"
+        ],
+        "roave-backward-compatibility-check:format-github-actions": "@roave-backward-compatibility-check --format=github-actions",
         "rule-doc-generator": [
             "@putenv:php",
             "$PHP82 rule-doc-generator --ansi -vv"
@@ -397,7 +416,11 @@
         "sk:finalize-classes-dry-run": "@sk:finalize-classes --dry-run",
         "sk:find-multi-classes": "@sk find-multi-classes src/",
         "sk:generate-symfony-config-builders": "@sk generate-symfony-config-builders --help",
-        "sk:namespace-to-psr-4": "@sk namespace-to-psr-4 src/ --namespace-root=Guanguans\\RectorRules\\",
+        "sk:namespace-to-psr-4": [
+            "@sk:namespace-to-psr-4-src",
+            "@sk:namespace-to-psr-4-tests"
+        ],
+        "sk:namespace-to-psr-4-src": "@sk namespace-to-psr-4 src/ --namespace-root=Guanguans\\RectorRules\\",
         "sk:namespace-to-psr-4-tests": "@sk namespace-to-psr-4 tests/ --namespace-root=Guanguans\\RectorRulesTests\\",
         "sk:pretty-json": "@sk pretty-json .lintmdrc",
         "sk:pretty-json-dry-run": "@sk:pretty-json --dry-run",
@@ -405,19 +428,6 @@
         "sk:search-regex": "@sk search-regex 'Guanguans.*ValetDrivers'",
         "sk:split-config-per-package": "@sk split-config-per-package monorepo-builder.php",
         "sk:spot-lazy-traits": "@sk spot-lazy-traits src/ --max-used=2",
-        "testbench": "@php vendor/bin/testbench --ansi",
-        "testbench:build": "@testbench workbench:build",
-        "testbench:clear": "@testbench package:purge-skeleton",
-        "testbench:prepare": "@testbench package:discover",
-        "testbench:serve": [
-            "@composer-config:disable-process-timeout",
-            "@testbench:build",
-            "@testbench serve"
-        ],
-        "testbench:test": [
-            "@testbench:clear",
-            "@pest"
-        ],
         "todo-lint": "! git --no-pager grep --extended-regexp --ignore-case 'todo|fixme' -- '*.php' ':!*.blade.php' ':(exclude)resources/'",
         "trufflehog": "trufflehog git https://github.com/guanguans/rector-rules --only-verified",
         "typos": "typos --color=always --sort --verbose",

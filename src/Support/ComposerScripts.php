@@ -124,11 +124,14 @@ final class ComposerScripts
                 $event->getIO()->info(Str::remove(getcwd().\DIRECTORY_SEPARATOR, $reflectionClass->getFileName()));
             });
 
+        $event->getIO()->info('');
+        $event->getIO()->info('No errors');
+
         return 0;
     }
 
     /**
-     *@see vendor/nikic/php-parser/bin/php-parse
+     * @see vendor/nikic/php-parser/bin/php-parse
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      *
