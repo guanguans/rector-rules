@@ -2,6 +2,7 @@
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection EfferentObjectCouplingInspection */
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -168,9 +169,6 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         ];
     }
 
-    /**
-     * @throws \Rector\Exception\ShouldNotHappenException
-     */
     private function doRefactor(Array_ $arrayNode, ClassReflection $classReflection): bool
     {
         $configurationArrayNode = $this->createConfigurationArrayNode($classReflection);
@@ -225,9 +223,6 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         return $hasChanged;
     }
 
-    /**
-     * @throws \Rector\Exception\ShouldNotHappenException
-     */
     private function createConfigurationArrayNode(ClassReflection $classReflection): ?Array_
     {
         if (!$classReflection->getNativeReflection()->isSubclassOf(ConfigurableRectorInterface::class)) {

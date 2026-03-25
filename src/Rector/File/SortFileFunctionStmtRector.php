@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
+/** @noinspection EfferentObjectCouplingInspection */
 declare(strict_types=1);
 
 /**

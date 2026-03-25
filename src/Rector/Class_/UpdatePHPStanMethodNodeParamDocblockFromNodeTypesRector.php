@@ -1,7 +1,6 @@
 <?php
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
-/** @noinspection PhpUnusedAliasInspection */
 
 declare(strict_types=1);
 

@@ -2,7 +2,7 @@
 
 /** @noinspection EfferentObjectCouplingInspection */
 /** @noinspection PhpUnused */
-
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**

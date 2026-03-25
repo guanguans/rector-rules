@@ -83,6 +83,8 @@ final class RenameGarbageParamNameRector extends AbstractRector
      * @see \Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector
      *
      * @param \PhpParser\Node\FunctionLike|\PhpParser\Node\Stmt\Foreach_ $node
+     *
+     * @throws \Rector\Exception\ShouldNotHappenException
      */
     public function refactor(Node $node): ?Node
     {
@@ -171,6 +173,8 @@ final class RenameGarbageParamNameRector extends AbstractRector
     }
 
     /**
+     * @throws \Rector\Exception\ShouldNotHappenException
+     *
      * @noinspection PhpParamsInspection
      */
     private function refactorForeach(Foreach_ $foreachNode): ?Foreach_

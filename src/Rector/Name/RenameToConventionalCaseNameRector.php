@@ -2,7 +2,6 @@
 
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection EfferentObjectCouplingInspection */
-/** @noinspection PhpUnusedAliasInspection */
 /** @noinspection PropertyCanBeStaticInspection */
 declare(strict_types=1);
 
