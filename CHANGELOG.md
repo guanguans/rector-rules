@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.7.1"></a>
+## [1.7.1] - 2026-03-25
+### ✨ Features
+- **deps:** Add phpstan-rules and update existing dependencies ([2e1f7a4](https://github.com/guanguans/rector-rules/commit/2e1f7a4))
+
+### 🤖 Continuous Integrations
+- **config:** Update github config files ([0ac5c1e](https://github.com/guanguans/rector-rules/commit/0ac5c1e))
+- **config:** Update config files ([3bddc11](https://github.com/guanguans/rector-rules/commit/3bddc11))
+
+
 <a name="1.7.0"></a>
 ## [1.7.0] - 2026-03-18
 ### ✨ Features
@@ -207,7 +217,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.7.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.7.1...HEAD
+[1.7.1]: https://github.com/guanguans/rector-rules/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/guanguans/rector-rules/compare/1.6.3...1.7.0
 [1.6.3]: https://github.com/guanguans/rector-rules/compare/1.6.2...1.6.3
 [1.6.2]: https://github.com/guanguans/rector-rules/compare/1.6.1...1.6.2
