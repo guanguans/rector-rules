@@ -19,31 +19,55 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Support\Utils;
+use Guanguans\RectorRules\Support\ComposerScripts;
 
-// arch('will not use debugging functions')
-//     // ->throwsNoExceptions()
+// arch()
 //     ->group(__DIR__, __FILE__)
+//     // ->skip()
+//     ->preset()->php()->ignoring([
+//     ]);
+//
+// arch()
+//     ->group(__DIR__, __FILE__)
+//     ->skip()
+//     ->preset()->laravel()->ignoring([
+//         ComposerScripts::class,
+//     ]);
+//
+// arch()
+//     ->group(__DIR__, __FILE__)
+//     // ->skip()
+//     ->preset()->security()->ignoring([
+//         'assert',
+//     ]);
+//
+// arch()
+//     ->group(__DIR__, __FILE__)
+//     ->skip()
+//     ->preset()->strict()->ignoring([
+//     ]);
+//
+// arch()
+//     ->group(__DIR__, __FILE__)
+//     ->skip()
+//     ->preset()->relaxed()->ignoring([
+//     ]);
+//
+// arch('will not use debugging functions')
+//     ->group(__DIR__, __FILE__)
+//     // ->throwsNoExceptions()
+//     // ->skip()
 //     ->expect([
 //         'dd',
-//         'die',
-//         'dump',
-//         'echo',
 //         'env',
 //         'env_explode',
 //         'env_getcsv',
 //         'exit',
-//         'print',
-//         'print_r',
 //         'printf',
-//         'ray',
-//         'trap',
-//         'var_dump',
-//         'var_export',
 //         'vprintf',
 //     ])
 //     // ->each
 //     ->not->toBeUsed()
 //     ->ignoring([
-//         Utils::class,
+//         ComposerScripts::class,
 //     ]);

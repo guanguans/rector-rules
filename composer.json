@@ -303,8 +303,14 @@
             "@php vendor/bin/pest --colors=always --min=80 --coverage",
             "@putenv:xdebug-off"
         ],
+        "pest:bail": "@pest --bail",
+        "pest:ci": "@pest --ci",
         "pest:coverage": "@pest --coverage-html=.build/phpunit/ --coverage-clover=.build/phpunit/clover.xml",
+        "pest:debug": "@pest --debug",
+        "pest:dirty": "@pest --dirty",
+        "pest:drift": "@pest --drift",
         "pest:generate-baseline": "@pest --generate-baseline=phpunit-baseline.xml",
+        "pest:headed": "@pest --headed",
         "pest:highest": [
             "@putenv:php",
             "@putenv:xdebug-on",
@@ -312,9 +318,12 @@
             "@putenv:xdebug-off"
         ],
         "pest:migrate-configuration": "@pest --migrate-configuration",
+        "pest:mutate": "@pest --mutate",
         "pest:parallel": "@pest --parallel",
         "pest:profanity": "@pest --profanity --language=en",
         "pest:profile": "@pest --profile",
+        "pest:retry": "@pest --retry",
+        "pest:todos": "@pest --todos",
         "pest:type-coverage": "@pest --type-coverage",
         "pest:update-snapshots": "@pest --update-snapshots",
         "php-cs-fixer": "@php vendor/bin/php-cs-fixer --ansi -vv",

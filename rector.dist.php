@@ -60,7 +60,7 @@ return RectorConfig::configure()
     ])
     ->withRootFiles()
     ->withSkip([
-        '**/Fixtures/*',
+        '*/Fixtures/*',
         __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
         __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
         // __DIR__.'/tests.php',
@@ -168,8 +168,12 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        JsonThrowOnErrorRector::class => [
+            __DIR__.'/tests/Pest.php',
+        ],
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/src/Rector/*Rector.php',
+            __DIR__.'/tests/Pest.php',
         ],
         RenameVariableToMatchMethodCallReturnTypeRector::class => [
             __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
