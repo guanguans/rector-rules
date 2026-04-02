@@ -39,6 +39,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
+ * @see https://github.com/laravel/framework/blob/12.x/src/Illuminate/Foundation/ComposerScripts.php
+ *
  * @internal
  *
  * @property \Symfony\Component\Console\Output\ConsoleOutput $output

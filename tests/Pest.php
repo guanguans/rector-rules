@@ -39,7 +39,7 @@ use Pest\Expectation;
 //     ->timeout(10000);
 // pest()->only();
 // pest()->printer()->compact();
-// pest()->project()->github('guanguans/notify');
+// pest()->project()->github('guanguans/rector-rules');
 uses(TestCase::class)
     ->beforeAll(function (): void {})
     ->beforeEach(function (): void {})
