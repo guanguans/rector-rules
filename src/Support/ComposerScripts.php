@@ -141,7 +141,7 @@ final class ComposerScripts
      * @noinspection DebugFunctionUsageInspection
      * @noinspection PhpVoidFunctionResultUsedInspection
      */
-    public static function phpdocParse(Event $event): void
+    public static function parsePhpdoc(Event $event): void
     {
         self::requireAutoload($event);
 

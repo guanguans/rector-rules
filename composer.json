@@ -151,6 +151,10 @@
             "@composer:normalize"
         ],
         "actionlint": "actionlint -ignore=SC2035 -ignore=SC2086 -color -oneline -verbose",
+        "app:fix-neon": "Guanguans\\PHPStanRules\\Support\\ComposerScripts::fixNeon",
+        "app:lint-readme": "App\\Support\\ComposerScripts::lintReadme",
+        "app:list-files": "Guanguans\\RectorRules\\Support\\ComposerScripts::listFiles",
+        "app:parse-phpdoc": "Guanguans\\RectorRules\\Support\\ComposerScripts::parsePhpdoc",
         "argtyper": "@php vendor/bin/argtyper --ansi -vv",
         "argtyper:add-types": "@argtyper add-types .",
         "blade-formatter": "blade-formatter resources/views/*.blade.php resources/views/**/*.blade.php --ignore-path= --php-version=7.4 --progress",
@@ -167,6 +171,7 @@
         ],
         "checks:optional": [
             "@putenv:xdebug-off",
+            "@app:list-files",
             "@composer:unlink",
             "@class-leak:check",
             "@composer-dependency-analyser",
@@ -178,7 +183,6 @@
             "@jsonlint",
             "@phpmnd",
             "@phpstan:analyse",
-            "@rector-rules:list-files",
             "@rector:process-dry-run",
             "@sk:check-commented-code",
             "@sk:check-conflicts",
@@ -393,8 +397,6 @@
             "@putenv XDEBUG_SESSION=1"
         ],
         "rector": "@php vendor/bin/rector",
-        "rector-rules:list-files": "Guanguans\\RectorRules\\Support\\ComposerScripts::listFiles",
-        "rector-rules:phpdoc-parse": "Guanguans\\RectorRules\\Support\\ComposerScripts::phpdocParse",
         "rector:custom-rule": "@rector custom-rule",
         "rector:list-rules": "@rector list-rules",
         "rector:process": "@rector process --ansi",
