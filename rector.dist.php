@@ -48,7 +48,6 @@ use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Transform\Rector\String_\StringToClassConstantRector;
-use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
 use Rector\ValueObject\PhpVersion;
 
 return RectorConfig::configure()
@@ -120,7 +119,6 @@ return RectorConfig::configure()
         EnumCaseToPascalCaseRector::class,
         GeneratorPropertyFetchToMethodCallRector::class,
         JsonThrowOnErrorRector::class,
-        SafeDeclareStrictTypesRector::class,
         SortAssociativeArrayByKeyRector::class,
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
