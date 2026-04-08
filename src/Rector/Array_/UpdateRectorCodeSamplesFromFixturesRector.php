@@ -276,7 +276,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         //     ['/tests/', '/config/configured_rule.php'],
         //     $classReflection->getNativeReflection()->getFileName()
         // );
-        return (string) Str::of($classReflection->getNativeReflection()->getName())
+        return (string) \str($classReflection->getNativeReflection()->getName())
             ->replace(['Guanguans\\RectorRules\\', '\\'], ['tests/', '/'])
             ->append('/config/configured_rule.php');
     }
@@ -292,7 +292,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         //     $classReflection->getNativeReflection()->getFileName()
         // ));
         return glob(
-            (string) Str::of($classReflection->getNativeReflection()->getName())
+            (string) \str($classReflection->getNativeReflection()->getName())
                 ->replace(['Guanguans\\RectorRules\\', '\\'], ['tests/', '/'])
                 ->append('/Fixture/fixture.php.inc')
         );
@@ -300,7 +300,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
 
     private function sanitizeCode(string $code): string
     {
-        return (string) Str::of($code)
+        return (string) \str($code)
             ->trim()
             ->whenStartsWith($start = '<?php', static fn (Stringable $code) => $code->replaceFirst($start, ''))
             ->whenEndsWith($finish = '?>', static fn (Stringable $code) => $code->replaceLast($finish, ''))

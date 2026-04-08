@@ -96,15 +96,15 @@ final class ComposerScripts
         require_once $event->getComposer()->getConfig()->get('vendor-dir').'/rector/rector/vendor/autoload.php';
 
         classes(
-            static fn (string $class, string $file): bool => Str::of($class)->startsWith('Rector\\')
-                && Str::of($class)->afterLast('\\')->contains([
+            static fn (string $class, string $file): bool => \str($class)->startsWith('Rector\\')
+                && \str($class)->afterLast('\\')->contains([
                     'Better',
                     // 'Factory',
                     // 'Resolver',
                     // 'er',
                     // 'Renamer',
                 ])
-                && !Str::of($file)->contains([
+                && !\str($file)->contains([
                     '/rector-doctrine/',
                     '/rector-downgrade-php/',
                     '/rector-phpunit/',

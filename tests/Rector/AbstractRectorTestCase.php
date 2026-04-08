@@ -60,7 +60,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
     {
         self::assertSame(
             static::class,
-            (string) Str::of(static::rectorClass())
+            (string) \str(static::rectorClass())
                 ->replace('RectorRules', 'RectorRulesTests')
                 ->append('\\', static::rectorReflectionClass()->getShortName(), 'Test')
         );
@@ -82,7 +82,6 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
      * @noinspection PhpLanguageLevelInspection
      * @noinspection PhpUndefinedNamespaceInspection
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('provideCases')]
     final public function test(string $filePath): void
     {
         $this->doTestFile($filePath);
@@ -93,7 +92,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
         yield from self::yieldFilesFromDirectory(static::directory().'/Fixture/');
 
         foreach ((array) glob(static::directory().'/Fixture\d*/', \GLOB_ONLYDIR) as $directory) {
-            if ((int) (\PHP_MAJOR_VERSION.\PHP_MINOR_VERSION) >= (int) (string) Str::of($directory)->basename()->substr(7)) {
+            if ((int) (\PHP_MAJOR_VERSION.\PHP_MINOR_VERSION) >= (int) (string) \str($directory)->basename()->substr(7)) {
                 yield from self::yieldFilesFromDirectory($directory);
             }
         }
@@ -146,7 +145,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
      */
     protected static function rectorClass(): string
     {
-        return (string) Str::of((new \ReflectionClass(static::class))->getNamespaceName())->replace(
+        return (string) \str((new \ReflectionClass(static::class))->getNamespaceName())->replace(
             'RectorRulesTests',
             'RectorRules'
         );
