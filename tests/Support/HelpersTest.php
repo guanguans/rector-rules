@@ -31,13 +31,13 @@ use function Guanguans\RectorRules\Support\is_subclass_of_all;
 use function Guanguans\RectorRules\Support\is_subclass_of_any;
 
 it('will throw `ReflectionException` when call classes function', function (): void {
-    classes(fn (string $class): bool => \str($class)->startsWith('Illuminate\Support'));
+    classes(fn (string $class): bool => Str::of($class)->startsWith('Illuminate\Support'));
 })
     ->group(__DIR__, __FILE__)
     ->throws(ReflectionException::class);
 
 it('can get classes', function (): void {
-    expect(classes(fn (string $class): bool => \str($class)->startsWith(Str::class)))
+    expect(classes(fn (string $class): bool => Str::of($class)->startsWith(Str::class)))
         ->toBeInstanceOf(Collection::class);
 })->group(__DIR__, __FILE__);
 
