@@ -41,7 +41,7 @@ abstract class AbstractRector extends \Rector\Rector\AbstractRector implements D
 
     protected function description(): string
     {
-        return (string) \str(static::class)
+        return (string) Str::of(static::class)
             ->afterLast('\\')
             ->beforeLast('Rector')
             ->headline()
