@@ -82,6 +82,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
      * @noinspection PhpLanguageLevelInspection
      * @noinspection PhpUndefinedNamespaceInspection
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('provideCases')]
     final public function test(string $filePath): void
     {
         $this->doTestFile($filePath);
