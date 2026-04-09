@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.7.2"></a>
+## [1.7.2] - 2026-04-09
+### 💅 Code Refactorings
+- **RectorErrorException:** Improve method annotations and variable naming ([d432500](https://github.com/guanguans/rector-rules/commit/d432500))
+
+### 📦 Builds
+- **dependencies:** Update package versions in composer.json ([6c684d3](https://github.com/guanguans/rector-rules/commit/6c684d3))
+- **deps:** Bump codecov/codecov-action from 5 to 6 ([bf1123d](https://github.com/guanguans/rector-rules/commit/bf1123d))
+
+### 🤖 Continuous Integrations
+- **config:** Update config files ([57f87e8](https://github.com/guanguans/rector-rules/commit/57f87e8))
+- **config:** Update config files ([7472617](https://github.com/guanguans/rector-rules/commit/7472617))
+- **config:** Update pest config files ([63fe302](https://github.com/guanguans/rector-rules/commit/63fe302))
+- **config:** Update config files ([c8fdbc3](https://github.com/guanguans/rector-rules/commit/c8fdbc3))
+
+
 <a name="1.7.1"></a>
 ## [1.7.1] - 2026-03-25
 ### ✨ Features
@@ -217,7 +233,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.7.1...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.7.2...HEAD
+[1.7.2]: https://github.com/guanguans/rector-rules/compare/1.7.1...1.7.2
 [1.7.1]: https://github.com/guanguans/rector-rules/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/guanguans/rector-rules/compare/1.6.3...1.7.0
 [1.6.3]: https://github.com/guanguans/rector-rules/compare/1.6.2...1.6.3
