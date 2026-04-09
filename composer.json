@@ -281,7 +281,7 @@
         "mago:lint-semantics-only": "@mago lint --semantics-only",
         "monorepo-builder": [
             "@putenv:php",
-            "$PHP82 vendor/bin/monorepo-builder --ansi -vv"
+            "$PHP82 vendor/bin/monorepo-builder --config=vendor-bin/php82/vendor/guanguans/monorepo-builder-worker/monorepo-builder.php --ansi -vv"
         ],
         "monorepo-builder:release": [
             "@git-chglog",
