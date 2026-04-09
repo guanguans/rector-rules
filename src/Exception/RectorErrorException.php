@@ -21,6 +21,10 @@ use Rector\Rector\AbstractRector;
 
 /**
  * @see \PhpCsFixer\ConfigurationException\InvalidFixerConfigurationException
+ *
+ * @method \Rector\ValueObject\Application\File getFile()
+ *
+ * @noinspection PhpFullyQualifiedNameUsageInspection
  */
 final class RectorErrorException extends Error implements ThrowableContract
 {
@@ -33,7 +37,7 @@ final class RectorErrorException extends Error implements ThrowableContract
             \sprintf(
                 '[%s:%s%s] %s',
                 (new \ReflectionObject($rector))->getShortName(),
-                (string) Str::of((fn (): string => $this->getFile()->getFilePath())->bindTo($rector, $rector)()) // @phpstan-ignore method.nonObject
+                (string) Str::of((fn (): string => $this->getFile()->getFilePath())->bindTo($rector, $rector)())
                     // ->chopStart(getcwd().\DIRECTORY_SEPARATOR)
                     // ->replaceStart(getcwd().\DIRECTORY_SEPARATOR, '')
                     ->whenStartsWith(

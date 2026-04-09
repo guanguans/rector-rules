@@ -42,6 +42,8 @@ final class AddNoinspectionDocblockToFileFirstStmtRector extends AbstractRector 
 
     /**
      * @param \Rector\PhpParser\Node\FileNode $node
+     *
+     * @throws \Rector\Exception\ShouldNotHappenException
      */
     public function refactor(Node $node): ?Node
     {
@@ -138,6 +140,9 @@ final class AddNoinspectionDocblockToFileFirstStmtRector extends AbstractRector 
         ];
     }
 
+    /**
+     * @throws \Rector\Exception\ShouldNotHappenException
+     */
     private function inspectionsContains(Comment $comment): bool
     {
         foreach ($this->getInspections() as $inspection) {
@@ -150,6 +155,8 @@ final class AddNoinspectionDocblockToFileFirstStmtRector extends AbstractRector 
     }
 
     /**
+     * @throws \Rector\Exception\ShouldNotHappenException
+     *
      * @return list<string>
      */
     private function getInspections(): array

@@ -57,23 +57,23 @@ final class SortFileFunctionStmtRector extends AbstractRector
      */
     public function refactor(Node $node): ?Node
     {
-        $stmt = collect($node->stmts)->first(
+        $rootNode = collect($node->stmts)->first(
             static fn (Stmt $stmtNode): bool => $stmtNode instanceof Namespace_,
             $node
         );
-        \assert($stmt instanceof FileNode || $stmt instanceof Namespace_);
+        \assert($rootNode instanceof FileNode || $rootNode instanceof Namespace_);
 
         if (
-            collect($stmt->stmts)->containsStrict(
+            collect($rootNode->stmts)->containsStrict(
                 static fn (Stmt $stmtNode): bool => $stmtNode instanceof ClassLike
             )
-            || !collect($stmt->stmts)->containsStrict(
+            || !collect($rootNode->stmts)->containsStrict(
                 static fn (Stmt $stmtNode): bool => $stmtNode instanceof Function_ || $stmtNode instanceof If_
             )
-            || !collect($stmt->stmts)->containsStrict(
+            || !collect($rootNode->stmts)->containsStrict(
                 fn (Stmt $stmtNode): ?string => $this->parseFuncName($stmtNode)
             )
-            || collect($stmt->stmts)
+            || collect($rootNode->stmts)
                 ->map(fn (Stmt $stmtNode): ?string => $this->parseFuncName($stmtNode))
                 ->filter()
                 ->pipe(static fn (Collection $funcNames): bool => $funcNames->all() === $funcNames->sort()->all())
@@ -82,7 +82,7 @@ final class SortFileFunctionStmtRector extends AbstractRector
         }
 
         /** @var list<Stmt> $sortedStmts */
-        $sortedStmts = collect($stmt->stmts)
+        $sortedStmts = collect($rootNode->stmts)
             ->sort(
                 fn (Stmt $a, Stmt $b): int => ($aName = $this->parseFuncName($a)) && ($bName = $this->parseFuncName($b))
                     ? $aName <=> $bName
@@ -107,7 +107,7 @@ final class SortFileFunctionStmtRector extends AbstractRector
         //     return null;
         // }
 
-        $stmt->stmts = $sortedStmts;
+        $rootNode->stmts = $sortedStmts;
 
         return $node;
     }

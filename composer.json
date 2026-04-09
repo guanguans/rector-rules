@@ -172,10 +172,10 @@
         "checks:optional": [
             "@putenv:xdebug-off",
             "@app:list-files",
-            "@composer:unlink",
             "@class-leak:check",
             "@composer-dependency-analyser",
             "@composer:normalize-dry-run",
+            "@composer:unlink",
             "@detect-collisions",
             "@jack:breakpoint",
             "@jack:open-versions-dry-run",
@@ -255,7 +255,7 @@
             "$PHP82 vendor/bin/grumphp run --ansi -vv"
         ],
         "jack": "@php -d='error_reporting=E_ALL &~ E_DEPRECATED' vendor/bin/jack",
-        "jack:breakpoint": "@jack breakpoint --limit=8",
+        "jack:breakpoint": "@jack breakpoint --limit=9",
         "jack:breakpoint-dev": "@jack:breakpoint --dev",
         "jack:open-versions": "@jack open-versions --limit=99",
         "jack:open-versions-dev": "@jack:open-versions --dev",
