@@ -259,12 +259,10 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         /** @var array<string, Array_> $configurationNodes */
         static $configurationNodes = [];
 
-        if (!isset($configurationNodes[$configFile])) {
-            $configurationNodes[$configFile] = $this->betterNodeFinder->findFirstInstanceOf(
-                $this->simplePhpParser->parseFile($configFile),
-                Array_::class
-            );
-        }
+        $configurationNodes[$configFile] ??= $this->betterNodeFinder->findFirstInstanceOf(
+            $this->simplePhpParser->parseFile($configFile),
+            Array_::class
+        );
 
         return $configurationNodes[$configFile];
     }
