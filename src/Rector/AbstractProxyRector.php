@@ -79,7 +79,8 @@ abstract class AbstractProxyRector extends AbstractRector
         }
 
         $rectorConfig = (new LazyContainerFactory)->create();
-        $rectorConfig->singletonIf($this->proxyRectorClass());
+        // $rectorConfig->singletonIf($this->proxyRectorClass());
+        $rectorConfig->bound($this->proxyRectorClass()) or $rectorConfig->singleton($this->proxyRectorClass());
         $rectorConfig->boot();
 
         return $rectorConfig;

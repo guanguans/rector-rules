@@ -62,7 +62,12 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
             static::class,
             (string) Str::of(static::rectorClass())
                 ->replace('RectorRules', 'RectorRulesTests')
-                ->append('\\', static::rectorReflectionClass()->getShortName(), 'Test')
+                ->append(
+                    '\\',
+                    static::rectorReflectionClass()
+                        ->getShortName(),
+                    'Test'
+                )
         );
     }
 
@@ -81,6 +86,8 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
      * @noinspection PhpFullyQualifiedNameUsageInspection
      * @noinspection PhpLanguageLevelInspection
      * @noinspection PhpUndefinedNamespaceInspection
+     *
+     * @doesNotPerformAssertions
      */
     #[\PHPUnit\Framework\Attributes\DataProvider('provideCases')]
     final public function test(string $filePath): void
