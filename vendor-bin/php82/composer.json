@@ -1,12 +1,12 @@
 {
     "require-dev": {
         "php": ">=8.2",
-        "ergebnis/composer-normalize": "^2.51",
+        "ergebnis/composer-normalize": "^2.52",
         "guanguans/monorepo-builder-worker": "^3.2",
-        "guzzlehttp/guzzle": "^7.10",
-        "laravel/framework": "^12.58 || ^13.0",
+        "guzzlehttp/guzzle": "^7.15 || ^8.0",
+        "laravel/framework": "^12.69 || ^13.0",
         "peckphp/peck": "^0.3",
-        "phpbench/phpbench": "^1.6"
+        "phpbench/phpbench": "^1.7"
     },
     "suggest": {
         "jbelien/phpstan-sarif-formatter": "php > 7.4",
