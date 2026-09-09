@@ -64,6 +64,7 @@ return static function (RectorConfig $rectorConfig): void {
         TokenIterator::class => BetterTokenIterator::class,
     ]);
 
+    /** @noinspection NullableArgumentPassedInspection */
     $rectorConfig->ruleWithConfiguration(StringToClassConstantRector::class, array_reduce(
         [
             AttributeKey::class,
@@ -72,10 +73,11 @@ return static function (RectorConfig $rectorConfig): void {
         static fn (array $carry, string $class): array => array_merge(
             $carry,
             array_map(
-                static fn (
-                    string $string,
-                    string $constant
-                ): StringToClassConstant => new StringToClassConstant($string, $class, $constant),
+                static fn (string $string, string $constant): StringToClassConstant => new StringToClassConstant(
+                    $string,
+                    $class,
+                    $constant
+                ),
                 $constants = (new ReflectionClass($class))->getConstants(),
                 array_keys($constants),
             ),
@@ -83,13 +85,12 @@ return static function (RectorConfig $rectorConfig): void {
         [],
     ));
 
-    $rectorConfig->ruleWithConfiguration(
-        ScalarValueToConstFetchRector::class,
-        collect((new ReflectionClass(PhpVersion::class))->getConstants())
-            ->map(static fn (int $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-                new Int_($value),
-                new ClassConstFetch(new FullyQualified(PhpVersion::class), new Identifier($name))
-            ))
-            ->all()
-    );
+    // $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchRector::class, array_map(
+    //     static fn (int $value, string $constant): ScalarValueToConstFetch => new ScalarValueToConstFetch(
+    //         new Int_($value),
+    //         new ClassConstFetch(new FullyQualified(PhpVersion::class), new Identifier($constant))
+    //     ),
+    //     $constants = (new ReflectionClass(PhpVersion::class))->getConstants(),
+    //     array_keys($constants)
+    // ));
 };

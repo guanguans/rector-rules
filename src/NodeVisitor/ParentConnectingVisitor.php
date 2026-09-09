@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpMissingParentCallCommonInspection */
 declare(strict_types=1);
 
 /**
@@ -47,6 +48,9 @@ final class ParentConnectingVisitor extends NodeVisitorAbstract implements Decor
         $this->stack = [];
     }
 
+    /**
+     * @noinspection OffsetOperationsInspection
+     */
     public function enterNode(Node $node): void
     {
         if ([] !== $this->stack) {

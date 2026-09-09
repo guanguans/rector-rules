@@ -23,20 +23,17 @@ use Symfony\Component\HttpFoundation\Response;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
 
-    /**
-     * @required symfony/http-foundation
-     */
-    if (class_exists(Response::class)) {
-        $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchRector::class, array_map(
-            static fn (int $value, string $constant): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-                new Int_($value),
-                new ClassConstFetch(new FullyQualified(Response::class), new Identifier($constant))
-            ),
-            $constants = array_filter(
-                (new ReflectionClass(Response::class))->getConstants(),
-                static fn ($value): bool => \is_int($value),
-            ),
-            array_keys($constants)
-        ));
-    }
+    // /**
+    //  * @required symfony/http-foundation
+    //  */
+    // if (class_exists(Response::class)) {
+    //     $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchRector::class, array_map(
+    //         static fn (int $value, string $constant): ScalarValueToConstFetch => new ScalarValueToConstFetch(
+    //             new Int_($value),
+    //             new ClassConstFetch(new FullyQualified(Response::class), new Identifier($constant))
+    //         ),
+    //         $constants = array_filter((new ReflectionClass(Response::class))->getConstants(), '\is_int'),
+    //         array_keys($constants)
+    //     ));
+    // }
 };

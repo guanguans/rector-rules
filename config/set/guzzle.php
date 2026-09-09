@@ -24,6 +24,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->import(__DIR__.'/../config.php');
 
+    /** @noinspection NullableArgumentPassedInspection */
     $rectorConfig->ruleWithConfiguration(StringToClassConstantRector::class, array_reduce(
         [
             RequestOptions::class,
@@ -31,10 +32,11 @@ return static function (RectorConfig $rectorConfig): void {
         static fn (array $carry, string $class): array => array_merge(
             $carry,
             array_map(
-                static fn (
-                    string $string,
-                    string $constant
-                ): StringToClassConstant => new StringToClassConstant($string, $class, $constant),
+                static fn (string $string, string $constant): StringToClassConstant => new StringToClassConstant(
+                    $string,
+                    $class,
+                    $constant
+                ),
                 $constants = (new ReflectionClass($class))->getConstants(),
                 array_keys($constants),
             ),

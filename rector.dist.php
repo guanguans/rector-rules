@@ -41,6 +41,8 @@ use Rector\Set\ValueObject\SetList;
 use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\ValueObject\PhpVersion;
 
+error_reporting(\E_ALL & ~\E_DEPRECATED & ~\E_USER_DEPRECATED);
+
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/config/',

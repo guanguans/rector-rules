@@ -35,26 +35,26 @@ return static function (RectorConfig $rectorConfig): void {
         // SortListItemOfSameScalarTypeRector::class,
     ]);
 
-    $rectorConfig->ruleWithConfiguration(AddSensitiveParameterAttributeRector::class, [
-        AddSensitiveParameterAttributeRector::SENSITIVE_PARAMETERS => [
-            'accessToken',
-            'apiKey',
-            'botApiKey',
-            'key',
-            'password',
-            'pushKey',
-            'secret',
-            'tempKey',
-            'token',
-            'webHook',
-        ],
-    ]);
+    // $rectorConfig->ruleWithConfiguration(AddSensitiveParameterAttributeRector::class, [
+    //     AddSensitiveParameterAttributeRector::SENSITIVE_PARAMETERS => [
+    //         'accessToken',
+    //         'apiKey',
+    //         'botApiKey',
+    //         'key',
+    //         'password',
+    //         'pushKey',
+    //         'secret',
+    //         'tempKey',
+    //         'token',
+    //         'webHook',
+    //     ],
+    // ]);
 
-    $rectorConfig->ruleWithConfiguration(RemoveAnnotationRector::class, [
-        'codeCoverageIgnore',
-        'inheritDoc',
-        'phpstan-ignore',
-        'phpstan-ignore-next-line',
-        'psalm-suppress',
-    ]);
+    // $rectorConfig->ruleWithConfiguration(RemoveAnnotationRector::class, [
+    //     'codeCoverageIgnore',
+    //     'inheritDoc',
+    //     'phpstan-ignore',
+    //     'phpstan-ignore-next-line',
+    //     'psalm-suppress',
+    // ]);
 };

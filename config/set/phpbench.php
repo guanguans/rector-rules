@@ -27,6 +27,8 @@ return static function (RectorConfig $rectorConfig): void {
 
     if (\PHP_VERSION_ID >= PhpVersion::PHP_80 && class_exists(AbstractMethodsAttribute::class)) {
         $reflectionClass = new ReflectionClass(AbstractMethodsAttribute::class);
+
+        /** @noinspection NullableArgumentPassedInspection */
         $rectorConfig->ruleWithConfiguration(
             AnnotationToAttributeRector::class,
             array_reduce(
