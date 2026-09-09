@@ -23,16 +23,19 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRulesTests\Rector;
 
+use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Illuminate\Support\Str;
 use PhpCsFixer\FileRemoval;
-use PhpParser\NodeVisitor\ParentConnectingVisitor;
-use Rector\Config\RegisteredService;
-use Rector\Contract\PhpParser\DecoratingNodeVisitorInterface;
 
 abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRectorTestCase
 {
     /**
+     * @see https://getrector.com/documentation/creating-node-visitor
+     * @see \Rector\DependencyInjection\LazyContainerFactory::registerNodeVisitorsAndPhpDoc()
+     * @see \Rector\Configuration\RectorConfigBuilder::registerDecoratingNodeVisitor()
+     * @see \Rector\Configuration\RectorConfigBuilder::registerService()
+     *
      * @noinspection PhpMissingParentCallCommonInspection
      */
     final public static function setUpBeforeClass(): void
@@ -42,13 +45,7 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
         // }
 
         $rectorConfig = parent::getContainer();
-        $registeredService = new RegisteredService(
-            ParentConnectingVisitor::class,
-            null,
-            DecoratingNodeVisitorInterface::class
-        );
-        $rectorConfig->singleton($registeredService->getClassName());
-        $rectorConfig->tag($registeredService->getClassName(), $registeredService->getTag());
+        $rectorConfig->singleton(ParentConnectingVisitor::class);
     }
 
     final public function provideConfigFilePath(): string

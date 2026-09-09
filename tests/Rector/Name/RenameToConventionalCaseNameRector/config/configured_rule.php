@@ -22,8 +22,6 @@ declare(strict_types=1);
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
-use Rector\Config\RegisteredService;
-use Rector\Contract\PhpParser\DecoratingNodeVisitorInterface;
 
 // /**
 //  * @see \Rector\PhpDocParser\ValueObject\AttributeKey
@@ -36,13 +34,7 @@ use Rector\Contract\PhpParser\DecoratingNodeVisitorInterface;
 //     ]);
 
 return static function (RectorConfig $rectorConfig): void {
-    // $registeredService = new RegisteredService(
-    //     ParentConnectingVisitor::class,
-    //     null,
-    //     DecoratingNodeVisitorInterface::class
-    // );
-    // $rectorConfig->singleton($registeredService->getClassName());
-    // $rectorConfig->tag($registeredService->getClassName(), $registeredService->getTag());
+    $rectorConfig->singleton(ParentConnectingVisitor::class);
 
     // Ensure that using the default configuration is valid.
     $rectorConfig->rule(RenameToConventionalCaseNameRector::class);

@@ -13,6 +13,7 @@
 >
   <php>
     <ini name="error_reporting" value="-1"/>
+    <ini name="error_reporting" value="24575"/>
     <!--<env name="SYMFONY_DEPRECATIONS_HELPER" value="/PDO::MYSQL_ATTR_SSL_CA/"/>-->
     <env name="DUMP_LIGHT_ARRAY" value=""/>
     <env name="DUMP_STRING_LENGTH" value=""/>
@@ -44,6 +45,7 @@
     </include>
     <exclude>
       <!--<directory>src/Support/Rector/</directory>-->
+      <file>src/NodeVisitor/ParentConnectingVisitor.php</file>
       <file>src/Support/ComposerScripts.php</file>
     </exclude>
   </source>
@@ -53,6 +55,7 @@
     </include>
     <exclude>
       <!--<directory>src/Support/Rector/</directory>-->
+      <file>src/NodeVisitor/ParentConnectingVisitor.php</file>
       <file>src/Support/ComposerScripts.php</file>
     </exclude>
   </coverage>

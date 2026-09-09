@@ -218,6 +218,9 @@ parameters:
         -
             identifier: symplify.forbiddenFuncCall
             path: src/Support/helpers.php
+        -
+            identifier: method.childReturnType
+            path: src/NodeVisitor/ParentConnectingVisitor.php
 
         - identifier: typeCoverage.paramTypeCoverage
 #        - identifier: typeCoverage.returnTypeCoverage
