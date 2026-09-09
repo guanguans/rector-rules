@@ -8,6 +8,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.8.0"></a>
+## [1.8.0] - 2026-09-09
+### ✨ Features
+- **NodeVisitor:** Add ParentConnectingVisitor for parent node linking ([b82cec5](https://github.com/guanguans/rector-rules/commit/b82cec5))
+
+### 💅 Code Refactorings
+- **TestCase:** Remove unused PHPMock integration ([1160427](https://github.com/guanguans/rector-rules/commit/1160427))
+- **config:** Comment out unused Rector rules and adjust error reporting ([f5fa171](https://github.com/guanguans/rector-rules/commit/f5fa171))
+
+### 📦 Builds
+- **deps:** Bump actions/stale from 10 to 11 ([d678944](https://github.com/guanguans/rector-rules/commit/d678944))
+- **deps:** Bump actions/setup-node from 6 to 7 ([360cfd3](https://github.com/guanguans/rector-rules/commit/360cfd3))
+- **deps:** Bump actions/cache from 5 to 6 ([f9d1578](https://github.com/guanguans/rector-rules/commit/f9d1578))
+- **deps:** Bump actions/checkout from 6 to 7 ([12fa7a4](https://github.com/guanguans/rector-rules/commit/12fa7a4))
+- **deps:** Bump codecov/codecov-action from 6 to 7 ([f7864f0](https://github.com/guanguans/rector-rules/commit/f7864f0))
+- **deps:** Bump dependabot/fetch-metadata from 2 to 3 ([4215cfd](https://github.com/guanguans/rector-rules/commit/4215cfd))
+- **deps-dev:** Update composer dependencies to latest versions - Bump ergebnis/composer-normalize to ^2.52 - Update guzzlehttp/guzzle to ^7.15 || ^8.0 - Update laravel/framework to ^12.69 || ^13.0 - Upgrade phpbench/phpbench to ^1.7 - Bump rector/rector to ^2.6 - Update symfony/polyfill-php81 to ^1.38 - Upgrade spaze/phpstan-disallowed-calls to ^4.14 - Update symplify/phpstan-rules to ^14.10 - Bump tomasvotruba/type-coverage to ^2.2 ([1de7d16](https://github.com/guanguans/rector-rules/commit/1de7d16))
+- **deps-dev:** update Composer dependencies to latest versions ([d957fcc](https://github.com/guanguans/rector-rules/commit/d957fcc))
+- **deps-dev:** Update rector/jack requirement || ^1.0 ([d658f29](https://github.com/guanguans/rector-rules/commit/d658f29))
+
+
 <a name="1.7.2"></a>
 ## [1.7.2] - 2026-04-09
 ### 💅 Code Refactorings
@@ -233,7 +254,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.7.2...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.8.0...HEAD
+[1.8.0]: https://github.com/guanguans/rector-rules/compare/1.7.2...1.8.0
 [1.7.2]: https://github.com/guanguans/rector-rules/compare/1.7.1...1.7.2
 [1.7.1]: https://github.com/guanguans/rector-rules/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/guanguans/rector-rules/compare/1.6.3...1.7.0
