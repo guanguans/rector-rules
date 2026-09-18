@@ -12,6 +12,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
+use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
+use Ergebnis\Rector\Rules\Expressions\CallLikes\RemoveNamedArgumentForSingleParameterRector;
+use Ergebnis\Rector\Rules\Expressions\Matches\SortMatchArmsByConditionalRector;
+use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
+use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
+use Ergebnis\Rector\Rules\PHPUnit\ReplaceTestAttributeWithTestPrefixRector;
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\ClassMethod\PrivateToProtectedVisibilityForTraitRector;
@@ -57,4 +63,20 @@ return static function (RectorConfig $rectorConfig): void {
     //     'phpstan-ignore-next-line',
     //     'psalm-suppress',
     // ]);
+
+    if (class_exists(SortAssociativeArrayByKeyRector::class)) {
+        $rectorConfig->rules([
+            GeneratorPropertyFetchToMethodCallRector::class,
+            RemoveNamedArgumentForSingleParameterRector::class,
+            ReplaceTestAttributeWithTestPrefixRector::class,
+            SortAssociativeArrayByKeyRector::class,
+            SortMatchArmsByConditionalRector::class,
+        ]);
+
+        // $rectorConfig->ruleWithConfiguration(ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector::class, [
+        //     'namespacePrefixes' => [
+        //         // 'Guanguans\\RectorRules',
+        //     ],
+        // ]);
+    }
 };

@@ -175,6 +175,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
 
     /**
      * @see https://github.com/jawira/case-converter
+     * @see \Rector\CodingStyle\Rector\Enum_\EnumCaseToPascalCaseRector
      *
      * ConventionalizeCaseName
      * ConventionalizeName
@@ -488,7 +489,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
     {
         $parent = $node->getAttribute('parent');
         \assert($parent instanceof Node || null === $parent);
-        $grandparent = $parent ? $parent->getAttribute('parent') : null;
+        $grandparent = $parent instanceof Node ? $parent->getAttribute('parent') : null;
 
         // function function_name(){}
         if ($node instanceof Identifier && $parent instanceof Function_) {
@@ -533,7 +534,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
     {
         $parent = $node->getAttribute('parent');
         \assert($parent instanceof Node || null === $parent);
-        $grandparent = $parent ? $parent->getAttribute('parent') : null;
+        $grandparent = $parent instanceof Node ? $parent->getAttribute('parent') : null;
 
         if (
             $node instanceof Identifier
@@ -643,7 +644,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
     {
         $parent = $node->getAttribute('parent');
         \assert($parent instanceof Node || null === $parent);
-        $grandparent = $parent ? $parent->getAttribute('parent') : null;
+        $grandparent = $parent instanceof Node ? $parent->getAttribute('parent') : null;
 
         if (
             $node instanceof Identifier

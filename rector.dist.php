@@ -1,9 +1,6 @@
 <?php
 
 /** @noinspection PhpInternalEntityUsedInspection */
-/** @noinspection PhpMultipleClassDeclarationsInspection */
-/** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -16,24 +13,20 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
-use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
-use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
 use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
-use Rector\CodingStyle\Rector\Enum_\EnumCaseToPascalCaseRector;
 use Rector\Config\RectorConfig;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrContainsRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrEndsWithRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
 use Rector\DowngradePhp81\Rector\FuncCall\DowngradeArrayIsListRector;
+use Rector\DowngradePhp82\Rector\MethodCall\DowngradeReflectionMethodHasPrototypeRector;
 use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
-use Rector\Naming\Rector\Assign\RenameVariableToMatchMethodCallReturnTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
-use Rector\Naming\Rector\ClassMethod\RenameVariableToMatchNewTypeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
@@ -49,12 +42,11 @@ return RectorConfig::configure()
         __DIR__.'/src/',
         __DIR__.'/tests/',
         __DIR__.'/composer-bump',
+        __DIR__.'/rule-doc-generator',
     ])
     ->withRootFiles()
     ->withSkip([
         '*/Fixtures/*',
-        __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
-        __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
         // __DIR__.'/tests.php',
     ])
     ->withCache(__DIR__.'/.build/rector/')
@@ -62,7 +54,7 @@ return RectorConfig::configure()
     ->withParallel()
     // ->withImportNames(importDocBlockNames: false, importShortClasses: false, removeUnusedImports: false)
     ->withImportNames(true, false, false, false)
-    // ->withEditorUrl()
+    ->reportUnusedSkips()
     ->withFluentCallNewLine()
     ->withTreatClassesAsFinal()
     ->withTypeGuardedClasses([])
@@ -70,7 +62,7 @@ return RectorConfig::configure()
     // ->withComposerBased(phpunit: true/* , laravel: true */)
     ->withComposerBased(false, false, true)
     ->withPhpVersion(PhpVersion::PHP_74)
-    ->withPhpLevel(74)
+    ->withPhpLevel(70400)
     // ->withDowngradeSets(php74: true)
     // ->withPhpSets(php74: true)
     // ->withPreparedSets(
@@ -107,11 +99,7 @@ return RectorConfig::configure()
         SetList::RECTOR_PRESET,
         SetList::PHP_POLYFILLS,
     ])
-    ->withRules([
-        // EnumCaseToPascalCaseRector::class,
-        GeneratorPropertyFetchToMethodCallRector::class,
-        SortAssociativeArrayByKeyRector::class,
-    ])
+    ->withRules([])
     ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/src/Rector/*Rector.php' => [
             'PhpMultipleClassDeclarationsInspection',
@@ -132,11 +120,6 @@ return RectorConfig::configure()
     //     'ignore_comment' => false,
     //     'ignore_docblock' => false,
     // ])
-    ->withConfiguredRule(ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector::class, [
-        'namespacePrefixes' => [
-            // 'Guanguans\\RectorRules',
-        ],
-    ])
     ->withSkip([
         DowngradeArrayFirstLastRector::class,
         DowngradeArrayIsListRector::class,
@@ -151,19 +134,16 @@ return RectorConfig::configure()
         SplitDoubleAssignRector::class,
     ])
     ->withSkip([
+        DowngradeReflectionMethodHasPrototypeRector::class => [
+            __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
+        ],
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/src/Rector/*Rector.php',
-            __DIR__.'/tests/Pest.php',
-        ],
-        RenameVariableToMatchMethodCallReturnTypeRector::class => [
-            __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
-        ],
-        RenameVariableToMatchNewTypeRector::class => [
-            __DIR__.'/src/Rector/Namespace_/RemoveNamespaceRector.php',
+            // __DIR__.'/tests/Pest.php',
         ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src/',
-            __DIR__.'/tests/',
+            // __DIR__.'/tests/',
         ],
         StringToClassConstantRector::class => [
             __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',

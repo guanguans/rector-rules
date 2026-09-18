@@ -35,6 +35,7 @@ return (new Configuration)
         [
             /**
              * @see https://github.com/rectorphp/rector-src/blob/main/scoper.php
+             * @see vendor/rector/rector/vendor/
              * @see vendor/rector/rector/vendor/symfony/
              */
             'illuminate/collections',

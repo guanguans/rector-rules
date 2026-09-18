@@ -209,7 +209,7 @@ final class RenameGarbageParamNameRector extends AbstractRector
                 'stmts' => $foreachNode->stmts,
             ],
             $foreachNode->getAttributes()
-        )) ? $foreachNode : null;
+        )) instanceof FunctionLike ? $foreachNode : null;
     }
 
     /**
