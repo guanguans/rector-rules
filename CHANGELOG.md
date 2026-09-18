@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.8.1"></a>
+## [1.8.1] - 2026-09-18
+### 📦 Builds
+- **qa:** Integrate ECS and PHP 8.5 tooling ([427bf21](https://github.com/guanguans/rector-rules/commit/427bf21))
+
+
 <a name="1.8.0"></a>
 ## [1.8.0] - 2026-09-09
 ### ✨ Features
@@ -254,7 +260,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.8.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.8.1...HEAD
+[1.8.1]: https://github.com/guanguans/rector-rules/compare/1.8.0...1.8.1
 [1.8.0]: https://github.com/guanguans/rector-rules/compare/1.7.2...1.8.0
 [1.7.2]: https://github.com/guanguans/rector-rules/compare/1.7.1...1.7.2
 [1.7.1]: https://github.com/guanguans/rector-rules/compare/1.7.0...1.7.1
