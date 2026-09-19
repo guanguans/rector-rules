@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\File;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use Illuminate\Support\Collection;
 use PhpParser\Comment;
 use PhpParser\Node;
 use Rector\NodeTypeResolver\Node\AttributeKey;
@@ -57,6 +58,17 @@ final class SortFileFirstStmtDocblockRector extends AbstractRector
                 }
 
                 return $a->getText() <=> $b->getText();
+            })
+            ->whenNotEmpty(static function (Collection $comments) use ($stmtNode): Collection {
+                $lastComment = $comments->last();
+                \assert($lastComment instanceof Comment);
+
+                return $comments->when(
+                    1 < ($stmtNode->getStartLine() - $lastComment->getEndLine()),
+                    static fn (Collection $comments): Collection => $comments->map(
+                        static fn (Comment $comment): Comment => clone $comment
+                    )
+                );
             })
             ->all();
 

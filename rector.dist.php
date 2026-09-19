@@ -142,6 +142,7 @@ return RectorConfig::configure()
             // __DIR__.'/tests/Pest.php',
         ],
         SortAssociativeArrayByKeyRector::class => [
+            /** @see vendor/rector/rector/src/PostRector/Rector/ */
             __DIR__.'/src/',
             // __DIR__.'/tests/',
         ],

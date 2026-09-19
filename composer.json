@@ -387,7 +387,7 @@
         "rector:process-clear-cache-dry-run": "@rector:process-clear-cache --dry-run",
         "rector:process-dry-run": "@rector:process --dry-run",
         "rector:process-dry-run-output-format-github": "@rector:process-dry-run --output-format=github",
-        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\ClassMethod\\PrivateToProtectedVisibilityForTraitRector",
+        "rector:process-only": "@rector:process-clear-cache tests.php --only=Guanguans\\RectorRules\\Rector\\File\\SortFileFirstStmtDocblockRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
         "roave-backward-compatibility-check": [
             "@putenv:php",
