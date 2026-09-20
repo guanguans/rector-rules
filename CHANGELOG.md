@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.8.3"></a>
+## [1.8.3] - 2026-09-20
+### 💅 Code Refactorings
+- **rector.dist.php:** Consolidate skip rules for rector configuration ([c6c032d](https://github.com/guanguans/rector-rules/commit/c6c032d))
+
+
 <a name="1.8.2"></a>
 ## [1.8.2] - 2026-09-19
 ### ✨ Features
@@ -266,7 +272,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.8.2...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.8.3...HEAD
+[1.8.3]: https://github.com/guanguans/rector-rules/compare/1.8.2...1.8.3
 [1.8.2]: https://github.com/guanguans/rector-rules/compare/1.8.1...1.8.2
 [1.8.1]: https://github.com/guanguans/rector-rules/compare/1.8.0...1.8.1
 [1.8.0]: https://github.com/guanguans/rector-rules/compare/1.7.2...1.8.0
