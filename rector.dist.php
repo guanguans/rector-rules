@@ -13,6 +13,7 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
+use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
 use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
@@ -20,6 +21,7 @@ use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\Config\RectorConfig;
+use Rector\DowngradePhp74\Rector\Array_\DowngradeArraySpreadRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrContainsRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrEndsWithRector;
 use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
@@ -38,13 +40,7 @@ use Rector\ValueObject\PhpVersion;
 error_reporting(\E_ALL & ~\E_DEPRECATED & ~\E_USER_DEPRECATED);
 
 return RectorConfig::configure()
-    ->withPaths([
-        __DIR__.'/config/',
-        __DIR__.'/src/',
-        __DIR__.'/tests/',
-        __DIR__.'/composer-bump',
-        __DIR__.'/rule-doc-generator',
-    ])
+    ->withPaths([__DIR__.'/config/', __DIR__.'/src/', __DIR__.'/tests/', ...Utils::defaultRootFiles()])
     ->withRootFiles()
     ->withSkip([
         '*/Fixtures/*',
@@ -53,6 +49,7 @@ return RectorConfig::configure()
     ->withSkip([
         DowngradeArrayFirstLastRector::class,
         DowngradeArrayIsListRector::class,
+        DowngradeArraySpreadRector::class,
         DowngradeStrContainsRector::class,
         DowngradeStrEndsWithRector::class,
         DowngradeStrStartsWithRector::class,

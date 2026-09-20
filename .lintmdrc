@@ -1,14 +1,22 @@
 {
     "excludeFiles": [
-        ".build/",
-        "baselines/",
-        "config/",
-        "src/",
-        "tests/",
-        "vendor/",
-        "vendor-bin/",
+        ".build/**",
+        "baselines/**",
+        "config/**",
+        "node_modules/**",
+        "resources/**",
+        "routes/**",
+        "src/**",
+        "tests/**",
+        "vendor-bin/**",
+        "vendor/**",
         "CHANGELOG.md",
         "zhlint-*.md"
+    ],
+    "extensions": [
+        ".markdown",
+        ".md",
+        ".mdx"
     ],
     "rules": {
         "space-around-alphabet": 2,
@@ -38,7 +46,7 @@
         ],
         "no-half-width-punctuation": 0,
         "require-trailing-spaces": 0,
-        "space-around-link": 2,
+        "space-around-link": 0,
         "no-multiple-blank-lines": 2
     }
 }
