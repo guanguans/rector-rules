@@ -1,7 +1,7 @@
 <?php
 
-/** @noinspection PhpUnusedAliasInspection */
 /** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -48,7 +48,7 @@ return static function (RectorConfig $rectorConfig): void {
     }
 
     $rectorConfig->import(__DIR__.'/../config.php');
-    $rectorConfig->skip([__FILE__]);
+    // $rectorConfig->skip([__FILE__]);
     $rectorConfig->rules([
         UpdateRectorCodeSamplesFromFixturesRector::class,
         UpdateRectorMethodNodeParamDocblockFromNodeTypesRector::class,

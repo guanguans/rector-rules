@@ -29,6 +29,7 @@ use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
+use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Transform\Rector\String_\StringToClassConstantRector;
@@ -48,6 +49,37 @@ return RectorConfig::configure()
     ->withSkip([
         '*/Fixtures/*',
         // __DIR__.'/tests.php',
+    ])
+    ->withSkip([
+        DowngradeArrayFirstLastRector::class,
+        DowngradeArrayIsListRector::class,
+        DowngradeStrContainsRector::class,
+        DowngradeStrEndsWithRector::class,
+        DowngradeStrStartsWithRector::class,
+    ])
+    ->withSkip([
+        LogicalToBooleanRector::class,
+        NewlineBetweenClassLikeStmtsRector::class,
+        PreferPHPUnitThisCallRector::class,
+        SplitDoubleAssignRector::class,
+    ])
+    ->withSkip([
+        DowngradeReflectionMethodHasPrototypeRector::class => [
+            __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
+        ],
+        RenameClassRector::class => [
+            __DIR__.'/config/set/rector.php',
+        ],
+        RenameParamToMatchTypeRector::class => [
+            __DIR__.'/src/Rector/*Rector.php',
+        ],
+        SortAssociativeArrayByKeyRector::class => [
+            /** @see vendor/rector/rector/src/PostRector/Rector/ */
+            __DIR__.'/src/',
+        ],
+        StringToClassConstantRector::class => [
+            __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
+        ],
     ])
     ->withCache(__DIR__.'/.build/rector/')
     // ->withoutParallel()
@@ -114,39 +146,9 @@ return RectorConfig::configure()
             'StaticClosureCanBeUsedInspection',
         ],
     ])
-    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT'])
     // ->withConfiguredRule(SortListItemOfSameScalarTypeRector::class, [
     //     'ignore_comment' => false,
     //     'ignore_docblock' => false,
     // ])
-    ->withSkip([
-        DowngradeArrayFirstLastRector::class,
-        DowngradeArrayIsListRector::class,
-        DowngradeStrContainsRector::class,
-        DowngradeStrEndsWithRector::class,
-        DowngradeStrStartsWithRector::class,
-    ])
-    ->withSkip([
-        LogicalToBooleanRector::class,
-        NewlineBetweenClassLikeStmtsRector::class,
-        PreferPHPUnitThisCallRector::class,
-        SplitDoubleAssignRector::class,
-    ])
-    ->withSkip([
-        DowngradeReflectionMethodHasPrototypeRector::class => [
-            __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
-        ],
-        RenameParamToMatchTypeRector::class => [
-            __DIR__.'/src/Rector/*Rector.php',
-            // __DIR__.'/tests/Pest.php',
-        ],
-        SortAssociativeArrayByKeyRector::class => [
-            /** @see vendor/rector/rector/src/PostRector/Rector/ */
-            __DIR__.'/src/',
-            // __DIR__.'/tests/',
-        ],
-        StringToClassConstantRector::class => [
-            __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
-        ],
-    ]);
+    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT']);
