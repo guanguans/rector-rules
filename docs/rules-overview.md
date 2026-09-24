@@ -1,4 +1,4 @@
-# 13 Rules Overview
+# 14 Rules Overview
 
 <br>
 
@@ -19,6 +19,8 @@
 - [Name](#name) (1)
 
 - [Namespace](#namespace) (1)
+
+- [Param](#param) (1)
 
 <br>
 
@@ -492,6 +494,38 @@ Remove namespace
  it('is true', function (): void {
      expect(true)->toBeTrue();
  });
+```
+
+<br>
+
+## Param
+
+### AddSensitiveParameterAttributeRector
+
+Add sensitive parameter attribute
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector`](../src/Rector/Param/AddSensitiveParameterAttributeRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\Param\AddSensitiveParameterAttributeRector\Fixture;
+
+-function login($username, $password): void
++function login($username, #[\SensitiveParameter]
++$password): void
+ {
+ }
+
+ class ApplyAttributeToMethods
+ {
+-    public function login($username, $password): void
++    public function login($username, #[\SensitiveParameter]
++    $password): void
+     {
+     }
+ }
 ```
 
 <br>
