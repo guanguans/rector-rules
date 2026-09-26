@@ -1,4 +1,4 @@
-# 15 Rules Overview
+# 16 Rules Overview
 
 <br>
 
@@ -12,7 +12,7 @@
 
 - [File](#file) (3)
 
-- [FuncCall](#funccall) (2)
+- [FuncCall](#funccall) (3)
 
 - [FunctionLike](#functionlike) (1)
 
@@ -278,6 +278,31 @@ Sort file function stmt
 <br>
 
 ## FuncCall
+
+### ArraySpreadInsteadOfArrayMergeRector
+
+Array spread instead of array merge
+
+- class: [`Guanguans\RectorRules\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector`](../src/Rector/FuncCall/ArraySpreadInsteadOfArrayMergeRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector\Fixture;
+
+ class IntegerKeys
+ {
+     public function run()
+     {
+         $iter1 = [0 => 'two', 3 => 'four'];
+         $iter2 = [5 => 'six', 7 => 'eight'];
+
+-        return array_merge($iter1, $iter2);
++        return [...$iter1, ...$iter2];
+     }
+ }
+```
+
+<br>
 
 ### JsonThrowOnErrorRector
 

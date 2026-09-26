@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace Guanguans\RectorRulesTests\Rector;
 
 use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
+use Guanguans\RectorRules\Rector\AbstractRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Illuminate\Support\Str;
 use PhpCsFixer\FileRemoval;
@@ -66,6 +67,11 @@ abstract class AbstractRectorTestCase extends \Rector\Testing\PHPUnit\AbstractRe
                     'Test'
                 )
         );
+    }
+
+    final public function testRectorClass(): void
+    {
+        self::assertTrue(is_subclass_of(static::rectorClass(), AbstractRector::class));
     }
 
     final public function testRuleDefinition(): void
