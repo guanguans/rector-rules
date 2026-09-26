@@ -40,7 +40,7 @@ use Rector\ValueObject\PhpVersion;
 error_reporting(\E_ALL & ~\E_DEPRECATED & ~\E_USER_DEPRECATED);
 
 return RectorConfig::configure()
-    ->withPaths([__DIR__.'/config/', __DIR__.'/src/', __DIR__.'/tests/', ...Utils::defaultRootFiles()])
+    ->withPaths([...Utils::defaultRootDirectories(), ...Utils::defaultRootFiles()])
     ->withRootFiles()
     ->withSkip([
         '*/Fixtures/*',

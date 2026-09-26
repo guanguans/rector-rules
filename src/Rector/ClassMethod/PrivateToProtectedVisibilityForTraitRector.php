@@ -64,9 +64,11 @@ final class PrivateToProtectedVisibilityForTraitRector extends AbstractRector
             return null;
         }
 
+        $flags = $node->flags;
         $this->visibilityManipulator->changeNodeVisibility($node, Visibility::PROTECTED);
+        $newFlags = $node->flags;
 
-        return $node;
+        return $newFlags !== $flags ? $node : null;
     }
 
     /**
