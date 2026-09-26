@@ -31,6 +31,7 @@ use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
+use Rector\PostRector\Rector\NameImportingPostRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\SetList;
@@ -63,6 +64,14 @@ return RectorConfig::configure()
     ->withSkip([
         DowngradeReflectionMethodHasPrototypeRector::class => [
             __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
+        ],
+        NameImportingPostRector::class => [
+            __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
+            __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',
+            __DIR__.'/src/Rector/New_/NewExceptionToNewAnonymousExtendsExceptionImplementsRector.php',
+            __DIR__.'/src/Support/ComposerScripts.php',
+            __DIR__.'/src/Support/helpers.php',
+            __DIR__.'/tests/Rector/AbstractRectorTestCase.php',
         ],
         RenameClassRector::class => [
             __DIR__.'/config/set/rector.php',

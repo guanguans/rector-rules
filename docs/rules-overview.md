@@ -1,4 +1,4 @@
-# 14 Rules Overview
+# 15 Rules Overview
 
 <br>
 
@@ -12,7 +12,7 @@
 
 - [File](#file) (3)
 
-- [FuncCall](#funccall) (1)
+- [FuncCall](#funccall) (2)
 
 - [FunctionLike](#functionlike) (1)
 
@@ -278,6 +278,32 @@ Sort file function stmt
 <br>
 
 ## FuncCall
+
+### JsonThrowOnErrorRector
+
+Json throw on error
+
+- class: [`Guanguans\RectorRules\Rector\FuncCall\JsonThrowOnErrorRector`](../src/Rector/FuncCall/JsonThrowOnErrorRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\FuncCall\JsonThrowOnErrorRector\Fixture;
+
+ function jsonThrowOnError()
+ {
+-    json_encode($content);
+-    json_decode($json);
++    json_encode($content, JSON_THROW_ON_ERROR);
++    json_decode($json, null, 512, JSON_THROW_ON_ERROR);
+
+-    json_decode($json, true, 215);
++    json_decode($json, true, 215, JSON_THROW_ON_ERROR);
+
+     json_decode($json, true, 122, JSON_THROW_ON_ERROR);
+ }
+```
+
+<br>
 
 ### RenameAppFunctionToResolveFunctionRector
 

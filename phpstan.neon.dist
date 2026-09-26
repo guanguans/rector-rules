@@ -228,6 +228,9 @@ parameters:
         -
             identifier: method.childReturnType
             path: src/NodeVisitor/ParentConnectingVisitor.php
+        -
+            identifier: if.alwaysFalse
+            path: src/Rector/FuncCall/JsonThrowOnErrorRector.php
 
         - identifier: typeCoverage.paramTypeCoverage
 #        - identifier: typeCoverage.returnTypeCoverage

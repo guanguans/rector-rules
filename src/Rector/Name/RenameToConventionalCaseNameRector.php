@@ -175,7 +175,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
 
     /**
      * @see https://github.com/jawira/case-converter
-     * @see \Rector\CodingStyle\Rector\Enum_\EnumCaseToPascalCaseRector
+     * @see https://github.com/rectorphp/rector-src/blob/bc675f031ba86784696adb08f416548c9d4dc406/rules/CodingStyle/Rector/Enum_/EnumCaseToPascalCaseRector.php
      *
      * ConventionalizeCaseName
      * ConventionalizeName
