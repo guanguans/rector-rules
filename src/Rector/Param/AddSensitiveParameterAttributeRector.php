@@ -127,7 +127,7 @@ final class AddSensitiveParameterAttributeRector extends AbstractRector implemen
                         }
                     }
                     PHP,
-                [AddSensitiveParameterAttributeRector::SENSITIVE_PARAMETERS => ['password']]
+                [self::SENSITIVE_PARAMETERS => ['password']]
             ),
         ];
     }

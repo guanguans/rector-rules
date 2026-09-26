@@ -24,7 +24,9 @@ use PhpParser\Node;
 use PhpParser\Node\Arg;
 use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\New_;
+use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Reflection\ClassReflection;
@@ -262,6 +264,23 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         $configurationNodes[$configFile] ??= $this->betterNodeFinder->findFirstInstanceOf(
             $this->simplePhpParser->parseFile($configFile),
             Array_::class
+        );
+
+        /** @see \Rector\CodeQuality\Rector\Class_\ConvertStaticToSelfRector::refactor() */
+        $this->traverseNodesWithCallable(
+            $configurationNodes[$configFile],
+            function (Node $subNode) use ($classReflection): ?Node {
+                if (
+                    !$subNode instanceof ClassConstFetch
+                    || !str_ends_with($classReflection->getNativeReflection()->getName(), $this->getName($subNode->class))
+                ) {
+                    return null;
+                }
+
+                $subNode->class = new Name('self');
+
+                return $subNode;
+            }
         );
 
         return $configurationNodes[$configFile];
