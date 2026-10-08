@@ -1,4 +1,4 @@
-# 16 Rules Overview
+# 17 Rules Overview
 
 <br>
 
@@ -21,6 +21,8 @@
 - [Namespace](#namespace) (1)
 
 - [Param](#param) (1)
+
+- [Scalar](#scalar) (1)
 
 <br>
 
@@ -577,6 +579,30 @@ Add sensitive parameter attribute
      {
      }
  }
+```
+
+<br>
+
+## Scalar
+
+### ScalarValueToConstFetchRector
+
+Scalar value to const fetch
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector`](../src/Rector/Scalar/ScalarValueToConstFetchRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\Fixture;
+
+-$int = 10;
+-$float = 10.1;
+-$string = 'ABC';
++$int = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_INT;
++$float = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_FLOAT;
++$string = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_STRING;
 ```
 
 <br>

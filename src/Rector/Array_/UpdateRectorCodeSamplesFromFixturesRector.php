@@ -34,6 +34,7 @@ use Rector\Config\RectorConfig;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PhpParser\Node\BetterNodeFinder;
+use Rector\PhpParser\Parser\RectorParser;
 use Rector\PhpParser\Parser\SimplePhpParser;
 use Rector\PHPStan\ScopeFetcher;
 use Rector\Testing\Fixture\FixtureSplitter;
@@ -50,16 +51,16 @@ use function Guanguans\RectorRules\Support\clone_node;
 final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
 {
     private BetterNodeFinder $betterNodeFinder;
-    private SimplePhpParser $simplePhpParser;
+    private RectorParser $rectorParser;
 
     public function __construct(
         BetterNodeFinder $betterNodeFinder,
-        SimplePhpParser $simplePhpParser
+        RectorParser $rectorParser
     ) {
         // $this->rectorConfig = clone $rectorConfig;
         // $this->rectorConfig = unserialize(serialize($rectorConfig), ['allowed_classes' => true]);
         $this->betterNodeFinder = $betterNodeFinder;
-        $this->simplePhpParser = $simplePhpParser;
+        $this->rectorParser = $rectorParser;
     }
 
     public function getNodeTypes(): array
@@ -262,7 +263,8 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
         static $configurationNodes = [];
 
         $configurationNodes[$configFile] ??= $this->betterNodeFinder->findFirstInstanceOf(
-            $this->simplePhpParser->parseFile($configFile),
+            // $this->simplePhpParser->parseFile($configFile),
+            $this->rectorParser->parseFile($configFile),
             Array_::class
         );
 

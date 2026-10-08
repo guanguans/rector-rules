@@ -56,7 +56,7 @@ final class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends A
                 {
                 };
                 PHP,
-                [ThrowableContract::class],
+                [\Guanguans\RectorRules\Contract\ThrowableContract::class],
             ),
         ];
     }

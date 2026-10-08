@@ -175,8 +175,8 @@ final class SortListItemOfSameScalarTypeRector extends AbstractRector implements
                     ];
                     PHP,
                 [
-                    'ignore_comment' => false,
-                    'ignore_docblock' => false,
+                    'ignore_comment' => \false,
+                    'ignore_docblock' => \false,
                     // 'sort_comparator' => static fn (string $a, string $b): int => $a <=> $b,
                     // 'sort_comparator' => 'strcasecmp',
                     // 'sort_comparator' => 'strcmp',
