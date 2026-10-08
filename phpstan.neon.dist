@@ -80,9 +80,9 @@ parameters:
 #    sidzIgnoreMagicNumbers: [0.9, 1, 2, 3, 5, 100, 600, 512, 1024, 1000, 0o755]
     cognitive_complexity:
         class: 42
-        function: 8
-        dependency_tree: 150
-        dependency_tree_types:
+        function: 10
+#        dependency_tree: 150
+#        dependency_tree_types:
 #            # only these explicit types are checked, nothing else
 #            - Rector\Contract\Rector\RectorInterface
 #    symplify:

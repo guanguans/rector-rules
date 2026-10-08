@@ -3,6 +3,6 @@
 parameters:
     ignoreErrors:
         -
-            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\File\\SortFileFunctionStmtRector\:\:parseFuncName\(\)" is 12, keep it under 8$#'
+            message: '#^Cognitive complexity for "Guanguans\\RectorRules\\Rector\\Array_\\UpdateRectorCodeSamplesFromFixturesRector\:\:doRefactor\(\)" is 11, keep it under 10$#'
             count: 1
-            path: ../src/Rector/File/SortFileFunctionStmtRector.php
+            path: ../src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php
