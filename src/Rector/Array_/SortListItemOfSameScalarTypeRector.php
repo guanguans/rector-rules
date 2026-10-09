@@ -60,7 +60,10 @@ final class SortListItemOfSameScalarTypeRector extends AbstractRector implements
         $this->rawConfigure([
             'ignore_comment' => true,
             'ignore_docblock' => true,
-            'sort_comparator' => 'strnatcmp',
+            // 'sort_comparator' => 'strcasecmp',
+            'sort_comparator' => 'strcmp',
+            // 'sort_comparator' => 'strnatcasecmp',
+            // 'sort_comparator' => 'strnatcmp',
             'sort_direction' => 'asc',
         ]);
         $this->valueResolver = $valueResolver;

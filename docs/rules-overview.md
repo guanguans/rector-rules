@@ -1,4 +1,4 @@
-# 17 Rules Overview
+# 18 Rules Overview
 
 <br>
 
@@ -7,6 +7,8 @@
 - [Array](#array) (3)
 
 - [Class](#class) (2)
+
+- [ClassLike](#classlike) (1)
 
 - [ClassMethod](#classmethod) (1)
 
@@ -178,6 +180,30 @@ Update rector method node param docblock from node types
      {
          return null;
      }
+ }
+```
+
+<br>
+
+## ClassLike
+
+### RemoveAnnotationRector
+
+Remove annotation
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\ClassLike\RemoveAnnotationRector`](../src/Rector/ClassLike/RemoveAnnotationRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\ClassLike\RemoveAnnotationRector\Fixture;
+
+-/**
+- * @method getName()
+- */
+ final class Fixture
+ {
  }
 ```
 

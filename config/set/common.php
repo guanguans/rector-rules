@@ -20,6 +20,7 @@ use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePre
 use Ergebnis\Rector\Rules\PHPUnit\ReplaceTestAttributeWithTestPrefixRector;
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
+use Guanguans\RectorRules\Rector\ClassLike\RemoveAnnotationRector;
 use Guanguans\RectorRules\Rector\ClassMethod\PrivateToProtectedVisibilityForTraitRector;
 use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
@@ -27,7 +28,6 @@ use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector;
 use Rector\Config\RectorConfig;
-use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
@@ -38,7 +38,11 @@ return static function (RectorConfig $rectorConfig): void {
         SimplifyListIndexRector::class,
         SortFileFirstStmtDocblockRector::class,
         SortFileFunctionStmtRector::class,
-        // SortListItemOfSameScalarTypeRector::class,
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(SortListItemOfSameScalarTypeRector::class, [
+        'ignore_comment' => false,
+        'ignore_docblock' => false,
     ]);
 
     $rectorConfig->ruleWithConfiguration(AddSensitiveParameterAttributeRector::class, [
@@ -58,13 +62,13 @@ return static function (RectorConfig $rectorConfig): void {
         ],
     ]);
 
-    // $rectorConfig->ruleWithConfiguration(RemoveAnnotationRector::class, [
-    //     'codeCoverageIgnore',
-    //     'inheritDoc',
-    //     'phpstan-ignore',
-    //     'phpstan-ignore-next-line',
-    //     'psalm-suppress',
-    // ]);
+    $rectorConfig->ruleWithConfiguration(RemoveAnnotationRector::class, [
+        'codeCoverageIgnore',
+        'inheritDoc',
+        'phpstan-ignore',
+        'phpstan-ignore-next-line',
+        'psalm-suppress',
+    ]);
 
     /**
      * @required https://packagist.org/packages/ergebnis/rector-rules

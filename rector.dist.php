@@ -151,8 +151,4 @@ return RectorConfig::configure()
             'StaticClosureCanBeUsedInspection',
         ],
     ])
-    // ->withConfiguredRule(SortListItemOfSameScalarTypeRector::class, [
-    //     'ignore_comment' => false,
-    //     'ignore_docblock' => false,
-    // ])
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT']);
