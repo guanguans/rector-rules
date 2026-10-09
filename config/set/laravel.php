@@ -28,7 +28,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
 
     /**
-     * @required laravel/framework
+     * @required https://packagist.org/packages/laravel/framework
      */
     if (class_exists(Application::class)) {
         $rectorConfig->rules([
@@ -47,7 +47,7 @@ return static function (RectorConfig $rectorConfig): void {
     }
 
     /**
-     * @required illuminate/support
+     * @required https://packagist.org/packages/illuminate/support
      */
     if (method_exists(Str::class, 'of')) {
         /**

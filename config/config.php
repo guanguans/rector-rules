@@ -11,6 +11,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
+use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
 
-return static function (RectorConfig $rectorConfig): void {};
+return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->singleton(ParentConnectingVisitor::class);
+};

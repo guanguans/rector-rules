@@ -16,6 +16,9 @@ use PHPStan\Rules\Rule;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
+    /**
+     * @required https://packagist.org/packages/phpstan/phpstan
+     */
     if (!class_exists(Rule::class)) {
         return;
     }

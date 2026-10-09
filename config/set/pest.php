@@ -17,6 +17,9 @@ use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 
 return static function (RectorConfig $rectorConfig): void {
+    /**
+     * @required https://packagist.org/packages/pestphp/pest
+     */
     if (!class_exists(Expectation::class)) {
         return;
     }

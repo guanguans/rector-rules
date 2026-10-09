@@ -25,9 +25,9 @@ use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
+use Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
-use Rector\Php82\Rector\Param\AddSensitiveParameterAttributeRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(__DIR__.'/../config.php');
@@ -41,20 +41,22 @@ return static function (RectorConfig $rectorConfig): void {
         // SortListItemOfSameScalarTypeRector::class,
     ]);
 
-    // $rectorConfig->ruleWithConfiguration(AddSensitiveParameterAttributeRector::class, [
-    //     AddSensitiveParameterAttributeRector::SENSITIVE_PARAMETERS => [
-    //         'accessToken',
-    //         'apiKey',
-    //         'botApiKey',
-    //         'key',
-    //         'password',
-    //         'pushKey',
-    //         'secret',
-    //         'tempKey',
-    //         'token',
-    //         'webHook',
-    //     ],
-    // ]);
+    $rectorConfig->ruleWithConfiguration(AddSensitiveParameterAttributeRector::class, [
+        AddSensitiveParameterAttributeRector::SENSITIVE_PARAMETERS => [
+            'accessToken',
+            'apiKey',
+            'botApiKey',
+            'clientSecret',
+            'key',
+            'password',
+            'pushKey',
+            'secret',
+            'tempKey',
+            'token',
+            'usernameOrToken',
+            'webHook',
+        ],
+    ]);
 
     // $rectorConfig->ruleWithConfiguration(RemoveAnnotationRector::class, [
     //     'codeCoverageIgnore',
@@ -64,6 +66,9 @@ return static function (RectorConfig $rectorConfig): void {
     //     'psalm-suppress',
     // ]);
 
+    /**
+     * @required https://packagist.org/packages/ergebnis/rector-rules
+     */
     if (class_exists(SortAssociativeArrayByKeyRector::class)) {
         $rectorConfig->rules([
             GeneratorPropertyFetchToMethodCallRector::class,

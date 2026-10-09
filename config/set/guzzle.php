@@ -18,6 +18,9 @@ use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\Transform\ValueObject\StringToClassConstant;
 
 return static function (RectorConfig $rectorConfig): void {
+    /**
+     * @required https://packagist.org/packages/guzzlehttp/guzzle
+     */
     if (!class_exists(Client::class)) {
         return;
     }

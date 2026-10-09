@@ -43,6 +43,9 @@ use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
+    /**
+     * @see https://packagist.org/packages/rector/rector
+     */
     if (!class_exists(AbstractRector::class)) {
         return;
     }

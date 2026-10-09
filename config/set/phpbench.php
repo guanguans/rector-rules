@@ -19,6 +19,9 @@ use Rector\Php80\ValueObject\AnnotationToAttribute;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
+    /**
+     * @required https://packagist.org/packages/phpbench/phpbench
+     */
     if (!class_exists(PhpBench::class)) {
         return;
     }

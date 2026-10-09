@@ -14,7 +14,6 @@ declare(strict_types=1);
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
-use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -156,5 +155,4 @@ return RectorConfig::configure()
     //     'ignore_comment' => false,
     //     'ignore_docblock' => false,
     // ])
-    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT']);

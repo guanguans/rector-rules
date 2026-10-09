@@ -18,27 +18,22 @@ use RectorLaravel\Set\LaravelSetList;
 use function Guanguans\RectorRules\Support\classes;
 
 return static function (RectorConfig $rectorConfig): void {
-    /**
-     * @required driftingly/rector-laravel
-     */
+    /** @required https://packagist.org/packages/driftingly/rector-laravel */
     if (!class_exists(LaravelSetList::class) || !class_exists(Application::class)) {
         return;
     }
 
     $rectorConfig->import(__DIR__.'/../config.php');
 
-    $rectorConfig->sets(
-        collect((new ReflectionClass(LaravelSetList::class))->getConstants())
-            ->reject(
-                static fn (string $_, string $name): bool => \in_array(
-                    $name,
-                    ['LARAVEL_STATIC_TO_INJECTION', 'LUMEN'],
-                    true
-                ) || preg_match('/^LARAVEL_\d{2,3}$/', $name)
-            )
-            // ->dd()
-            ->all()
-    );
+    $rectorConfig->sets(array_filter(
+        (new ReflectionClass(LaravelSetList::class))->getConstants(),
+        static fn (string $name): bool => !preg_match('/^LARAVEL_\d{2,3}$/', $name) && !\in_array(
+            $name,
+            ['LARAVEL_STATIC_TO_INJECTION', 'LUMEN'],
+            true
+        ),
+        \ARRAY_FILTER_USE_KEY
+    ));
 
     $rectorConfig->rules(
         classes(static fn (string $class): bool => str_starts_with($class, 'RectorLaravel\Rector'))
