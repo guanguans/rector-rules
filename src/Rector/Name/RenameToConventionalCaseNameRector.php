@@ -368,7 +368,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
                     method_exists($object, 'methodName');
                     property_exists($object, 'propertyName');
                     PHP,
-                ['afterAll', 'afterEach', 'assertMatches*Snapshot', 'beforeAll', 'beforeEach', 'PDO']
+                ['PDO', 'afterAll', 'afterEach', 'assertMatches*Snapshot', 'beforeAll', 'beforeEach']
             ),
         ];
     }
@@ -399,8 +399,8 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
 
         if (
             is_instance_of_any($node, [
-                Variable::class,
                 Identifier::class,
+                Variable::class,
             ])
         ) {
             if (($newName = $renamer($node->name)) === $node->name) {
@@ -780,7 +780,7 @@ final class RenameToConventionalCaseNameRector extends AbstractRector implements
 
                 $newClassName = Str::of($className)->camel()->ucfirst();
 
-                $newConstOrMethodName = $this->isNames($node, ['define', 'defined', 'constant'])
+                $newConstOrMethodName = $this->isNames($node, ['constant', 'define', 'defined'])
                     ? Str::of($constantOrMethodName)->snake()->upper()
                     : Str::of($constantOrMethodName)->camel()->pipe('lcfirst');
 

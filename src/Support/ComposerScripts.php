@@ -105,11 +105,11 @@ final class ComposerScripts
                     // 'Renamer',
                 ])
                 && !Str::of($file)->contains([
+                    '/jack/',
                     '/rector-doctrine/',
                     '/rector-downgrade-php/',
                     '/rector-phpunit/',
                     '/rector-symfony/',
-                    '/jack/',
                     '/swiss-knife/',
                     '/type-perfect/',
                 ])

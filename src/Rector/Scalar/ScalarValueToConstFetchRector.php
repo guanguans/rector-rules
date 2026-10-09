@@ -38,7 +38,7 @@ final class ScalarValueToConstFetchRector extends AbstractRector implements Conf
 
     public function getNodeTypes(): array
     {
-        return [String_::class, Float_::class, Int_::class];
+        return [Float_::class, Int_::class, String_::class];
     }
 
     /**

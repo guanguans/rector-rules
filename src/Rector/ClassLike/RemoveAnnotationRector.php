@@ -58,7 +58,7 @@ final class RemoveAnnotationRector extends AbstractRector implements Configurabl
      */
     public function getNodeTypes(): array
     {
-        return [ClassLike::class, FunctionLike::class, Property::class, ClassConst::class];
+        return [ClassConst::class, ClassLike::class, FunctionLike::class, Property::class];
     }
 
     /**
@@ -141,7 +141,7 @@ final class RemoveAnnotationRector extends AbstractRector implements Configurabl
                     {
                     }
                     PHP,
-                ['method', 'JMS\DiExtraBundle\Annotation\InjectParams'],
+                ['JMS\DiExtraBundle\Annotation\InjectParams', 'method'],
             ),
         ];
     }

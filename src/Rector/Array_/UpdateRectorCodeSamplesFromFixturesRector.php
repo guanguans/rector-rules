@@ -94,7 +94,7 @@ final class UpdateRectorCodeSamplesFromFixturesRector extends AbstractRector
                     && $arrayItemNode->value->class instanceof FullyQualified
                     && is_subclass_of($this->getName($arrayItemNode->value->class), CodeSampleInterface::class)
             )
-            || !\in_array($scope->getFunctionName(), ['getRuleDefinition', 'codeSamples'], true)
+            || !\in_array($scope->getFunctionName(), ['codeSamples', 'getRuleDefinition'], true)
             || !($classReflection = $scope->getClassReflection()) instanceof ClassReflection
             || !$classReflection->is(AbstractRector::class)
             || !$classReflection->getNativeReflection()->isInstantiable()

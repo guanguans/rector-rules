@@ -14,13 +14,18 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRules\Rector\Array_;
 
+use Ergebnis\Rector\Rules\Expressions\Arrays\Key;
 use Guanguans\RectorRules\Rector\AbstractRector;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Node\ArrayItem;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
+use PhpParser\Node\Expr\ClassConstFetch;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PhpParser\Node\Value\ValueResolver;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
@@ -61,9 +66,9 @@ final class SortListItemOfSameScalarTypeRector extends AbstractRector implements
             'ignore_comment' => true,
             'ignore_docblock' => true,
             // 'sort_comparator' => 'strcasecmp',
-            'sort_comparator' => 'strcmp',
+            // 'sort_comparator' => 'strcmp',
             // 'sort_comparator' => 'strnatcasecmp',
-            // 'sort_comparator' => 'strnatcmp',
+            'sort_comparator' => 'strnatcmp',
             'sort_direction' => 'asc',
         ]);
         $this->valueResolver = $valueResolver;
@@ -193,11 +198,25 @@ final class SortListItemOfSameScalarTypeRector extends AbstractRector implements
     }
 
     /**
+     * @see \Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector::arrayItemWithKeyFrom()
+     *
      * @throws \JsonException
      */
     private function getScalarArrayItemStringValue(ArrayItem $arrayItemNode): string
     {
-        $value = $this->valueResolver->getValue($arrayItemNode->value);
+        $valueNode = $arrayItemNode->value;
+
+        if (
+            $valueNode instanceof ClassConstFetch
+            && $valueNode->class instanceof Name
+            // && $valueNode->name instanceof Identifier
+            // && $valueNode->name->toString() === 'class'
+            && ($originalNameNode = $valueNode->class->getAttribute(AttributeKey::ORIGINAL_NAME)) instanceof Name
+        ) {
+            $valueNode->class = $originalNameNode;
+        }
+
+        $value = $this->valueResolver->getValue($valueNode);
         Assert::scalar($value);
 
         return \is_string($value) ? $value : json_encode($value, \JSON_THROW_ON_ERROR);

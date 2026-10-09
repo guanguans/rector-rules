@@ -25,7 +25,7 @@ return static function (RectorConfig $rectorConfig): void {
     // Ensure that using the default configuration is valid.
     $rectorConfig->rule(RemoveAnnotationRector::class);
     $rectorConfig->ruleWithConfiguration(RemoveAnnotationRector::class, [
-        'method',
         'JMS\DiExtraBundle\Annotation\InjectParams',
+        'method',
     ]);
 };

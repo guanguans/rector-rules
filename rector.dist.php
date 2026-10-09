@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
+use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -81,6 +82,9 @@ return RectorConfig::configure()
         SortAssociativeArrayByKeyRector::class => [
             /** @see vendor/rector/rector/src/PostRector/Rector/ */
             __DIR__.'/src/',
+        ],
+        SortListItemOfSameScalarTypeRector::class => [
+            __DIR__.'/src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php',
         ],
         StringToClassConstantRector::class => [
             __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',

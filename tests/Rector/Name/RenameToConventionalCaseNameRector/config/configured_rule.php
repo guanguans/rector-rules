@@ -39,11 +39,11 @@ return static function (RectorConfig $rectorConfig): void {
     // Ensure that using the default configuration is valid.
     $rectorConfig->rule(RenameToConventionalCaseNameRector::class);
     $rectorConfig->ruleWithConfiguration(RenameToConventionalCaseNameRector::class, [
+        'PDO',
         'afterAll',
         'afterEach',
         'assertMatches*Snapshot',
         'beforeAll',
         'beforeEach',
-        'PDO',
     ]);
 };
