@@ -15,5 +15,5 @@ use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->singleton(ParentConnectingVisitor::class);
+    $rectorConfig->bound(ParentConnectingVisitor::class) or $rectorConfig->singleton(ParentConnectingVisitor::class);
 };

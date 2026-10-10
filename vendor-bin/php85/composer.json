@@ -3,7 +3,6 @@
         "php": ">=8.5",
         "ergebnis/composer-normalize": "^2.54",
         "guanguans/monorepo-builder-worker": "^3.3",
-        "guzzlehttp/guzzle": "^8.2",
         "laravel/framework": "^13.35",
         "phpbench/phpbench": "^1.7"
     },

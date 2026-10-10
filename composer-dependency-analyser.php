@@ -31,6 +31,11 @@ return (new Configuration)
         ],
         [ErrorType::SHADOW_DEPENDENCY],
     )
+    ->ignoreErrorsOnPackageAndPaths(
+        'guzzlehttp/guzzle',
+        [__DIR__.'/src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php'],
+        [ErrorType::DEV_DEPENDENCY_IN_PROD]
+    )
     ->ignoreErrorsOnPackages(
         [
             /**
@@ -40,6 +45,7 @@ return (new Configuration)
              */
             'illuminate/collections',
             'nikic/php-parser',
+            'phpstan/phpdoc-parser',
             'phpstan/phpstan',
         ],
         [ErrorType::SHADOW_DEPENDENCY]

@@ -18,19 +18,7 @@ includes:
 #    - vendor/shipmonk/dead-code-detector/rules.neon
 #    - vendor/staabm/phpstan-todo-by/extension.neon
 
-#    - vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
-#    - vendor/symplify/phpstan-rules/config/configurable-rules.neon
-#    - vendor/symplify/phpstan-rules/config/ctor-rules.neon
-#    - vendor/symplify/phpstan-rules/config/mock-rules.neon
-#    - vendor/symplify/phpstan-rules/config/naming-rules.neon
-#    - vendor/symplify/phpstan-rules/config/static-rules.neon
-    - vendor/symplify/phpstan-rules/config/symplify-rules.neon
-
-#    - vendor/symplify/phpstan-rules/config/doctrine-rules.neon
-    - vendor/symplify/phpstan-rules/config/phpunit-rules.neon
     - vendor/symplify/phpstan-rules/config/rector-rules.neon
-#    - vendor/symplify/phpstan-rules/config/symfony-rules.neon
-#    - vendor/symplify/phpstan-rules/config/symfony-config-rules.neon
 
 services:
 #    # https://github.com/guanguans/notify/security/code-scanning
@@ -85,14 +73,23 @@ parameters:
 #        dependency_tree_types:
 #            # only these explicit types are checked, nothing else
 #            - Rector\Contract\Rector\RectorInterface
-#    symplify:
-#        pathStrings: true
-#        ctor: true
-#        mocks: true
-#        laravelReturnType: true
-#        symfonyReturnType: true
+    symplify:
+        complexity: true
+        configurable: true
+        doctrine: true
+        naming: true
+        phpunit: true
+        static: true
+        symfony: true
+        symfonyConfig: true
+
+        ctor: true
+        mocks: true
+
+        laravelReturnType: true
+        pathStrings: true
+        symfonyReturnType: true
     type_coverage:
-        declare: 100
         param: 100
         return: 100
         constant: 100
@@ -193,8 +190,8 @@ parameters:
         - identifier: shipmonk.returnListNotUsed
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.forbiddenArrayMethodCall
-        - identifier: symplify.forbiddenNode
-        - identifier: symplify.forbiddenStaticClassConstFetch
+#        - identifier: symplify.forbiddenNode
+#        - identifier: symplify.forbiddenStaticClassConstFetch
         - identifier: symplify.noArrayMapWithArrayCallable
 
         - identifier: argument.type
@@ -218,7 +215,9 @@ parameters:
             path: src/Support/helpers.php
         -
             identifier: rector.noClassReflectionStaticReflection
-            path: src/Support/helpers.php
+            paths:
+                - src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php
+                - src/Support/helpers.php
         -
             identifier: rector.noInstanceOfStaticReflection
             path: src/Support/helpers.php

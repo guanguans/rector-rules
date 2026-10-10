@@ -78,7 +78,7 @@ final class ScalarValueToConstFetchRector extends AbstractRector implements Conf
             new ConfiguredCodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
-                    namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\Fixture;
+                    namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Fixture;
 
                     $int = 10;
                     $float = 10.1;
@@ -86,7 +86,7 @@ final class ScalarValueToConstFetchRector extends AbstractRector implements Conf
                     PHP,
                 <<<'PHP'
                     /** @noinspection ALL */
-                    namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\Fixture;
+                    namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Fixture;
 
                     $int = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_INT;
                     $float = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_FLOAT;

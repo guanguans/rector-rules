@@ -1,4 +1,4 @@
-# 18 Rules Overview
+# 19 Rules Overview
 
 <br>
 
@@ -24,7 +24,7 @@
 
 - [Param](#param) (1)
 
-- [Scalar](#scalar) (1)
+- [Scalar](#scalar) (2)
 
 <br>
 
@@ -621,7 +621,7 @@ Scalar value to const fetch
 
 ```diff
  /** @noinspection ALL */
- namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\Fixture;
+ namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Fixture;
 
 -$int = 10;
 -$float = 10.1;
@@ -629,6 +629,26 @@ Scalar value to const fetch
 +$int = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_INT;
 +$float = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_FLOAT;
 +$string = \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst::FOOBAR_STRING;
+```
+
+<br>
+
+### StringToClassConstantOfRequestOptionsRector
+
+String to class constant of request options
+
+- class: [`Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector`](../src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\Scalar\StringToClassConstantOfRequestOptionsRector\Fixture;
+
+-$allowRedirects = 'allow_redirects';
+-$auth = 'auth';
+-$body = 'body';
++$allowRedirects = \GuzzleHttp\RequestOptions::ALLOW_REDIRECTS;
++$auth = \GuzzleHttp\RequestOptions::AUTH;
++$body = \GuzzleHttp\RequestOptions::BODY;
 ```
 
 <br>

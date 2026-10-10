@@ -1,5 +1,12 @@
 <?php
 
+/** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
 declare(strict_types=1);
 
 /**
@@ -12,19 +19,8 @@ declare(strict_types=1);
  */
 
 use Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector;
-use GuzzleHttp\Client;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
-    /**
-     * @required https://packagist.org/packages/guzzlehttp/guzzle
-     */
-    if (!class_exists(Client::class)) {
-        return;
-    }
-
-    $rectorConfig->import(__DIR__.'/../config.php');
-    $rectorConfig->rules([
-        StringToClassConstantOfRequestOptionsRector::class,
-    ]);
+    $rectorConfig->rule(StringToClassConstantOfRequestOptionsRector::class);
 };
