@@ -1,6 +1,8 @@
 <?php
 
 /** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedNamespaceInspection */
 /** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
@@ -44,6 +46,8 @@ use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->import(__DIR__.'/../config.php');
+
     /**
      * @see https://packagist.org/packages/rector/rector
      */
@@ -51,7 +55,6 @@ return static function (RectorConfig $rectorConfig): void {
         return;
     }
 
-    $rectorConfig->import(__DIR__.'/../config.php');
     // $rectorConfig->skip([__FILE__]);
     $rectorConfig->rules([
         UpdateRectorCodeSamplesFromFixturesRector::class,
@@ -60,9 +63,9 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(RenameClassRector::class, [
         BetterReflectionSourceLocatorFactory::class => RectorBetterReflectionSourceLocatorFactory::class,
-        // InlineCodeParser::class => RectorParser::class,
         NodeFinder::class => BetterNodeFinder::class,
         PhpDocParser::class => BetterPhpDocParser::class,
+        // InlineCodeParser::class => RectorParser::class,
         // SimplePhpParser::class => RectorParser::class,
         Standard::class => BetterStandardPrinter::class,
         TokenIterator::class => BetterTokenIterator::class,

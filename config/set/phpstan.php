@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedNamespaceInspection */
 declare(strict_types=1);
 
 /**
@@ -16,6 +18,8 @@ use PHPStan\Rules\Rule;
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->import(__DIR__.'/../config.php');
+
     /**
      * @required https://packagist.org/packages/phpstan/phpstan
      */
@@ -23,7 +27,6 @@ return static function (RectorConfig $rectorConfig): void {
         return;
     }
 
-    $rectorConfig->import(__DIR__.'/../config.php');
     $rectorConfig->rules([
         UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector::class,
     ]);

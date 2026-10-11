@@ -98,7 +98,7 @@ return RectorConfig::configure()
     // ->withComposerBased(phpunit: true/* , laravel: true */)
     ->withComposerBased(false, false, true)
     ->withPhpVersion(PhpVersion::PHP_74)
-    ->withPhpLevel(70400)
+    ->withPhpLevel(PhpVersion::PHP_74)
     // ->withDowngradeSets(php74: true)
     // ->withPhpSets(php74: true)
     // ->withPreparedSets(

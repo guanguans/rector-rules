@@ -11,15 +11,8 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/rector-rules
  */
 
-use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
-use PhpParser\Node\Expr\ClassConstFetch;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Name\FullyQualified;
-use PhpParser\Node\Scalar\Float_;
-use PhpParser\Node\Scalar\Int_;
-use PhpParser\Node\Scalar\String_;
+use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchOfResponseRector;
 use Rector\Config\RectorConfig;
-use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Symfony\Component\HttpFoundation\Response;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -29,33 +22,8 @@ return static function (RectorConfig $rectorConfig): void {
      * @required https://packagist.org/packages/symfony/http-foundation
      */
     if (class_exists(Response::class)) {
-        $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchRector::class, array_map(
-            static fn (int $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-                // new (match (true) {
-                //     \is_float($value) => Float_::class,
-                //     \is_int($value) => Int_::class,
-                //     \is_string($value) => String_::class,
-                // })($value),
-                // (static function (/* float|int|string */ $value): object {
-                //     switch (true) {
-                //         case \is_float($value):
-                //             return new Float_($value);
-                //         case \is_int($value):
-                //             return new Int_($value);
-                //         case \is_string($value):
-                //         default:
-                //             return new String_($value);
-                //     }
-                // })($value),
-                new Int_($value),
-                new ClassConstFetch(new FullyQualified(Response::class), new Identifier($name))
-            ),
-            $constants = array_filter(
-                (new ReflectionClass(Response::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
-                // static fn (mixed $value): bool => \is_float($value) || \is_int($value) || \is_string($value)
-                '\is_int'
-            ),
-            array_keys($constants)
-        ));
+        $rectorConfig->rules([
+            ScalarValueToConstFetchOfResponseRector::class,
+        ]);
     }
 };

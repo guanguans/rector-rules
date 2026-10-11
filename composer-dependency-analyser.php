@@ -36,6 +36,11 @@ return (new Configuration)
         [__DIR__.'/src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php'],
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
     )
+    ->ignoreErrorsOnPackageAndPaths(
+        'symfony/http-foundation',
+        [__DIR__.'/src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php'],
+        [ErrorType::DEV_DEPENDENCY_IN_PROD]
+    )
     ->ignoreErrorsOnPackages(
         [
             /**

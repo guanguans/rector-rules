@@ -28,8 +28,6 @@ abstract class AbstractProxyRector extends AbstractRector
     // {return $this->makeProxyRector()->{$name}(...$arguments);}
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     *
      * {@inheritDoc}
      */
     final public function getNodeTypes(): array
@@ -39,8 +37,6 @@ abstract class AbstractProxyRector extends AbstractRector
 
     /**
      * {@inheritDoc}
-     *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     final public function refactor(Node $node)
     {
@@ -48,8 +44,6 @@ abstract class AbstractProxyRector extends AbstractRector
     }
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     *
      * @return null|list<Node>|NodeVisitor::REMOVE_NODE|\PhpParser\Node
      */
     protected function rawRefactor(Node $node)
@@ -58,9 +52,10 @@ abstract class AbstractProxyRector extends AbstractRector
     }
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     *
      * @return \Rector\Contract\Rector\ConfigurableRectorInterface&\Rector\Rector\AbstractRector
+     *
+     * @noinspection PhpUnhandledExceptionInspection
+     * @noinspection PhpDocMissingThrowsInspection
      */
     protected function makeProxyRector(): \Rector\Rector\AbstractRector
     {

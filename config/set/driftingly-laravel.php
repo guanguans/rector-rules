@@ -18,15 +18,15 @@ use RectorLaravel\Set\LaravelSetList;
 use function Guanguans\RectorRules\Support\classes;
 
 return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->import(__DIR__.'/../config.php');
+
     /** @required https://packagist.org/packages/driftingly/rector-laravel */
     if (!class_exists(LaravelSetList::class) || !class_exists(Application::class)) {
         return;
     }
 
-    $rectorConfig->import(__DIR__.'/../config.php');
-
     $rectorConfig->sets(array_filter(
-        (new ReflectionClass(LaravelSetList::class))->getConstants(),
+        (new ReflectionClass(LaravelSetList::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
         static fn (string $name): bool => !preg_match('/^LARAVEL_\d{2,3}$/', $name) && !\in_array(
             $name,
             ['LARAVEL_STATIC_TO_INJECTION', 'LUMEN'],
@@ -39,7 +39,6 @@ return static function (RectorConfig $rectorConfig): void {
         classes(static fn (string $class): bool => str_starts_with($class, 'RectorLaravel\Rector'))
             ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isInstantiable())
             ->keys()
-            // ->dd()
             ->all()
     );
 };

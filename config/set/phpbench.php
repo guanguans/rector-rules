@@ -19,14 +19,14 @@ use Rector\Php80\ValueObject\AnnotationToAttribute;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
+    $rectorConfig->import(__DIR__.'/../config.php');
+
     /**
      * @required https://packagist.org/packages/phpbench/phpbench
      */
     if (!class_exists(PhpBench::class)) {
         return;
     }
-
-    $rectorConfig->import(__DIR__.'/../config.php');
 
     if (\PHP_VERSION_ID >= PhpVersion::PHP_80 && class_exists(AbstractMethodsAttribute::class)) {
         $reflectionClass = new ReflectionClass(AbstractMethodsAttribute::class);

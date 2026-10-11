@@ -1,4 +1,4 @@
-# 19 Rules Overview
+# 20 Rules Overview
 
 <br>
 
@@ -24,7 +24,7 @@
 
 - [Param](#param) (1)
 
-- [Scalar](#scalar) (2)
+- [Scalar](#scalar) (3)
 
 <br>
 
@@ -610,6 +610,26 @@ Add sensitive parameter attribute
 <br>
 
 ## Scalar
+
+### ScalarValueToConstFetchOfResponseRector
+
+Scalar value to const fetch of response
+
+- class: [`Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchOfResponseRector`](../src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchOfResponseRector\Fixture;
+
+-$httpContinue = 100;
+-$httpSwitchingProtocols = 101;
+-$httpProcessing = 102;
++$httpContinue = \Symfony\Component\HttpFoundation\Response::HTTP_CONTINUE;
++$httpSwitchingProtocols = \Symfony\Component\HttpFoundation\Response::HTTP_SWITCHING_PROTOCOLS;
++$httpProcessing = \Symfony\Component\HttpFoundation\Response::HTTP_PROCESSING;
+```
+
+<br>
 
 ### ScalarValueToConstFetchRector
 
