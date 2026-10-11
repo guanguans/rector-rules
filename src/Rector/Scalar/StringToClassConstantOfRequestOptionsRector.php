@@ -65,7 +65,10 @@ final class StringToClassConstantOfRequestOptionsRector extends AbstractProxyRec
                 string $value,
                 string $name
             ): StringToClassConstant => new StringToClassConstant($value, RequestOptions::class, $name),
-            $constants = array_filter((new \ReflectionClass(RequestOptions::class))->getConstants(), '\is_string'),
+            $constants = array_filter(
+                (new \ReflectionClass(RequestOptions::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
+                '\is_string'
+            ),
             array_keys($constants),
         ));
 
