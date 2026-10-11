@@ -8,6 +8,32 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.9.0"></a>
+## [1.9.0] - 2026-10-11
+### ✨ Features
+- **AddSensitiveParameterAttributeRector:** Implement SensitiveParameter attribute handling ([addba39](https://github.com/guanguans/rector-rules/commit/addba39))
+- **ArraySpreadInsteadOfArrayMergeRector:** Implement array_merge to spread operator conversion ([643e322](https://github.com/guanguans/rector-rules/commit/643e322))
+- **JsonThrowOnErrorRector:** Add JSON_THROW_ON_ERROR handling for json_encode and json_decode ([397d2be](https://github.com/guanguans/rector-rules/commit/397d2be))
+- **Rector:** Add StringToClassConstantOfResponseRector ([7452c48](https://github.com/guanguans/rector-rules/commit/7452c48))
+- **Rector:** Add StringToClassConstantOfRequestOptionsRector ([f706041](https://github.com/guanguans/rector-rules/commit/f706041))
+- **RemoveAnnotationRector:** Implement rector to remove specified annotations ([0d4e39a](https://github.com/guanguans/rector-rules/commit/0d4e39a))
+- **ScalarValueToConstFetchRector:** Add rector to replace scalar values with ConstFetch ([e18aa71](https://github.com/guanguans/rector-rules/commit/e18aa71))
+- **config:** Integrate ScalarValueToConstFetchRector in rector configuration ([90d5293](https://github.com/guanguans/rector-rules/commit/90d5293))
+- **config:** Reorder rector rules for improved clarity ([e90f580](https://github.com/guanguans/rector-rules/commit/e90f580))
+- **config:** Register ParentConnectingVisitor in rector configuration ([4a96844](https://github.com/guanguans/rector-rules/commit/4a96844))
+
+### 🐞 Bug Fixes
+- **UpdateRectorCodeSamples:** Enhance handling of class constants ([ef8d05c](https://github.com/guanguans/rector-rules/commit/ef8d05c))
+- **composer.json:** Update ergebnis dependencies and adjust script limits ([7b82490](https://github.com/guanguans/rector-rules/commit/7b82490))
+
+### 💅 Code Refactorings
+- **PrivateToProtectedVisibilityForTraitRector:** Optimize visibility change logic - Store original flags before changing visibility to PROTECTED. - Return the node only if the visibility change occurred, improving efficiency. ([0c10d70](https://github.com/guanguans/rector-rules/commit/0c10d70))
+- **rector.dist.php:** Simplify root files configuration ([12316e1](https://github.com/guanguans/rector-rules/commit/12316e1))
+
+### 📦 Builds
+- **deps-dev:** Update rector/jack requirement ([084a325](https://github.com/guanguans/rector-rules/commit/084a325))
+
+
 <a name="1.8.3"></a>
 ## [1.8.3] - 2026-09-20
 ### 💅 Code Refactorings
@@ -272,7 +298,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.8.3...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.9.0...HEAD
+[1.9.0]: https://github.com/guanguans/rector-rules/compare/1.8.3...1.9.0
 [1.8.3]: https://github.com/guanguans/rector-rules/compare/1.8.2...1.8.3
 [1.8.2]: https://github.com/guanguans/rector-rules/compare/1.8.1...1.8.2
 [1.8.1]: https://github.com/guanguans/rector-rules/compare/1.8.0...1.8.1
