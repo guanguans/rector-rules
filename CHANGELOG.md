@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.9.1"></a>
+## [1.9.1] - 2026-10-12
+### ✨ Features
+- **Rector:** Implement configurable exception handling in StringToClassConstantOfRequestOptionsRector ([7ee1040](https://github.com/guanguans/rector-rules/commit/7ee1040))
+- **Rector:** Enhance ScalarValueToConstFetchOfResponseRector configuration ([29cb24b](https://github.com/guanguans/rector-rules/commit/29cb24b))
+
+
 <a name="1.9.0"></a>
 ## [1.9.0] - 2026-10-11
 ### ✨ Features
@@ -298,7 +305,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.9.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.9.1...HEAD
+[1.9.1]: https://github.com/guanguans/rector-rules/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/guanguans/rector-rules/compare/1.8.3...1.9.0
 [1.8.3]: https://github.com/guanguans/rector-rules/compare/1.8.2...1.8.3
 [1.8.2]: https://github.com/guanguans/rector-rules/compare/1.8.1...1.8.2
