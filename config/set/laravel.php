@@ -19,6 +19,8 @@ use Illuminate\Support\Str;
 use Rector\Config\RectorConfig;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
+use Rector\Renaming\Rector\StaticCall\RenameStaticMethodRector;
+use Rector\Renaming\ValueObject\RenameStaticMethod;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
@@ -60,5 +62,17 @@ return static function (RectorConfig $rectorConfig): void {
             : $rectorConfig->ruleWithConfiguration(FuncCallToStaticCallRector::class, [
                 new FuncCallToStaticCall('str', Str::class, 'of'),
             ]);
+    }
+
+    /**
+     * @required https://packagist.org/packages/illuminate/support
+     */
+    if (method_exists(Str::class, 'uuid7')) {
+        /**
+         * @see https://github.com/laravel/framework/commit/c49e9015774a76cdcff2900455b899a633d6769c
+         */
+        $rectorConfig->ruleWithConfiguration(RenameStaticMethodRector::class, [
+            new RenameStaticMethod(Str::class, 'orderedUuid', Str::class, 'uuid7'),
+        ]);
     }
 };
