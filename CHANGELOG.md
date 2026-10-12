@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.9.2"></a>
+## [1.9.2] - 2026-10-12
+### ✨ Features
+- **Rector:** Add RenameStaticMethodRector for Str class UUID handling ([2463869](https://github.com/guanguans/rector-rules/commit/2463869))
+
+
 <a name="1.9.1"></a>
 ## [1.9.1] - 2026-10-12
 ### ✨ Features
@@ -305,7 +311,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.9.1...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.9.2...HEAD
+[1.9.2]: https://github.com/guanguans/rector-rules/compare/1.9.1...1.9.2
 [1.9.1]: https://github.com/guanguans/rector-rules/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/guanguans/rector-rules/compare/1.8.3...1.9.0
 [1.8.3]: https://github.com/guanguans/rector-rules/compare/1.8.2...1.8.3
