@@ -15,7 +15,7 @@ $body = 'body';
 namespace Guanguans\RectorRulesTests\Rector\Scalar\StringToClassConstantOfRequestOptionsRector\Fixture;
 
 $allowRedirects = \GuzzleHttp\RequestOptions::ALLOW_REDIRECTS;
-$auth = \GuzzleHttp\RequestOptions::AUTH;
+$auth = 'auth';
 $body = \GuzzleHttp\RequestOptions::BODY;
 
 ?>

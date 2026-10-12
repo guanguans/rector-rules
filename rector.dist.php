@@ -17,7 +17,6 @@ use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
-use Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
@@ -77,9 +76,6 @@ return RectorConfig::configure()
         ],
         SortListItemOfSameScalarTypeRector::class => [
             __DIR__.'/src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php',
-        ],
-        StringToClassConstantOfRequestOptionsRector::class => [
-            __DIR__.'/composer-bump',
         ],
         StringToClassConstantRector::class => [
             __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',

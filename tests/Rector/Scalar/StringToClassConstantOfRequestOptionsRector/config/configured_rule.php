@@ -22,5 +22,7 @@ use Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRec
 use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
+    // Ensure that using the default configuration is valid.
     $rectorConfig->rule(StringToClassConstantOfRequestOptionsRector::class);
+    $rectorConfig->ruleWithConfiguration(StringToClassConstantOfRequestOptionsRector::class, ['auth', 'json', 'version']);
 };

@@ -658,6 +658,8 @@ Scalar value to const fetch
 
 String to class constant of request options
 
+:wrench: **configure it!**
+
 - class: [`Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector`](../src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php)
 
 ```diff
@@ -665,10 +667,9 @@ String to class constant of request options
  namespace Guanguans\RectorRulesTests\Rector\Scalar\StringToClassConstantOfRequestOptionsRector\Fixture;
 
 -$allowRedirects = 'allow_redirects';
--$auth = 'auth';
--$body = 'body';
 +$allowRedirects = \GuzzleHttp\RequestOptions::ALLOW_REDIRECTS;
-+$auth = \GuzzleHttp\RequestOptions::AUTH;
+ $auth = 'auth';
+-$body = 'body';
 +$body = \GuzzleHttp\RequestOptions::BODY;
 ```
 

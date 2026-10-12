@@ -17,22 +17,47 @@ namespace Guanguans\RectorRules\Rector\Scalar;
 use Guanguans\RectorRules\Rector\AbstractProxyRector;
 use GuzzleHttp\RequestOptions;
 use PhpParser\Node;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\Transform\ValueObject\StringToClassConstant;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
+use Webmozart\Assert\Assert;
 
 /**
  * @see \Guanguans\RectorRulesTests\Rector\Scalar\StringToClassConstantOfRequestOptionsRector\StringToClassConstantOfRequestOptionsRectorTest
  */
-final class StringToClassConstantOfRequestOptionsRector extends AbstractProxyRector
+final class StringToClassConstantOfRequestOptionsRector extends AbstractProxyRector implements ConfigurableRectorInterface
 {
+    /** @var list<string> */
+    private array $except = [
+        'auth',
+        'curl',
+        'debug',
+        'json',
+        'progress',
+        'query',
+        'stream',
+        'synchronous',
+        'timeout',
+        'version',
+    ];
+
+    public function configure(array $configuration): void
+    {
+        Assert::isList($configuration);
+        Assert::allString($configuration);
+        $this->except = $configuration;
+    }
+
     /**
-     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample>
+     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
+     *
+     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample>
      */
     protected function codeSamples(): array
     {
         return [
-            new CodeSample(
+            new ConfiguredCodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
                     namespace Guanguans\RectorRulesTests\Rector\Scalar\StringToClassConstantOfRequestOptionsRector\Fixture;
@@ -46,9 +71,10 @@ final class StringToClassConstantOfRequestOptionsRector extends AbstractProxyRec
                     namespace Guanguans\RectorRulesTests\Rector\Scalar\StringToClassConstantOfRequestOptionsRector\Fixture;
 
                     $allowRedirects = \GuzzleHttp\RequestOptions::ALLOW_REDIRECTS;
-                    $auth = \GuzzleHttp\RequestOptions::AUTH;
+                    $auth = 'auth';
                     $body = \GuzzleHttp\RequestOptions::BODY;
                     PHP,
+                ['auth', 'json', 'version']
             ),
         ];
     }
@@ -67,7 +93,8 @@ final class StringToClassConstantOfRequestOptionsRector extends AbstractProxyRec
             ): StringToClassConstant => new StringToClassConstant($value, RequestOptions::class, $name),
             $constants = array_filter(
                 (new \ReflectionClass(RequestOptions::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
-                '\is_string'
+                // '\is_string'
+                fn ($value): bool => \is_string($value) && !\in_array($value, $this->except, true)
             ),
             array_keys($constants),
         ));
