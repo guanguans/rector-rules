@@ -22,22 +22,36 @@ use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\Float_;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\String_;
+use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Symfony\Component\HttpFoundation\Response;
-use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
+use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
+use Webmozart\Assert\Assert;
 
 /**
  * @see \Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchOfResponseRector\ScalarValueToConstFetchOfResponseRectorTest
  */
-final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector
+final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector implements ConfigurableRectorInterface
 {
+    /** @var list<int> */
+    private array $except = [100, 200, 300, 400, 500];
+
+    public function configure(array $configuration): void
+    {
+        Assert::isList($configuration);
+        Assert::allInteger($configuration);
+        $this->except = $configuration;
+    }
+
     /**
-     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample>
+     * @throws \Symplify\RuleDocGenerator\Exception\ShouldNotHappenException
+     *
+     * @return list<\Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample>
      */
     protected function codeSamples(): array
     {
         return [
-            new CodeSample(
+            new ConfiguredCodeSample(
                 <<<'PHP'
                     /** @noinspection ALL */
                     namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchOfResponseRector\Fixture;
@@ -50,10 +64,11 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector
                     /** @noinspection ALL */
                     namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchOfResponseRector\Fixture;
 
-                    $httpContinue = \Symfony\Component\HttpFoundation\Response::HTTP_CONTINUE;
+                    $httpContinue = 100;
                     $httpSwitchingProtocols = \Symfony\Component\HttpFoundation\Response::HTTP_SWITCHING_PROTOCOLS;
                     $httpProcessing = \Symfony\Component\HttpFoundation\Response::HTTP_PROCESSING;
                     PHP,
+                [100, 200]
             ),
         ];
     }
@@ -89,7 +104,8 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector
             $constants = array_filter(
                 (new \ReflectionClass(Response::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
                 // static fn (mixed $value): bool => \is_float($value) || \is_int($value) || \is_string($value)
-                '\is_int'
+                // '\is_int'
+                fn ($value): bool => \is_int($value) && !\in_array($value, $this->except, true)
             ),
             array_keys($constants)
         ));

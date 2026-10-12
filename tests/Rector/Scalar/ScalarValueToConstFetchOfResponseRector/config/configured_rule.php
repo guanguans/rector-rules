@@ -23,4 +23,5 @@ use Rector\Config\RectorConfig;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ScalarValueToConstFetchOfResponseRector::class);
+    $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchOfResponseRector::class, [100, 200]);
 };

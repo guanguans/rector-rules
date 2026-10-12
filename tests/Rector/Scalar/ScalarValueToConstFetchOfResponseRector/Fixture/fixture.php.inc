@@ -14,7 +14,7 @@ $httpProcessing = 102;
 /** @noinspection ALL */
 namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchOfResponseRector\Fixture;
 
-$httpContinue = \Symfony\Component\HttpFoundation\Response::HTTP_CONTINUE;
+$httpContinue = 100;
 $httpSwitchingProtocols = \Symfony\Component\HttpFoundation\Response::HTTP_SWITCHING_PROTOCOLS;
 $httpProcessing = \Symfony\Component\HttpFoundation\Response::HTTP_PROCESSING;
 

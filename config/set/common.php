@@ -51,7 +51,7 @@ return static function (RectorConfig $rectorConfig): void {
             'apiKey',
             'botApiKey',
             'clientSecret',
-            'key',
+            // 'key',
             'password',
             'pushKey',
             'secret',

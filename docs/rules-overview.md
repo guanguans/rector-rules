@@ -615,16 +615,17 @@ Add sensitive parameter attribute
 
 Scalar value to const fetch of response
 
+:wrench: **configure it!**
+
 - class: [`Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchOfResponseRector`](../src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php)
 
 ```diff
  /** @noinspection ALL */
  namespace Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchOfResponseRector\Fixture;
 
--$httpContinue = 100;
+ $httpContinue = 100;
 -$httpSwitchingProtocols = 101;
 -$httpProcessing = 102;
-+$httpContinue = \Symfony\Component\HttpFoundation\Response::HTTP_CONTINUE;
 +$httpSwitchingProtocols = \Symfony\Component\HttpFoundation\Response::HTTP_SWITCHING_PROTOCOLS;
 +$httpProcessing = \Symfony\Component\HttpFoundation\Response::HTTP_PROCESSING;
 ```
