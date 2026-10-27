@@ -1,0 +1,44 @@
+--- ../src/RuleDoc/RuleDefinition.php
++++ ../src/RuleDoc/RuleDefinition.php
+@@ -12,6 +12,41 @@
+  */
+ final class RuleDefinition
+ {
++    private ?string $ruleClass = null;
++
++    public function setRuleClass(string $ruleClass): void
++    {
++        $this->ruleClass = $ruleClass;
++    }
++
++    /**
++     * @throws \Rector\RuleDoc\Exception\ShouldNotHappenException
++     *
++     * @noinspection ThrowRawExceptionInspection
++     */
++    public function getRuleClass(): string
++    {
++        if (null === $this->ruleClass) {
++            throw new ShouldNotHappenException;
++        }
++
++        return $this->ruleClass;
++    }
++
++    /**
++     * @throws \Rector\RuleDoc\Exception\ShouldNotHappenException
++     *
++     * @noinspection ThrowRawExceptionInspection
++     */
++    public function getRuleShortClass(): string
++    {
++        if (null === $this->ruleClass) {
++            throw new ShouldNotHappenException;
++        }
++
++        // get short class name
++        return basename(str_replace('\\', '/', $this->ruleClass));
++    }
+     /**
+      * @readonly
+      */

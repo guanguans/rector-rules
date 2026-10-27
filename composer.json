@@ -49,6 +49,7 @@
         "bamarni/composer-bin-plugin": "^1.9",
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "composer/composer": "^2.10",
+        "cweagans/composer-patches": "^1.7",
         "driftingly/rector-laravel": "^2.5",
         "ergebnis/composer-normalize": "^2.54",
         "ergebnis/license": "^2.8",
@@ -84,6 +85,7 @@
         "symfony/var-dumper": "^5.4 || ^6.0 || ^7.0 || ^8.0",
         "symplify/easy-coding-standard": "^13.3",
         "symplify/phpstan-rules": "^14.18",
+        "symplify/vendor-patches": "^12.1",
         "tomasvotruba/class-leak": "^2.3",
         "tomasvotruba/cognitive-complexity": "^1.3",
         "tomasvotruba/type-coverage": "^2.5",
@@ -108,6 +110,7 @@
     "config": {
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true,
+            "cweagans/composer-patches": true,
             "ergebnis/composer-normalize": true,
             "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true,
@@ -133,6 +136,11 @@
             ],
             "pre-commit": [
                 "composer checks:required"
+            ]
+        },
+        "patches": {
+            "rector/rector": [
+                "patches/rector-rector-src-ruledoc-ruledefinition-php.patch"
             ]
         }
     },
@@ -254,9 +262,9 @@
         "gitleaks": "gitleaks git --report-path=.build/gitleaks-report.json -v",
         "gitleaks:generate-baseline": "gitleaks git --report-path=gitleaks-baseline.json -v",
         "jack": "@user-php vendor/bin/jack",
-        "jack:breakpoint": "@jack breakpoint --limit=7",
+        "jack:breakpoint": "@jack breakpoint --limit=8",
         "jack:breakpoint-dev": "@jack:breakpoint --dev",
-        "jack:open-versions": "@jack open-versions --limit=7",
+        "jack:open-versions": "@jack open-versions --limit=8",
         "jack:open-versions-dev": "@jack:open-versions --dev",
         "jack:open-versions-dev-dry-run": "@jack:open-versions-dev --dry-run",
         "jack:open-versions-dry-run": "@jack:open-versions --dry-run",
@@ -442,7 +450,7 @@
             "open .build/dump.html",
             "@php vendor/bin/var-dump-server --ansi -v --format=html > .build/dump.html"
         ],
-        "vendor-patches": "@php vendor/bin/vendor-patches generate --ansi -vv",
+        "vendor-patches": "@php vendor/bin/vendor-patches generate",
         "vhs": "vhs < rector-rules.tape",
         "yaml-lint": "@php vendor/bin/yaml-lint .github/ *.yaml --ansi -vv",
         "zhlint": [

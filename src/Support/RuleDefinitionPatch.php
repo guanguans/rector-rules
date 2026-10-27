@@ -19,7 +19,7 @@ use Rector\RuleDoc\Exception\ShouldNotHappenException;
  * @see \Rector\RuleDoc\RuleDefinition
  * @see \Symplify\RuleDocGenerator\ValueObject\RuleDefinition
  */
-trait RuleDefinition
+trait RuleDefinitionPatch
 {
     private ?string $ruleClass = null;
 

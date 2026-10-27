@@ -47,6 +47,7 @@
       <!--<directory>src/Support/Rector/</directory>-->
       <file>src/NodeVisitor/ParentConnectingVisitor.php</file>
       <file>src/Support/ComposerScripts.php</file>
+      <file>src/Support/RuleDefinitionPatch.php</file>
     </exclude>
   </source>
   <coverage>
@@ -57,6 +58,7 @@
       <!--<directory>src/Support/Rector/</directory>-->
       <file>src/NodeVisitor/ParentConnectingVisitor.php</file>
       <file>src/Support/ComposerScripts.php</file>
+      <file>src/Support/RuleDefinitionPatch.php</file>
     </exclude>
   </coverage>
 </phpunit>

@@ -42,6 +42,7 @@ parameters:
     scanFiles:
         - vendor/composer/InstalledVersions.php
     excludePaths:
+        - src/Support/RuleDefinitionPatch.php
         - src/Support/ComposerScripts.php
         - tests/Fixtures/
     tmpDir: .build/phpstan/
