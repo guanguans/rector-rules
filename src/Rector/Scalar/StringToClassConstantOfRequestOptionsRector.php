@@ -32,8 +32,10 @@ final class StringToClassConstantOfRequestOptionsRector extends AbstractProxyRec
     private array $except = [
         'auth',
         'body',
+        'cookies',
         'curl',
         'debug',
+        'delay',
         'headers',
         'json',
         'progress',
