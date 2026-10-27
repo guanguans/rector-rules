@@ -12,6 +12,7 @@ declare(strict_types=1);
  */
 
 use Carbon\Carbon;
+use Guanguans\RectorRules\Rector\FuncCall\FuncCallToStaticCallRector;
 use Guanguans\RectorRules\Rector\FuncCall\RenameAppFunctionToResolveFunctionRector;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Carbon as IlluminateCarbon;
@@ -21,7 +22,6 @@ use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Renaming\Rector\StaticCall\RenameStaticMethodRector;
 use Rector\Renaming\ValueObject\RenameStaticMethod;
-use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Rector\Transform\ValueObject\StaticCallToFuncCall;
