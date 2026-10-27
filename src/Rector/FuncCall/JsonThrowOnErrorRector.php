@@ -25,7 +25,7 @@ use PhpParser\Node\Scalar\Int_;
 use Rector\PhpParser\Enum\NodeGroup;
 use Rector\PhpParser\Node\BetterNodeFinder;
 use Rector\PhpParser\Node\Value\ValueResolver;
-use Rector\ValueObject\PhpVersionFeature;
+use Rector\ValueObject\PhpVersion;
 use Rector\VersionBonding\Contract\MinPhpVersionInterface;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\CodeSample;
 
@@ -99,7 +99,7 @@ final class JsonThrowOnErrorRector extends AbstractRector implements MinPhpVersi
 
     public function provideMinPhpVersion(): int
     {
-        return PhpVersionFeature::JSON_EXCEPTION;
+        return PhpVersion::PHP_73;
     }
 
     /**

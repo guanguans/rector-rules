@@ -1,4 +1,4 @@
-# 20 Rules Overview
+# 21 Rules Overview
 
 <br>
 
@@ -25,6 +25,8 @@
 - [Param](#param) (1)
 
 - [Scalar](#scalar) (3)
+
+- [String](#string) (1)
 
 <br>
 
@@ -671,6 +673,36 @@ String to class constant of request options
  $auth = 'auth';
 -$body = 'body';
 +$body = \GuzzleHttp\RequestOptions::BODY;
+```
+
+<br>
+
+## String
+
+### StringToClassConstantRector
+
+String to class constant
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\String_\StringToClassConstantRector`](../src/Rector/String_/StringToClassConstantRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\String_\StringToClassConstantRector\Fixture;
+
+ final class Fixture
+ {
+     public static function getSubscribedEvents()
+     {
+         return [
+-            'compiler.post_dump' => 'compile',
+-            'compiler.to_class' => 'compile'
++            \Yet\AnotherClass::CONSTANT => 'compile',
++            \Yet\AnotherClass::class => 'compile'
+         ];
+     }
+ }
 ```
 
 <br>

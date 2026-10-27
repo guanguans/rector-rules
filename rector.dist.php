@@ -67,9 +67,9 @@ return RectorConfig::configure()
         RenameClassRector::class => [
             __DIR__.'/config/set/rector.php',
         ],
-        RenameParamToMatchTypeRector::class => [
-            __DIR__.'/src/Rector/*Rector.php',
-        ],
+        // RenameParamToMatchTypeRector::class => [
+        //     __DIR__.'/src/Rector/*Rector.php',
+        // ],
         SortAssociativeArrayByKeyRector::class => [
             /** @see vendor/rector/rector/src/PostRector/Rector/ */
             __DIR__.'/src/',
@@ -125,7 +125,7 @@ return RectorConfig::configure()
         SetList::TYPE_DECLARATION,
         SetList::TYPE_DECLARATION_DOCBLOCKS,
         SetList::PRIVATIZATION,
-        SetList::NAMING,
+        // SetList::NAMING,
         SetList::NAMED_ARGS,
         // SetList::CARBON,
         SetList::RECTOR_PRESET,

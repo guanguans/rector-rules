@@ -16,6 +16,7 @@ use Guanguans\PhpCsFixerCustomFixers\Set\SetList;
 use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use PhpCsFixer\Fixer\FunctionNotation\StaticLambdaFixer;
+use Symplify\CodingStandard\Fixer\ConstantNotation\RemoveSlashFromNativeConstantFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
@@ -27,6 +28,9 @@ return ECSConfig::configure()
         //     __DIR__.'/tests/*Test.php',
         //     __DIR__.'/tests/Pest.php',
         // ],
+        RemoveSlashFromNativeConstantFixer::class => [
+            __DIR__.'/src/Rector/Array_/SortListItemOfSameScalarTypeRector.php',
+        ],
     ])
     ->withSets([SetList::GUANGUANS])
     ->withConfiguredRule(HeaderCommentFixer::class, Utils::configurationOfHeaderCommentFixer(

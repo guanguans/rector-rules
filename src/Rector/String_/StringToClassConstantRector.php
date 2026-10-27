@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection PhpMultipleClassDeclarationsInspection */
 declare(strict_types=1);
 
 /**
@@ -86,25 +87,40 @@ final class StringToClassConstantRector extends AbstractRector implements Config
     {
         return [
             new ConfiguredCodeSample(
-                <<<'CODE_SAMPLE'
-                    final class SomeSubscriber
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    namespace Guanguans\RectorRulesTests\Rector\String_\StringToClassConstantRector\Fixture;
+
+                    final class Fixture
                     {
                         public static function getSubscribedEvents()
                         {
-                            return ['compiler.post_dump' => 'compile'];
+                            return [
+                                'compiler.post_dump' => 'compile',
+                                'compiler.to_class' => 'compile'
+                            ];
                         }
                     }
-                    CODE_SAMPLE,
-                <<<'CODE_SAMPLE'
-                    final class SomeSubscriber
+                    PHP,
+                <<<'PHP'
+                    /** @noinspection ALL */
+                    namespace Guanguans\RectorRulesTests\Rector\String_\StringToClassConstantRector\Fixture;
+
+                    final class Fixture
                     {
                         public static function getSubscribedEvents()
                         {
-                            return [\Yet\AnotherClass::CONSTANT => 'compile'];
+                            return [
+                                \Yet\AnotherClass::CONSTANT => 'compile',
+                                \Yet\AnotherClass::class => 'compile'
+                            ];
                         }
                     }
-                    CODE_SAMPLE,
-                [new StringToClassConstant('compiler.post_dump', 'Yet\AnotherClass', 'CONSTANT')]
+                    PHP,
+                [
+                    new StringToClassConstant('compiler.post_dump', 'Yet\AnotherClass', 'CONSTANT'),
+                    new StringToClassConstant('compiler.to_class', 'Yet\AnotherClass', 'class'),
+                ]
             ),
         ];
     }
