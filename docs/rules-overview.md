@@ -1,4 +1,4 @@
-# 21 Rules Overview
+# 23 Rules Overview
 
 <br>
 
@@ -14,7 +14,7 @@
 
 - [File](#file) (3)
 
-- [FuncCall](#funccall) (3)
+- [FuncCall](#funccall) (4)
 
 - [FunctionLike](#functionlike) (1)
 
@@ -25,6 +25,8 @@
 - [Param](#param) (1)
 
 - [Scalar](#scalar) (3)
+
+- [StaticCall](#staticcall) (1)
 
 - [String](#string) (1)
 
@@ -328,6 +330,32 @@ Array spread instead of array merge
 
 -        return array_merge($iter1, $iter2);
 +        return [...$iter1, ...$iter2];
+     }
+ }
+```
+
+<br>
+
+### FuncCallToStaticCallRector
+
+Func call to static call
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\FuncCall\FuncCallToStaticCallRector`](../src/Rector/FuncCall/FuncCallToStaticCallRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\FuncCall\FuncCallToStaticCallRector\Fixture;
+
+ class Fixture
+ {
+     public function someMethod()
+     {
+-        \view('template', []);
+-        \SomeNamespaced\view('template', []);
++        \SomeStaticClass::render('template', []);
++        \AnotherStaticClass::render('template', []);
      }
  }
 ```
@@ -673,6 +701,31 @@ String to class constant of request options
  $auth = 'auth';
 -$body = 'body';
 +$body = \GuzzleHttp\RequestOptions::BODY;
+```
+
+<br>
+
+## StaticCall
+
+### RenameStaticMethodRector
+
+Rename static method
+
+:wrench: **configure it!**
+
+- class: [`Guanguans\RectorRules\Rector\StaticCall\RenameStaticMethodRector`](../src/Rector/StaticCall/RenameStaticMethodRector.php)
+
+```diff
+ /** @noinspection ALL */
+ namespace Guanguans\RectorRulesTests\Rector\StaticCall\RenameStaticMethodRector\Fixture;
+
+ function staticMethodNameReplacer()
+ {
+-Nette\Utils\Html::add('someContent');
++Nette\Utils\Html::addHtml('someContent');
+     $result = FormMacros::renderFormBegin($someArgs);
+     $result = FormMACROS::renderFormBEGIN($someArgs);
+ }
 ```
 
 <br>

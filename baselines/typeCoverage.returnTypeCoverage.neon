@@ -3,6 +3,6 @@
 parameters:
     ignoreErrors:
         -
-            message: '#^Out of 134 possible return types, only 132 \- 98\.5 %% actually have it\. Add more return types to get over 100 %%$#'
+            message: '#^Out of 143 possible return types, only 141 \- 98\.6 %% actually have it\. Add more return types to get over 100 %%$#'
             count: 2
             path: ../src/Rector/AbstractProxyRector.php

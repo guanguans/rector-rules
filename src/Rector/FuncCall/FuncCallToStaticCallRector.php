@@ -79,9 +79,36 @@ final class FuncCallToStaticCallRector extends AbstractRector implements Configu
     {
         return [
             new ConfiguredCodeSample(
-                'view("...", []);',
-                'SomeClass::render("...", []);',
-                [new FuncCallToStaticCall('view', 'SomeStaticClass', 'render')]
+                <<<'EOD'
+                    /** @noinspection ALL */
+                    namespace Guanguans\RectorRulesTests\Rector\FuncCall\FuncCallToStaticCallRector\Fixture;
+
+                    class Fixture
+                    {
+                        public function someMethod()
+                        {
+                            \view('template', []);
+                            \SomeNamespaced\view('template', []);
+                        }
+                    }
+                    EOD,
+                <<<'EOD'
+                    /** @noinspection ALL */
+                    namespace Guanguans\RectorRulesTests\Rector\FuncCall\FuncCallToStaticCallRector\Fixture;
+
+                    class Fixture
+                    {
+                        public function someMethod()
+                        {
+                            \SomeStaticClass::render('template', []);
+                            \AnotherStaticClass::render('template', []);
+                        }
+                    }
+                    EOD,
+                [
+                    new FuncCallToStaticCall('view', 'SomeStaticClass', 'render'),
+                    new FuncCallToStaticCall('SomeNamespaced\view', 'AnotherStaticClass', 'render'),
+                ]
             ),
         ];
     }

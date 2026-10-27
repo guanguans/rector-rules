@@ -41,6 +41,11 @@ return (new Configuration)
         [__DIR__.'/src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php'],
         [ErrorType::DEV_DEPENDENCY_IN_PROD]
     )
+    ->ignoreErrorsOnPackageAndPaths(
+        'nette/utils',
+        [__DIR__.'/src/Rector/StaticCall/RenameStaticMethodRector.php'],
+        [ErrorType::DEV_DEPENDENCY_IN_PROD]
+    )
     ->ignoreErrorsOnPackages(
         [
             /**
