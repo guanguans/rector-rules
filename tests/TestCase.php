@@ -22,6 +22,7 @@ declare(strict_types=1);
 namespace Guanguans\RectorRulesTests;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 class TestCase extends \PHPUnit\Framework\TestCase
@@ -37,7 +38,16 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * This method is called after the last test of this test class is run.
      */
-    public static function tearDownAfterClass(): void {}
+    public static function tearDownAfterClass(): void
+    {
+        array_map('unlink', array_keys(iterator_to_array(
+            Finder::create()
+                ->in(__DIR__.'/Rector/')
+                ->ignoreDotFiles(false)
+                ->name('.fixture.lock')
+                ->files()
+        )));
+    }
 
     /**
      * This method is called before each test.

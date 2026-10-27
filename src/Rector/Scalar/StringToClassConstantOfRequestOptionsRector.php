@@ -15,10 +15,10 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\Scalar;
 
 use Guanguans\RectorRules\Rector\AbstractProxyRector;
+use Guanguans\RectorRules\Rector\String_\StringToClassConstantRector;
 use GuzzleHttp\RequestOptions;
 use PhpParser\Node;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Transform\Rector\String_\StringToClassConstantRector;
 use Rector\Transform\ValueObject\StringToClassConstant;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
