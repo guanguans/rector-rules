@@ -8,6 +8,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.10.0"></a>
+## [1.10.0] - 2026-10-27
+### ✨ Features
+- **Rector:** Add RenameStaticMethodRector for static method renaming ([d2cb5d2](https://github.com/guanguans/rector-rules/commit/d2cb5d2))
+- **Rector:** Add FuncCallToStaticCallRector for function call transformation ([b8c01fb](https://github.com/guanguans/rector-rules/commit/b8c01fb))
+- **Rector:** Introduce RuleDefinitionPatch for enhanced rule documentation ([c330494](https://github.com/guanguans/rector-rules/commit/c330494))
+- **Rector:** Add StringToClassConstantRector for string conversion ([e5e6184](https://github.com/guanguans/rector-rules/commit/e5e6184))
+- **bootstrap:** Add bootstrap file for PHPUnit configuration ([7b66a1e](https://github.com/guanguans/rector-rules/commit/7b66a1e))
+
+### 🐞 Bug Fixes
+- **Rector:** Update PHP version constants for array handling ([50f1069](https://github.com/guanguans/rector-rules/commit/50f1069))
+
+
 <a name="1.9.2"></a>
 ## [1.9.2] - 2026-10-12
 ### ✨ Features
@@ -311,7 +324,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.9.2...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.0...HEAD
+[1.10.0]: https://github.com/guanguans/rector-rules/compare/1.9.2...1.10.0
 [1.9.2]: https://github.com/guanguans/rector-rules/compare/1.9.1...1.9.2
 [1.9.1]: https://github.com/guanguans/rector-rules/compare/1.9.0...1.9.1
 [1.9.0]: https://github.com/guanguans/rector-rules/compare/1.8.3...1.9.0
