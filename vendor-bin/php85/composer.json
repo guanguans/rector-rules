@@ -2,8 +2,8 @@
     "require-dev": {
         "php": ">=8.5",
         "ergebnis/composer-normalize": "^2.54",
-        "guanguans/monorepo-builder-worker": "^3.3",
-        "laravel/framework": "^13.35",
+        "guanguans/monorepo-builder-worker": "^3.4",
+        "laravel/framework": "^13.39",
         "phpbench/phpbench": "^1.7"
     },
     "suggest": {
