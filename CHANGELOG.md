@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.10.1"></a>
+## [1.10.1] - 2026-10-27
+### ✨ Features
+- **Rector:** Add additional options to request handling ([333389b](https://github.com/guanguans/rector-rules/commit/333389b))
+
+
 <a name="1.10.0"></a>
 ## [1.10.0] - 2026-10-27
 ### ✨ Features
@@ -324,7 +330,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.0...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.1...HEAD
+[1.10.1]: https://github.com/guanguans/rector-rules/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/guanguans/rector-rules/compare/1.9.2...1.10.0
 [1.9.2]: https://github.com/guanguans/rector-rules/compare/1.9.1...1.9.2
 [1.9.1]: https://github.com/guanguans/rector-rules/compare/1.9.0...1.9.1
