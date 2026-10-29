@@ -74,7 +74,7 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector 
     }
 
     /**
-     * @param \PhpParser\Node\Scalar\String_ $node
+     * @param \PhpParser\Node\Scalar\Float_|\PhpParser\Node\Scalar\Int_|\PhpParser\Node\Scalar\String_ $node
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */

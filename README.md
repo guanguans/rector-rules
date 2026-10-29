@@ -40,7 +40,6 @@ composer require guanguans/rector-rules --dev --ansi -v
 ### In your rector configuration register rules
 
 ```php
-use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
@@ -52,7 +51,6 @@ return RectorConfig::configure()
         // ...
     ])
     // ...
-    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
         'assertMatches*Snapshot', // Exclude `spatie/pest-plugin-snapshots` function name
         'beforeEach', // Exclude `pestphp/pest` function name
