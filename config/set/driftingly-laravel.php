@@ -1,6 +1,8 @@
 <?php
 
 /** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedNamespaceInspection */
 declare(strict_types=1);
 
 /**
@@ -13,7 +15,11 @@ declare(strict_types=1);
  */
 
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
 use Rector\Config\RectorConfig;
+use Rector\Transform\NodeAnalyzer\FuncCallStaticCallToMethodCallAnalyzer;
+use Rector\Transform\ValueObject\ArrayDimFetchToMethodCall;
+use RectorLaravel\Rector\FuncCall\ArgumentFuncCallToMethodCallRector;
 use RectorLaravel\Set\LaravelSetList;
 use function Guanguans\RectorRules\Support\classes;
 
@@ -29,7 +35,12 @@ return static function (RectorConfig $rectorConfig): void {
         (new ReflectionClass(LaravelSetList::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
         static fn (string $name): bool => !preg_match('/^LARAVEL_\d{2,3}$/', $name) && !\in_array(
             $name,
-            ['LARAVEL_STATIC_TO_INJECTION', 'LUMEN'],
+            collect(['LARAVEL_STATIC_TO_INJECTION', 'LUMEN'])
+                ->unless(
+                    class_exists(ArrayDimFetchToMethodCall::class),
+                    static fn (Collection $exceptSets): Collection => $exceptSets->push('LARAVEL_ARRAYACCESS_TO_METHOD_CALL')
+                )
+                ->all(),
             true
         ),
         \ARRAY_FILTER_USE_KEY
@@ -39,6 +50,12 @@ return static function (RectorConfig $rectorConfig): void {
         classes(static fn (string $class): bool => str_starts_with($class, 'RectorLaravel\Rector'))
             ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isInstantiable())
             ->keys()
+            ->unless(
+                class_exists(FuncCallStaticCallToMethodCallAnalyzer::class),
+                static fn (Collection $rules): Collection => $rules->reject(
+                    static fn (string $rule): bool => ArgumentFuncCallToMethodCallRector::class === $rule
+                )
+            )
             ->all()
     );
 };
