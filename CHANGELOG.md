@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.10.4"></a>
+## [1.10.4] - 2026-11-08
+### 🐞 Bug Fixes
+- **composer:** Update dependencies for compatibility and improvements ([a20c34c](https://github.com/guanguans/rector-rules/commit/a20c34c))
+
+
 <a name="1.10.3"></a>
 ## [1.10.3] - 2026-10-29
 ### 🐞 Bug Fixes
@@ -342,7 +348,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.3...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.4...HEAD
+[1.10.4]: https://github.com/guanguans/rector-rules/compare/1.10.3...1.10.4
 [1.10.3]: https://github.com/guanguans/rector-rules/compare/1.10.2...1.10.3
 [1.10.2]: https://github.com/guanguans/rector-rules/compare/1.10.1...1.10.2
 [1.10.1]: https://github.com/guanguans/rector-rules/compare/1.10.0...1.10.1
