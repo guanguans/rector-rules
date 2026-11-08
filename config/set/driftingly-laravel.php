@@ -37,6 +37,7 @@ return static function (RectorConfig $rectorConfig): void {
             $name,
             collect(['LARAVEL_STATIC_TO_INJECTION', 'LUMEN'])
                 ->unless(
+                    /** @see https://github.com/driftingly/rector-laravel/compare/2.6.2...2.7.3 */
                     class_exists(ArrayDimFetchToMethodCall::class),
                     static fn (Collection $exceptSets): Collection => $exceptSets->push('LARAVEL_ARRAYACCESS_TO_METHOD_CALL')
                 )
@@ -51,6 +52,7 @@ return static function (RectorConfig $rectorConfig): void {
             ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isInstantiable())
             ->keys()
             ->unless(
+                /** @see https://github.com/driftingly/rector-laravel/compare/2.6.2...2.7.3 */
                 class_exists(FuncCallStaticCallToMethodCallAnalyzer::class),
                 static fn (Collection $rules): Collection => $rules->reject(
                     static fn (string $rule): bool => ArgumentFuncCallToMethodCallRector::class === $rule

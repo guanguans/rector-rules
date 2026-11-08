@@ -31,6 +31,7 @@ use Rector\DowngradePhp82\Rector\MethodCall\DowngradeReflectionMethodHasPrototyp
 use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
+use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\Name\RenameClassRector;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
@@ -61,6 +62,9 @@ return RectorConfig::configure()
         SplitDoubleAssignRector::class,
     ])
     ->withSkip([
+        AddDoesNotPerformAssertionToNonAssertingTestRector::class => [
+            __DIR__.'/tests/Rector/AbstractRectorTestCase.php',
+        ],
         DowngradeReflectionMethodHasPrototypeRector::class => [
             __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
         ],

@@ -9,8 +9,8 @@ final class RemoveByType
 {
     /**
      * @DI\InjectParams({
-     *     "subscribeService" = 'some',
-     *     "ipService" = 'some'
+     *     "subscribeService" = "some",
+     *     "ipService" = "some"
      * })
      */
     public function __construct()
