@@ -1,0 +1,40 @@
+src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php
+  h_f374ed0b3ee0f5 75-79
+  h_f374ed0b3ee0f5 81,83,85,113
+src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php
+  h_f374ed0b3ee0f5 85-89
+  h_f374ed0b3ee0f5 91,93,95,106
+baselines/typeCoverage.returnTypeCoverage.neon
+  h_f374ed0b3ee0f5 6
+src/Rector/FuncCall/RenameAppFunctionToResolveFunctionRector.php
+  s_40ec9423c89304::t_a40b25def988e0 83-84
+  s_40ec9423c89304::t_08f3397d649b7a 79
+  h_f374ed0b3ee0f5 80-82,85-88
+src/Rector/AbstractProxyRector.php
+  s_40ec9423c89304::t_e47dde965418c2 64-65
+  s_40ec9423c89304::t_24571f9167841b 62
+  s_40ec9423c89304::t_388d9893678e36 63
+  s_40ec9423c89304::t_ba48bf80a2a227 88
+  s_40ec9423c89304::t_bc6f9a5d44f870 91-98
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "b3d102c8c6864d4f3d5ff6e13e1ad42f9a62a518",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_40ec9423c89304": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1794270904225",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
