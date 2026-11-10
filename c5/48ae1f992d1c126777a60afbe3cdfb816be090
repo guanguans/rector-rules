@@ -1,0 +1,29 @@
+src/Rector/AbstractProxyRector.php
+  s_40ec9423c89304::t_388d9893678e36 66
+  s_40ec9423c89304::t_24571f9167841b 64
+  h_f374ed0b3ee0f5 19,65
+  s_40ec9423c89304::t_bc6f9a5d44f870 94-101
+  s_40ec9423c89304::t_e47dde965418c2 67-68
+  h_f374ed0b3ee0f5 21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "c548ae1f992d1c126777a60afbe3cdfb816be090",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_40ec9423c89304": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1794270904225",
+        "model": "unknown"
+      },
+      "human_author": "guanguans <ityaozm@gmail.com>"
+    }
+  }
+}
