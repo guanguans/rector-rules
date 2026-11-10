@@ -94,8 +94,5 @@ abstract class AbstractProxyRector extends AbstractRector
     /**
      * @return array<array-key, mixed>
      */
-    protected function configuration(): array
-    {
-        return [];
-    }
+    abstract protected function configuration(): array;
 }
