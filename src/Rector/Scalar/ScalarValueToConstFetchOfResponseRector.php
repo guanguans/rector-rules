@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\Scalar;
 
 use Guanguans\RectorRules\Rector\AbstractProxyRector;
-use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
@@ -73,14 +72,17 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector 
         ];
     }
 
-    /**
-     * @param \PhpParser\Node\Scalar\Float_|\PhpParser\Node\Scalar\Int_|\PhpParser\Node\Scalar\String_ $node
-     *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
-    protected function rawRefactor(Node $node): ?Node
+    protected function proxyRectorClass(): string
     {
-        $this->makeProxyRector()->configure(array_map(
+        return ScalarValueToConstFetchRector::class;
+    }
+
+    /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
+    protected function configuration(): array
+    {
+        return array_map(
             static fn (int $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
                 // new (match (true) {
                 //     \is_float($value) => Float_::class,
@@ -108,13 +110,6 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector 
                 fn ($value): bool => \is_int($value) && !\in_array($value, $this->except, true)
             ),
             array_keys($constants)
-        ));
-
-        return parent::rawRefactor($node);
-    }
-
-    protected function proxyRectorClass(): string
-    {
-        return ScalarValueToConstFetchRector::class;
+        );
     }
 }

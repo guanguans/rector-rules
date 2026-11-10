@@ -69,15 +69,21 @@ final class RenameAppFunctionToResolveFunctionRector extends AbstractProxyRector
             return null;
         }
 
-        $this->makeProxyRector()->configure([
-            'app' => 'resolve',
-        ]);
-
         return parent::rawRefactor($node);
     }
 
     protected function proxyRectorClass(): string
     {
         return RenameFunctionRector::class;
+    }
+
+    /**
+     * @noinspection PhpMissingParentCallCommonInspection
+     */
+    protected function configuration(): array
+    {
+        return [
+            'app' => 'resolve',
+        ];
     }
 }

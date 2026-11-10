@@ -52,6 +52,8 @@ abstract class AbstractProxyRector extends AbstractRector
     }
 
     /**
+     * @see \Rector\Config\RectorConfig::ruleWithConfiguration()
+     *
      * @return \Rector\Contract\Rector\ConfigurableRectorInterface&\Rector\Rector\AbstractRector
      *
      * @noinspection PhpUnhandledExceptionInspection
@@ -59,7 +61,10 @@ abstract class AbstractProxyRector extends AbstractRector
      */
     protected function makeProxyRector(): \Rector\Rector\AbstractRector
     {
-        return $this->makeRectorConfig()->make($this->proxyRectorClass());
+        $proxyRector = $this->makeRectorConfig()->make($this->proxyRectorClass());
+        $proxyRector->configure($this->configuration());
+
+        return $proxyRector;
     }
 
     /**
@@ -82,7 +87,15 @@ abstract class AbstractProxyRector extends AbstractRector
     }
 
     /**
-     * @return class-string<\Rector\Rector\AbstractRector>
+     * @return class-string<\Rector\Contract\Rector\ConfigurableRectorInterface&\Rector\Rector\AbstractRector>
      */
     abstract protected function proxyRectorClass(): string;
+
+    /**
+     * @return array<array-key, mixed>
+     */
+    protected function configuration(): array
+    {
+        return [];
+    }
 }
