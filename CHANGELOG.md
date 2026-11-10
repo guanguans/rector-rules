@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.10.5"></a>
+## [1.10.5] - 2026-11-10
+### 🐞 Bug Fixes
+- **Rector:** Enhance proxy rector configuration handling ([9000b4e](https://github.com/guanguans/rector-rules/commit/9000b4e))
+
+
 <a name="1.10.4"></a>
 ## [1.10.4] - 2026-11-08
 ### 🐞 Bug Fixes
@@ -348,7 +354,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.4...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.5...HEAD
+[1.10.5]: https://github.com/guanguans/rector-rules/compare/1.10.4...1.10.5
 [1.10.4]: https://github.com/guanguans/rector-rules/compare/1.10.3...1.10.4
 [1.10.3]: https://github.com/guanguans/rector-rules/compare/1.10.2...1.10.3
 [1.10.2]: https://github.com/guanguans/rector-rules/compare/1.10.1...1.10.2
