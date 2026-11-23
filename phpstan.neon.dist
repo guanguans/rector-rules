@@ -201,7 +201,7 @@ parameters:
         - identifier: typeCoverage.paramTypeCoverage
 #        - identifier: typeCoverage.returnTypeCoverage
 
-        - message: '#^Cannot call method (all|reduce|getParameterOption)\(\) on mixed\.$#'
+        - message: '#^Cannot call method (all|contains|reduce|getParameterOption)\(\) on mixed\.$#'
         - message: '#^Found non\-normalized type \(null \| list\<Node\> \| NodeVisitor\:\:REMOVE_NODE \| \\PhpParser\\Node\) for return\: .* is a subtype of NodeVisitor\:\:REMOVE_NODE\.$#'
         - message: '#^Unused Guanguans\\RectorRules\\Rector\\.*\\.*\:\:__construct$#'
 
@@ -213,6 +213,7 @@ parameters:
             paths:
                 - src/Rector/Name/RenameToConventionalCaseNameRector.php
                 - src/Support/helpers.php
+                - src/Support/Utils.php
         -
             identifier: guanguans.exceptionMustImplementNativeThrowable
             path: src/Support/helpers.php
@@ -227,10 +228,12 @@ parameters:
             identifier: rector.noInstanceOfStaticReflection
             paths:
                 - src/Support/helpers.php
-                - src/Support/Utils.php
+#                - src/Support/Utils.php
         -
             identifier: symplify.forbiddenFuncCall
-            path: src/Support/helpers.php
+            paths:
+                - src/Support/helpers.php
+                - src/Support/Utils.php
         -
             identifier: method.childReturnType
             path: src/NodeVisitor/ParentConnectingVisitor.php

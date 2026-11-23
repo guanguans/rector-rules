@@ -88,6 +88,7 @@ return static function (RectorConfig $rectorConfig): void {
         'MIT',
         'PDO',
         'afterEach',
+        'assertMatches*Snapshot',
         'beforeEach',
     ]);
 

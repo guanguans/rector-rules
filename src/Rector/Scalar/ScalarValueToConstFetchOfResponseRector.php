@@ -84,9 +84,6 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector 
      */
     protected function configuration(): array
     {
-        return Utils::configurationOfScalarValueToConstFetchRector(
-            Response::class,
-            [Response::class => $this->except]
-        );
+        return Utils::configurationOfScalarValueToConstFetchRector(Response::class, [Response::class => $this->except]);
     }
 }

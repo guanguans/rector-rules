@@ -68,10 +68,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->ruleWithConfiguration(
         StringToClassConstantRector::class,
-        Utils::configurationOfStringToClassConstantRector([
-            AttributeKey::class,
-            PhpDocAttributeKey::class,
-        ])
+        Utils::configurationOfStringToClassConstantRector([AttributeKey::class, PhpDocAttributeKey::class])
     );
 
     $rectorConfig->ruleWithConfiguration(
