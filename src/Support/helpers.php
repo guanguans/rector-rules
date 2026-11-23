@@ -56,8 +56,12 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
         $errorMessenger = static fn (
             string $file,
             string $class
-        ): string => "Failed to reflect the class [$class] in the file [$file]. "
-            ."You may need to filter out the class or file using the callback parameter of the function [$func()].";
+        ): string => implode(\PHP_EOL, [
+            "Failed to reflect the class [$class] in the file [$file]. ",
+            file_exists($file)
+                ? "You may need to filter out the class or file using the callback parameter of the function [$func()]."
+                : 'You need to run the command `composer dump-autoload --ansi -vv` to regenerate the autoload files.',
+        ]);
 
         /** @var null|array{file: string, class: class-string<TObject>, line: int} $context */
         static $context = null;

@@ -210,8 +210,9 @@ parameters:
             path: src/Rector/Name/RenameToConventionalCaseNameRector.php
         -
             identifier: complexity.functionLike
-            path: src/Rector/Name/RenameToConventionalCaseNameRector.php
-
+            paths:
+                - src/Rector/Name/RenameToConventionalCaseNameRector.php
+                - src/Support/helpers.php
         -
             identifier: guanguans.exceptionMustImplementNativeThrowable
             path: src/Support/helpers.php

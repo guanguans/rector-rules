@@ -36,7 +36,7 @@ it('will throw `ReflectionException` when call classes function', function (): v
     classes(fn (string $class): bool => Str::of($class)->startsWith('Illuminate\Support'));
 })
     ->group(__DIR__, __FILE__)
-    ->throws(ReflectionException::class);
+    ->throws(ReflectionException::class, getcwd());
 
 it('can get classes', function (): void {
     expect(classes(fn (string $class): bool => Str::of($class)->startsWith(Str::class)))

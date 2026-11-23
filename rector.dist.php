@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -143,10 +144,6 @@ return RectorConfig::configure()
         SetList::PHP_POLYFILLS,
     ])
     ->withRules([])
-    // ->withConfiguredRule(
-    //     StringToClassConstantRector::class,
-    //     RectorRulesUtils::configurationOfStringToClassConstantRector()
-    // )
     ->withConfiguredRule(
         ScalarValueToConstFetchRector::class,
         RectorRulesUtils::configurationOfScalarValueToConstFetchRector(null, [
