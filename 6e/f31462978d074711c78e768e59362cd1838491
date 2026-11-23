@@ -1,0 +1,144 @@
+tests/Rector/Scalar/StringToClassConstantOfRequestOptionsRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Array_/SortListItemOfSameScalarTypeRector/SortListItemOfSameScalarTypeRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/StaticCall/RenameStaticMethodRector/Source/FormMacros.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/AbstractRectorTestCase.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Class_/UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector/UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Param/AddSensitiveParameterAttributeRector/AddSensitiveParameterAttributeRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Array_/SortListItemOfSameScalarTypeRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/RenameAppFunctionToResolveFunctionRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/File/SortFileFirstStmtDocblockRector/SortFileFirstStmtDocblockRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/ArraySpreadInsteadOfArrayMergeRector/ArraySpreadInsteadOfArrayMergeRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/ClassMethod/PrivateToProtectedVisibilityForTraitRector/PrivateToProtectedVisibilityForTraitRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Name/RenameToConventionalCaseNameRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/JsonThrowOnErrorRector/JsonThrowOnErrorRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/FuncCallToStaticCallRector/FuncCallToStaticCallRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Class_/UpdatePHPStanMethodNodeParamDocblockFromNodeTypesRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/ClassLike/RemoveAnnotationRector/RemoveAnnotationRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Namespace_/RemoveNamespaceRector/RemoveNamespaceRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/New_/NewExceptionToNewAnonymousExtendsExceptionImplementsRector/NewExceptionToNewAnonymousExtendsExceptionImplementsRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/TestCase.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Array_/SimplifyListIndexRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Param/AddSensitiveParameterAttributeRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/New_/NewExceptionToNewAnonymousExtendsExceptionImplementsRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/bootstrap.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/String_/StringToClassConstantRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+config/set/common.php
+  s_d4c0d9dcfdf84c::t_cd88be4f570e90 93-97
+  s_d4c0d9dcfdf84c::t_6a81fdc51a6504 98
+  s_d4c0d9dcfdf84c::t_9067eaf4b6faa3 87-91
+  h_f374ed0b3ee0f5 25,29,92
+  s_d4c0d9dcfdf84c::t_d5c2c56ee31e6d 45-59
+tests/Rector/FunctionLike/RenameGarbageParamNameRector/RenameGarbageParamNameRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Scalar/ScalarValueToConstFetchOfResponseRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Pest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Scalar/ScalarValueToConstFetchOfResponseRector/ScalarValueToConstFetchOfResponseRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Support/HelpersTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Array_/SimplifyListIndexRector/SimplifyListIndexRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/File/SortFileFunctionStmtRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/ArchTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/File/SortFileFirstStmtDocblockRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/File/AddNoinspectionDocblockToFileFirstStmtRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/File/SortFileFunctionStmtRector/SortFileFunctionStmtRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/File/AddNoinspectionDocblockToFileFirstStmtRector/AddNoinspectionDocblockToFileFirstStmtRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/ClassMethod/PrivateToProtectedVisibilityForTraitRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Scalar/ScalarValueToConstFetchRector/Source/ClassWithConst.php
+  h_f374ed0b3ee0f5 5,10
+tests/Support/UtilsTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/ArraySpreadInsteadOfArrayMergeRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Name/RenameToConventionalCaseNameRector/RenameToConventionalCaseNameRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector/UpdateRectorCodeSamplesFromFixturesRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Namespace_/RemoveNamespaceRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/StaticCall/RenameStaticMethodRector/RenameStaticMethodRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Scalar/ScalarValueToConstFetchRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Datasets/Movies.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/JsonThrowOnErrorRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/StaticCall/RenameStaticMethodRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Class_/UpdateRectorMethodNodeParamDocblockFromNodeTypesRector/UpdateRectorMethodNodeParamDocblockFromNodeTypesRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FunctionLike/RenameGarbageParamNameRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/RenameAppFunctionToResolveFunctionRector/RenameAppFunctionToResolveFunctionRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/FuncCall/FuncCallToStaticCallRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/ClassLike/RemoveAnnotationRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Class_/UpdateRectorMethodNodeParamDocblockFromNodeTypesRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/String_/StringToClassConstantRector/StringToClassConstantRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Scalar/StringToClassConstantOfRequestOptionsRector/StringToClassConstantOfRequestOptionsRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+tests/Rector/Scalar/ScalarValueToConstFetchRector/ScalarValueToConstFetchRectorTest.php
+  h_f374ed0b3ee0f5 5,10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "6ef31462978d074711c78e768e59362cd1838491",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_d4c0d9dcfdf84c": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795422061262",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
