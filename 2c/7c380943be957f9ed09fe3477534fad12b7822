@@ -1,0 +1,36 @@
+rector.dist.php
+  s_4523ac4bd46e5b::t_01b20d940062b1 153,157
+  h_f374ed0b3ee0f5 17,19,21,144-152,154-156,158-159
+src/Support/Utils.php
+  h_f374ed0b3ee0f5 16-27,34-52,54-73,75-77,79-112,114-118,120-125,127,129-134,140-159,161,163-164
+  s_d4c0d9dcfdf84c::t_7ff6bea3eef362 53,74,78,113,119,126,128,135-139,160,162
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "2c7c380943be957f9ed09fe3477534fad12b7822",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_4523ac4bd46e5b": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795434410517",
+        "model": "unknown"
+      },
+      "human_author": null
+    },
+    "s_d4c0d9dcfdf84c": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795422061262",
+        "model": "unknown"
+      },
+      "human_author": "guanguans <ityaozm@gmail.com>"
+    }
+  }
+}
