@@ -85,7 +85,7 @@ final class ComposerScripts
      * @throws \ErrorException
      * @throws \ReflectionException
      *
-     * @return int<0>|never-returns<1>
+     * @return int<0>|never<1>
      *
      * @noinspection PhpDocSignatureInspection
      */

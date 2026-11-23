@@ -14,10 +14,12 @@ declare(strict_types=1);
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
+use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
-use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
-use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
+use Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector;
+use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
 use Guanguans\RectorRules\Rector\String_\StringToClassConstantRector;
+use Guanguans\RectorRules\Support\Utils as RectorRulesUtils;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
@@ -56,15 +58,20 @@ return RectorConfig::configure()
         DowngradeStrStartsWithRector::class,
     ])
     ->withSkip([
+        // PHP Fatal error:  Uncaught Error: Class 'WeakMap' not found in vendor/rector/rector/
+        // vendor/rector/rector-phpunit/src/NodeAnalyzer/LifecycleMethodAssertAnalyzer.php:58
+        AddDoesNotPerformAssertionToNonAssertingTestRector::class,
+
+        /** @see SortListItemOfSameScalarTypeRector */
         LogicalToBooleanRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
         PreferPHPUnitThisCallRector::class,
         SplitDoubleAssignRector::class,
     ])
     ->withSkip([
-        AddDoesNotPerformAssertionToNonAssertingTestRector::class => [
-            __DIR__.'/tests/Rector/AbstractRectorTestCase.php',
-        ],
+        // AddDoesNotPerformAssertionToNonAssertingTestRector::class => [
+        //     __DIR__.'/tests/Rector/AbstractRectorTestCase.php',
+        // ],
         DowngradeReflectionMethodHasPrototypeRector::class => [
             __DIR__.'/src/Rector/FunctionLike/RenameGarbageParamNameRector.php',
         ],
@@ -136,18 +143,14 @@ return RectorConfig::configure()
         SetList::PHP_POLYFILLS,
     ])
     ->withRules([])
-    ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
-        '*/src/Rector/*Rector.php' => [
-            'PhpMultipleClassDeclarationsInspection',
-        ],
-        '*/tests/*' => [
-            'AnonymousFunctionStaticInspection',
-            'NullPointerExceptionInspection',
-            'PhpPossiblePolymorphicInvocationInspection',
-            'PhpUndefinedClassInspection',
-            'PhpUnhandledExceptionInspection',
-            'PhpVoidFunctionResultUsedInspection',
-            'StaticClosureCanBeUsedInspection',
-        ],
-    ])
-    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT']);
+    // ->withConfiguredRule(
+    //     StringToClassConstantRector::class,
+    //     RectorRulesUtils::configurationOfStringToClassConstantRector()
+    // )
+    ->withConfiguredRule(
+        ScalarValueToConstFetchRector::class,
+        RectorRulesUtils::configurationOfScalarValueToConstFetchRector(null, [
+            AddSensitiveParameterAttributeRector::class,
+            ParentConnectingVisitor::class,
+        ])
+    );

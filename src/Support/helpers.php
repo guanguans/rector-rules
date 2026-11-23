@@ -37,7 +37,7 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
      * @see \PhpCsFixer\ExecutorWithoutErrorHandler
      * @see \Phrity\Util\ErrorHandler
      *
-     * @template TObject of object
+     * @template TObject of object = object
      *
      * @internal
      *

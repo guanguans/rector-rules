@@ -105,13 +105,6 @@ parameters:
 #        no_param_type_removal: true
 #        no_isset_on_object: true
 #        no_empty_on_object: true
-    unused_public:
-        constants: true
-        properties: true
-        methods: true
-        local_methods: true
-        template_paths:
-#            - resources/views/
     disallowedFunctionCalls:
         -
             function: 'env_explode()'
@@ -185,6 +178,7 @@ parameters:
         - identifier: ergebnis.noNullableReturnTypeDeclaration
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
+        - identifier: ergebnis.noSwitch
         - identifier: shipmonk.binaryOperationWithNull
         - identifier: shipmonk.checkedExceptionInCallable
         - identifier: shipmonk.forbiddenCast
@@ -193,13 +187,20 @@ parameters:
         - identifier: symplify.forbiddenArrayMethodCall
 #        - identifier: symplify.forbiddenNode
 #        - identifier: symplify.forbiddenStaticClassConstFetch
+        - identifier: symplify.forbiddenSwitch
         - identifier: symplify.noArrayMapWithArrayCallable
 
-        - identifier: argument.type
         - identifier: cast.int
         - identifier: encapsedStringPart.nonString
         - identifier: method.childParameterType
+
+#        - identifier: argument.templateType
+        - identifier: argument.type
+#        - identifier: assign.propertyType
         - identifier: return.type
+        - identifier: typeCoverage.paramTypeCoverage
+#        - identifier: typeCoverage.returnTypeCoverage
+
         - message: '#^Cannot call method (all|reduce|getParameterOption)\(\) on mixed\.$#'
         - message: '#^Found non\-normalized type \(null \| list\<Node\> \| NodeVisitor\:\:REMOVE_NODE \| \\PhpParser\\Node\) for return\: .* is a subtype of NodeVisitor\:\:REMOVE_NODE\.$#'
         - message: '#^Unused Guanguans\\RectorRules\\Rector\\.*\\.*\:\:__construct$#'
@@ -220,9 +221,12 @@ parameters:
                 - src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php
                 - src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php
                 - src/Support/helpers.php
+                - src/Support/Utils.php
         -
             identifier: rector.noInstanceOfStaticReflection
-            path: src/Support/helpers.php
+            paths:
+                - src/Support/helpers.php
+                - src/Support/Utils.php
         -
             identifier: symplify.forbiddenFuncCall
             path: src/Support/helpers.php
@@ -232,6 +236,3 @@ parameters:
         -
             identifier: if.alwaysFalse
             path: src/Rector/FuncCall/JsonThrowOnErrorRector.php
-
-        - identifier: typeCoverage.paramTypeCoverage
-#        - identifier: typeCoverage.returnTypeCoverage
