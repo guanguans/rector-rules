@@ -1,0 +1,42 @@
+composer.json
+  h_f374ed0b3ee0f5 54-58,62
+  s_818e90166cc8f1::t_44f15f43b5f643 200
+  s_818e90166cc8f1::t_8d1b8485b7001f 343
+  s_818e90166cc8f1::t_4d79ea5dab9ace 201
+  s_818e90166cc8f1::t_34d052adc38bc1 255
+  s_818e90166cc8f1::t_140b10c6df53f6 260
+  s_818e90166cc8f1::t_8870de1b2a16f2 256-259
+  s_818e90166cc8f1::t_02388586555a9a 344-346
+  h_f374ed0b3ee0f5 347-353
+src/Support/ComposerScripts.php
+  h_f374ed0b3ee0f5 88
+vendor-bin/php85/composer.json
+  h_f374ed0b3ee0f5 4,6
+rector.dist.php
+  s_818e90166cc8f1::t_bdd2886f82445d 62-63
+  h_f374ed0b3ee0f5 70-72
+  s_818e90166cc8f1::t_8d4be4c42c3fa2 59-61
+vendor-bin/common/composer.json
+  h_f374ed0b3ee0f5 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "0d1325337ae9819351b1c193ae494bf2109629ac",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_818e90166cc8f1": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795419441299",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
