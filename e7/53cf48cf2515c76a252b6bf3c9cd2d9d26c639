@@ -1,0 +1,16 @@
+tests/Rector/Scalar/StringToClassConstantOfRequestOptionsRector/StringToClassConstantOfRequestOptionsRectorTest.php
+  h_f374ed0b3ee0f5 29
+src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php
+  h_f374ed0b3ee0f5 19,93-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "e753cf48cf2515c76a252b6bf3c9cd2d9d26c639",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  }
+}
