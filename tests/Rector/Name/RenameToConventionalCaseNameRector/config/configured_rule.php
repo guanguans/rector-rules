@@ -2,10 +2,12 @@
 
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
+/** @noinspection SqlResolve */
 /** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);

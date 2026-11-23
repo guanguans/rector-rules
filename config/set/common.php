@@ -22,9 +22,11 @@ use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\ClassLike\RemoveAnnotationRector;
 use Guanguans\RectorRules\Rector\ClassMethod\PrivateToProtectedVisibilityForTraitRector;
+use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
 use Guanguans\RectorRules\Rector\File\SortFileFunctionStmtRector;
 use Guanguans\RectorRules\Rector\FunctionLike\RenameGarbageParamNameRector;
+use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
 use Guanguans\RectorRules\Rector\Param\AddSensitiveParameterAttributeRector;
 use Rector\Config\RectorConfig;
@@ -40,9 +42,21 @@ return static function (RectorConfig $rectorConfig): void {
         SortFileFunctionStmtRector::class,
     ]);
 
-    $rectorConfig->ruleWithConfiguration(SortListItemOfSameScalarTypeRector::class, [
-        'ignore_comment' => false,
-        'ignore_docblock' => false,
+    $rectorConfig->ruleWithConfiguration(AddNoinspectionDocblockToFileFirstStmtRector::class, [
+        '*/src/Rector/*Rector.php' => [
+            'PhpMultipleClassDeclarationsInspection',
+        ],
+        '*/tests/*' => [
+            'AnonymousFunctionStaticInspection',
+            'NullPointerExceptionInspection',
+            'PhpFieldAssignmentTypeMismatchInspection',
+            'PhpPossiblePolymorphicInvocationInspection',
+            'PhpUndefinedClassInspection',
+            'PhpUnhandledExceptionInspection',
+            'PhpVoidFunctionResultUsedInspection',
+            'SqlResolve',
+            'StaticClosureCanBeUsedInspection',
+        ],
     ]);
 
     $rectorConfig->ruleWithConfiguration(AddSensitiveParameterAttributeRector::class, [
@@ -68,6 +82,18 @@ return static function (RectorConfig $rectorConfig): void {
         'phpstan-ignore',
         'phpstan-ignore-next-line',
         'psalm-suppress',
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(RenameToConventionalCaseNameRector::class, [
+        'MIT',
+        'PDO',
+        'afterEach',
+        'beforeEach',
+    ]);
+
+    $rectorConfig->ruleWithConfiguration(SortListItemOfSameScalarTypeRector::class, [
+        'ignore_comment' => false,
+        'ignore_docblock' => false,
     ]);
 
     /**
