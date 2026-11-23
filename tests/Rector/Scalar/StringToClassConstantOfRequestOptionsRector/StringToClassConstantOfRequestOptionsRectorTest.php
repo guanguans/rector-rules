@@ -26,6 +26,7 @@ use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
  * @covers \Guanguans\RectorRules\Rector\Scalar\StringToClassConstantOfRequestOptionsRector
+ * @covers \Guanguans\RectorRules\Support\Utils
  */
 final class StringToClassConstantOfRequestOptionsRectorTest extends AbstractRectorTestCase
 {

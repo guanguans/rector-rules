@@ -16,9 +16,9 @@ namespace Guanguans\RectorRules\Rector\Scalar;
 
 use Guanguans\RectorRules\Rector\AbstractProxyRector;
 use Guanguans\RectorRules\Rector\String_\StringToClassConstantRector;
+use Guanguans\RectorRules\Support\Utils;
 use GuzzleHttp\RequestOptions;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Transform\ValueObject\StringToClassConstant;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 
@@ -88,21 +88,15 @@ final class StringToClassConstantOfRequestOptionsRector extends AbstractProxyRec
     }
 
     /**
-     * @noinspection PhpMissingParentCallCommonInspection
+     * @throws \ErrorException
+     * @throws \JsonException
+     * @throws \ReflectionException
      */
     protected function configuration(): array
     {
-        return array_map(
-            static fn (
-                string $value,
-                string $name
-            ): StringToClassConstant => new StringToClassConstant($value, RequestOptions::class, $name),
-            $constants = array_filter(
-                (new \ReflectionClass(RequestOptions::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
-                // '\is_string'
-                fn ($value): bool => \is_string($value) && !\in_array($value, $this->except, true)
-            ),
-            array_keys($constants),
+        return Utils::configurationOfStringToClassConstantRector(
+            RequestOptions::class,
+            [RequestOptions::class => array_map('\strtoupper', $this->except)]
         );
     }
 }

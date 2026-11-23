@@ -15,14 +15,8 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\Scalar;
 
 use Guanguans\RectorRules\Rector\AbstractProxyRector;
-use PhpParser\Node\Expr\ClassConstFetch;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Name\FullyQualified;
-use PhpParser\Node\Scalar\Float_;
-use PhpParser\Node\Scalar\Int_;
-use PhpParser\Node\Scalar\String_;
+use Guanguans\RectorRules\Support\Utils;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Symfony\Component\HttpFoundation\Response;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
@@ -32,13 +26,19 @@ use Webmozart\Assert\Assert;
  */
 final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector implements ConfigurableRectorInterface
 {
-    /** @var list<int> */
-    private array $except = [100, 200, 300, 400, 500];
+    /** @var list<string> */
+    private array $except = [
+        'HTTP_CONTINUE', // 100
+        'HTTP_OK', // 200
+        'HTTP_MULTIPLE_CHOICES', // 300
+        'HTTP_BAD_REQUEST', // 400
+        'HTTP_INTERNAL_SERVER_ERROR', // 500
+    ];
 
     public function configure(array $configuration): void
     {
         Assert::isList($configuration);
-        Assert::allInteger($configuration);
+        Assert::allString($configuration);
         $this->except = $configuration;
     }
 
@@ -67,7 +67,7 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector 
                     $httpSwitchingProtocols = \Symfony\Component\HttpFoundation\Response::HTTP_SWITCHING_PROTOCOLS;
                     $httpProcessing = \Symfony\Component\HttpFoundation\Response::HTTP_PROCESSING;
                     PHP,
-                [100, 200]
+                ['HTTP_CONTINUE', 'HTTP_OK']
             ),
         ];
     }
@@ -78,38 +78,15 @@ final class ScalarValueToConstFetchOfResponseRector extends AbstractProxyRector 
     }
 
     /**
-     * @noinspection PhpMissingParentCallCommonInspection
+     * @throws \ErrorException
+     * @throws \JsonException
+     * @throws \ReflectionException
      */
     protected function configuration(): array
     {
-        return array_map(
-            static fn (int $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-                // new (match (true) {
-                //     \is_float($value) => Float_::class,
-                //     \is_int($value) => Int_::class,
-                //     \is_string($value) => String_::class,
-                // })($value),
-                // (static function (/* float|int|string */ $value): object {
-                //     switch (true) {
-                //         case \is_float($value):
-                //             return new Float_($value);
-                //         case \is_int($value):
-                //             return new Int_($value);
-                //         case \is_string($value):
-                //         default:
-                //             return new String_($value);
-                //     }
-                // })($value),
-                new Int_($value),
-                new ClassConstFetch(new FullyQualified(Response::class), new Identifier($name))
-            ),
-            $constants = array_filter(
-                (new \ReflectionClass(Response::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
-                // static fn (mixed $value): bool => \is_float($value) || \is_int($value) || \is_string($value)
-                // '\is_int'
-                fn ($value): bool => \is_int($value) && !\in_array($value, $this->except, true)
-            ),
-            array_keys($constants)
+        return Utils::configurationOfScalarValueToConstFetchRector(
+            Response::class,
+            [Response::class => $this->except]
         );
     }
 }

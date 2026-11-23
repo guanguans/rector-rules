@@ -218,8 +218,8 @@ parameters:
         -
             identifier: rector.noClassReflectionStaticReflection
             paths:
-                - src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php
-                - src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php
+#                - src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php
+#                - src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php
                 - src/Support/helpers.php
                 - src/Support/Utils.php
         -

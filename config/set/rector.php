@@ -19,10 +19,7 @@ use Guanguans\RectorRules\Rector\Array_\UpdateRectorCodeSamplesFromFixturesRecto
 use Guanguans\RectorRules\Rector\Class_\UpdateRectorMethodNodeParamDocblockFromNodeTypesRector;
 use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
 use Guanguans\RectorRules\Rector\String_\StringToClassConstantRector;
-use PhpParser\Node\Expr\ClassConstFetch;
-use PhpParser\Node\Identifier;
-use PhpParser\Node\Name\FullyQualified;
-use PhpParser\Node\Scalar\Int_;
+use Guanguans\RectorRules\Support\Utils;
 use PhpParser\NodeFinder;
 use PhpParser\PrettyPrinter\Standard;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
@@ -41,8 +38,6 @@ use Rector\PhpParser\Parser\SimplePhpParser;
 use Rector\PhpParser\Printer\BetterStandardPrinter;
 use Rector\Rector\AbstractRector;
 use Rector\Renaming\Rector\Name\RenameClassRector;
-use Rector\Transform\ValueObject\ScalarValueToConstFetch;
-use Rector\Transform\ValueObject\StringToClassConstant;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -71,38 +66,16 @@ return static function (RectorConfig $rectorConfig): void {
         TokenIterator::class => BetterTokenIterator::class,
     ]);
 
-    /** @noinspection NullableArgumentPassedInspection */
-    $rectorConfig->ruleWithConfiguration(StringToClassConstantRector::class, array_reduce(
-        [
+    $rectorConfig->ruleWithConfiguration(
+        StringToClassConstantRector::class,
+        Utils::configurationOfStringToClassConstantRector([
             AttributeKey::class,
             PhpDocAttributeKey::class,
-        ],
-        static fn (array $carry, string $class): array => array_merge(
-            $carry,
-            array_map(
-                static fn (
-                    string $value,
-                    string $name
-                ): StringToClassConstant => new StringToClassConstant($value, $class, $name),
-                $constants = array_filter(
-                    (new ReflectionClass($class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
-                    '\is_string'
-                ),
-                array_keys($constants),
-            ),
-        ),
-        [],
-    ));
+        ])
+    );
 
-    $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchRector::class, array_map(
-        static fn (int $value, string $name): ScalarValueToConstFetch => new ScalarValueToConstFetch(
-            new Int_($value),
-            new ClassConstFetch(new FullyQualified(PhpVersion::class), new Identifier($name))
-        ),
-        $constants = array_filter(
-            (new ReflectionClass(PhpVersion::class))->getConstants(/* ReflectionClassConstant::IS_PUBLIC */),
-            '\is_int'
-        ),
-        array_keys($constants)
-    ));
+    $rectorConfig->ruleWithConfiguration(
+        ScalarValueToConstFetchRector::class,
+        Utils::configurationOfScalarValueToConstFetchRector(PhpVersion::class)
+    );
 };

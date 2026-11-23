@@ -26,5 +26,5 @@ use Rector\Config\RectorConfig;
 return static function (RectorConfig $rectorConfig): void {
     // Ensure that using the default configuration is valid.
     $rectorConfig->rule(ScalarValueToConstFetchOfResponseRector::class);
-    $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchOfResponseRector::class, [100, 200]);
+    $rectorConfig->ruleWithConfiguration(ScalarValueToConstFetchOfResponseRector::class, ['HTTP_CONTINUE', 'HTTP_OK']);
 };
