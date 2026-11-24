@@ -53,10 +53,7 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
     function classes(?callable $filter = null): Collection
     {
         $func = __FUNCTION__;
-        $errorMessenger = static fn (
-            string $file,
-            string $class
-        ): string => implode(\PHP_EOL, [
+        $errorMessenger = static fn (string $file, string $class): string => implode(\PHP_EOL, [
             "Failed to reflect the class [$class] in the file [$file]. ",
             file_exists($file)
                 ? "You may need to filter out the class or file using the callback parameter of the function [$func()]."
@@ -111,7 +108,6 @@ if (!\function_exists('Guanguans\RectorRules\Support\classes')) {
 
                     return [$class => new \ReflectionClass($class)];
                 } catch (\Throwable $throwable) {
-                    // return [$class => $throwable];
                     throw new \ReflectionException($errorMessenger($file, $class), 0, $throwable);
                 } finally {
                     $context = null;

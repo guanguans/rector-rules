@@ -33,8 +33,7 @@ return ECSConfig::configure()
         ],
     ])
     ->withSets([SetList::GUANGUANS])
-    ->withConfiguredRule(HeaderCommentFixer::class, Utils::configurationOfHeaderCommentFixer(
-        'guanguans/rector-rules',
-        '2025',
-        __DIR__.'/LICENSE'
-    ));
+    ->withConfiguredRule(
+        HeaderCommentFixer::class,
+        Utils::configurationOfHeaderCommentFixer('guanguans/rector-rules', '2025', __DIR__.'/LICENSE')
+    );
