@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.10.9"></a>
+## [1.10.9] - 2026-11-27
+### 💅 Code Refactorings
+- **config:** simplify file pattern for inspection rules ([aa66c93](https://github.com/guanguans/rector-rules/commit/aa66c93))
+
+
 <a name="1.10.8"></a>
 ## [1.10.8] - 2026-11-27
 ### 💅 Code Refactorings
@@ -381,7 +387,8 @@ All notable changes to this project will be documented in this file.
 - Merge pull request [#1](https://github.com/guanguans/rector-rules/issues/1) from guanguans/dependabot/composer/rector/jack-tw-0.4or-tw-0.5
 
 
-[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.8...HEAD
+[Unreleased]: https://github.com/guanguans/rector-rules/compare/1.10.9...HEAD
+[1.10.9]: https://github.com/guanguans/rector-rules/compare/1.10.8...1.10.9
 [1.10.8]: https://github.com/guanguans/rector-rules/compare/1.10.7...1.10.8
 [1.10.7]: https://github.com/guanguans/rector-rules/compare/1.10.6...1.10.7
 [1.10.6]: https://github.com/guanguans/rector-rules/compare/1.10.5...1.10.6
