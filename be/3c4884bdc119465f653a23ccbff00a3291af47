@@ -1,0 +1,16 @@
+src/ValueObject/RenameStaticMethod.php
+  h_f374ed0b3ee0f5 1-74
+src/ValueObject/ScalarValueToConstFetch.php
+  h_f374ed0b3ee0f5 1-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "be3c4884bdc119465f653a23ccbff00a3291af47",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  }
+}
