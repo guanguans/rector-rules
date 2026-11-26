@@ -18,6 +18,7 @@ use Ergebnis\Rector\Rules\Expressions\Matches\SortMatchArmsByConditionalRector;
 use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
 use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
 use Ergebnis\Rector\Rules\PHPUnit\ReplaceTestAttributeWithTestPrefixRector;
+use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\ClassLike\RemoveAnnotationRector;
@@ -43,9 +44,10 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->ruleWithConfiguration(AddNoinspectionDocblockToFileFirstStmtRector::class, [
-        '*/src/Rector/*Rector.php' => [
-            'PhpMultipleClassDeclarationsInspection',
+        '*/Mixin/*' => $mixinInspections = [
+            'OverrideMissingInspection',
         ],
+        '*/Mixins/*' => $mixinInspections,
         '*/tests/*' => [
             'AnonymousFunctionStaticInspection',
             'NullPointerExceptionInspection',
@@ -56,6 +58,13 @@ return static function (RectorConfig $rectorConfig): void {
             'PhpVoidFunctionResultUsedInspection',
             'SqlResolve',
             'StaticClosureCanBeUsedInspection',
+        ],
+        '*/tests/Arch/*' => [
+            'ClassConstantCanBeUsedInspection',
+            'ClassnameLiteralInspection',
+        ],
+        '*Rector.php' => [
+            'PhpMultipleClassDeclarationsInspection',
         ],
     ]);
 
@@ -84,12 +93,20 @@ return static function (RectorConfig $rectorConfig): void {
         'psalm-suppress',
     ]);
 
+    $rectorConfig->bound(ParentConnectingVisitor::class) or $rectorConfig->singleton(ParentConnectingVisitor::class);
     $rectorConfig->ruleWithConfiguration(RenameToConventionalCaseNameRector::class, [
+        'Debug', 'Info', 'Notice', 'Warning', 'Error', 'Critical', 'Alert', 'Emergency', /** @see \Monolog\Level */
+        'DB',
         'MIT',
         'PDO',
+        'URL',
+        'Value',
         'afterEach',
         'assertMatches*Snapshot',
         'beforeEach',
+        'current_password',
+        'extra_attributes',
+        'new_password',
     ]);
 
     $rectorConfig->ruleWithConfiguration(SortListItemOfSameScalarTypeRector::class, [

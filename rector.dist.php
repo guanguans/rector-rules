@@ -32,7 +32,6 @@ use Rector\DowngradePhp80\Rector\FuncCall\DowngradeStrStartsWithRector;
 use Rector\DowngradePhp81\Rector\FuncCall\DowngradeArrayIsListRector;
 use Rector\DowngradePhp82\Rector\MethodCall\DowngradeReflectionMethodHasPrototypeRector;
 use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
-use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
@@ -80,9 +79,6 @@ return RectorConfig::configure()
         RenameClassRector::class => [
             __DIR__.'/config/set/rector.php',
         ],
-        // RenameParamToMatchTypeRector::class => [
-        //     __DIR__.'/src/Rector/*Rector.php',
-        // ],
         SortAssociativeArrayByKeyRector::class => [
             /** @see vendor/rector/rector/src/PostRector/Rector/ */
             __DIR__.'/src/Support/helpers.php',
