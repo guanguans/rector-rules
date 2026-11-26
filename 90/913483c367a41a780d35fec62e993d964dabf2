@@ -1,0 +1,24 @@
+tests/Rector/Scalar/ScalarValueToConstFetchRector/config/configured_rule.php
+  h_f374ed0b3ee0f5 24
+src/Support/Utils.php
+  h_f374ed0b3ee0f5 16,71
+src/ValueObject/FuncCallToStaticCall.php
+  h_f374ed0b3ee0f5 1-57
+src/ValueObject/RenameStaticMethod.php
+  h_f374ed0b3ee0f5 1-74
+src/Rector/Scalar/ScalarValueToConstFetchRector.php
+  h_f374ed0b3ee0f5 18
+src/ValueObject/ScalarValueToConstFetch.php
+  h_f374ed0b3ee0f5 1-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "90913483c367a41a780d35fec62e993d964dabf2",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  }
+}
