@@ -721,8 +721,8 @@ Rename static method
 
  function staticMethodNameReplacer()
  {
--Nette\Utils\Html::add('someContent');
-+Nette\Utils\Html::addHtml('someContent');
+-    \Nette\Utils\Html::add('someContent');
++    \Nette\Utils\Html::addHtml('someContent');
      $result = FormMacros::renderFormBegin($someArgs);
      $result = FormMACROS::renderFormBEGIN($someArgs);
  }

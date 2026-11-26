@@ -36,6 +36,7 @@ services:
 
 parameters:
     paths:
+        - config/
         - src/
     scanDirectories:
 #        - vendor/rector/rector/vendor/symplify/rule-doc-generator-contracts/
@@ -220,8 +221,10 @@ parameters:
         -
             identifier: rector.noClassReflectionStaticReflection
             paths:
+                - config/
 #                - src/Rector/Scalar/ScalarValueToConstFetchOfResponseRector.php
 #                - src/Rector/Scalar/StringToClassConstantOfRequestOptionsRector.php
+                - src/Rector/Class_/AbstractUpdateClassMethodNodeParamDocblockFromNodeTypesRector.php
                 - src/Support/helpers.php
                 - src/Support/Utils.php
         -
@@ -240,3 +243,11 @@ parameters:
         -
             identifier: if.alwaysFalse
             path: src/Rector/FuncCall/JsonThrowOnErrorRector.php
+        -
+            messages:
+                - '#^Accessing PHPStan\\Reflection\\BetterReflection\\BetterReflectionSourceLocatorFactory\:\:class is not covered by backward compatibility promise\. The class might change in a minor PHPStan version\.$#'
+                - '#^Call to function class_exists\(\) with ''PHPStan\\\\Rules\\\\Rule'' will always evaluate to false\.$#'
+                - '#^Call to function method_exists\(\) with ''Illuminate\\\\Support\\\\Str'' and ''of'' will always evaluate to true\.$#'
+                - '#^Function "(class_exists|method_exists|function_exists)\(\)" cannot be used/left in the code\: use ReflectionProvider\-\>has\*\(\) instead$#'
+                - '#^Function "(method_exists|property_exists)\(\)" cannot be used/left in the code$#'
+            path: config/

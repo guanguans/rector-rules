@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\Scalar;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use Guanguans\RectorRules\ValueObject\ScalarValueToConstFetch;
 use Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst;
 use PhpParser\Node;
 use PhpParser\Node\Expr\ClassConstFetch;
@@ -24,7 +25,6 @@ use PhpParser\Node\Scalar\Float_;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\String_;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 

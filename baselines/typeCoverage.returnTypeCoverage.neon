@@ -1,8 +1,13 @@
-# total 2 errors
+# total 4 errors
 
 parameters:
     ignoreErrors:
         -
-            message: '#^Out of 148 possible return types, only 146 \- 98\.6 %% actually have it\. Add more return types to get over 100 %%$#'
+            message: '#^Out of 158 possible return types, only 154 \- 97\.4 %% actually have it\. Add more return types to get over 100 %%$#'
             count: 2
             path: ../src/Rector/AbstractProxyRector.php
+
+        -
+            message: '#^Out of 158 possible return types, only 154 \- 97\.4 %% actually have it\. Add more return types to get over 100 %%$#'
+            count: 2
+            path: ../src/ValueObject/ScalarValueToConstFetch.php

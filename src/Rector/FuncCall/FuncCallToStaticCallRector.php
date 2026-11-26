@@ -15,10 +15,10 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\FuncCall;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use Guanguans\RectorRules\ValueObject\FuncCallToStaticCall;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 

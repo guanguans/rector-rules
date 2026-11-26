@@ -21,10 +21,10 @@ declare(strict_types=1);
  */
 
 use Guanguans\RectorRules\Rector\StaticCall\RenameStaticMethodRector;
+use Guanguans\RectorRules\ValueObject\RenameStaticMethod;
 use Guanguans\RectorRulesTests\Rector\StaticCall\RenameStaticMethodRector\Source\FormMacros;
 use Nette\Utils\Html;
 use Rector\Config\RectorConfig;
-use Rector\Renaming\ValueObject\RenameStaticMethod;
 
 return static function (RectorConfig $rectorConfig): void {
     // Ensure that using the default configuration is valid.

@@ -26,6 +26,7 @@ use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 
 /**
  * @covers \Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector
+ * @covers \Guanguans\RectorRules\ValueObject\ScalarValueToConstFetch
  */
 final class ScalarValueToConstFetchRectorTest extends AbstractRectorTestCase
 {

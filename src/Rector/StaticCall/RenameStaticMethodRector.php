@@ -15,12 +15,12 @@ declare(strict_types=1);
 namespace Guanguans\RectorRules\Rector\StaticCall;
 
 use Guanguans\RectorRules\Rector\AbstractRector;
+use Guanguans\RectorRules\ValueObject\RenameStaticMethod;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Identifier;
 use PhpParser\Node\Name\FullyQualified;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
-use Rector\Renaming\ValueObject\RenameStaticMethod;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Webmozart\Assert\Assert;
 
@@ -80,32 +80,28 @@ final class RenameStaticMethodRector extends AbstractRector implements Configura
     {
         return [
             new ConfiguredCodeSample(
-                <<<'EOD'
+                <<<'PHP'
                     /** @noinspection ALL */
                     namespace Guanguans\RectorRulesTests\Rector\StaticCall\RenameStaticMethodRector\Fixture;
 
                     function staticMethodNameReplacer()
                     {
-
-                    EOD.\Nette\Utils\Html::class.<<<'EOD'
-                    ::add('someContent');
+                        \Nette\Utils\Html::add('someContent');
                         $result = FormMacros::renderFormBegin($someArgs);
                         $result = FormMACROS::renderFormBEGIN($someArgs);
                     }
-                    EOD,
-                <<<'EOD'
+                    PHP,
+                <<<'PHP'
                     /** @noinspection ALL */
                     namespace Guanguans\RectorRulesTests\Rector\StaticCall\RenameStaticMethodRector\Fixture;
 
                     function staticMethodNameReplacer()
                     {
-
-                    EOD.\Nette\Utils\Html::class.<<<'EOD'
-                    ::addHtml('someContent');
+                        \Nette\Utils\Html::addHtml('someContent');
                         $result = FormMacros::renderFormBegin($someArgs);
                         $result = FormMACROS::renderFormBEGIN($someArgs);
                     }
-                    EOD,
+                    PHP,
                 [
                     new RenameStaticMethod(\Nette\Utils\Html::class, 'add', \Nette\Utils\Html::class, 'addHtml'),
                     new RenameStaticMethod(\Guanguans\RectorRulesTests\Rector\StaticCall\RenameStaticMethodRector\Source\FormMacros::class, 'renderFormBegin', 'Nette\Bridges\FormsLatte\Runtime', 'renderFormBegin'),

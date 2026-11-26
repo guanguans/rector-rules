@@ -23,10 +23,8 @@ use Guanguans\RectorRules\Support\Utils;
 use PhpParser\NodeFinder;
 use PhpParser\PrettyPrinter\Standard;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
-use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\Reflection\BetterReflection\BetterReflectionSourceLocatorFactory;
 use Rector\BetterPhpDocParser\PhpDocParser\BetterPhpDocParser;
-use Rector\BetterPhpDocParser\ValueObject\Parser\BetterTokenIterator;
 use Rector\BetterPhpDocParser\ValueObject\PhpDocAttributeKey;
 use Rector\Config\RectorConfig;
 use Rector\NodeTypeResolver\Node\AttributeKey;
@@ -63,7 +61,6 @@ return static function (RectorConfig $rectorConfig): void {
         // InlineCodeParser::class => RectorParser::class,
         // SimplePhpParser::class => RectorParser::class,
         Standard::class => BetterStandardPrinter::class,
-        TokenIterator::class => BetterTokenIterator::class,
     ]);
 
     $rectorConfig->ruleWithConfiguration(

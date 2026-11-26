@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\RectorRules\Support;
 
+use Guanguans\RectorRules\ValueObject\ScalarValueToConstFetch;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -22,7 +23,6 @@ use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\Float_;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\String_;
-use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 use Rector\Transform\ValueObject\StringToClassConstant;
 
 /**
@@ -68,7 +68,7 @@ final class Utils
      * @throws \JsonException
      * @throws \ReflectionException
      *
-     * @return list<\Rector\Transform\ValueObject\ScalarValueToConstFetch>
+     * @return list<\Guanguans\RectorRules\ValueObject\ScalarValueToConstFetch>
      */
     public static function configurationOfScalarValueToConstFetchRector($namespacesOrClasses = null, array $skip = []): array
     {

@@ -27,6 +27,7 @@ use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 /**
  * @covers \Guanguans\RectorRules\Rector\AbstractProxyRector
  * @covers \Guanguans\RectorRules\Rector\StaticCall\RenameStaticMethodRector
+ * @covers \Guanguans\RectorRules\ValueObject\RenameStaticMethod
  */
 final class RenameStaticMethodRectorTest extends AbstractRectorTestCase
 {

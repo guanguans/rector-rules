@@ -33,6 +33,7 @@ use Rector\DowngradePhp81\Rector\FuncCall\DowngradeArrayIsListRector;
 use Rector\DowngradePhp82\Rector\MethodCall\DowngradeReflectionMethodHasPrototypeRector;
 use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
+use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\PHPUnit\PHPUnit60\Rector\ClassMethod\AddDoesNotPerformAssertionToNonAssertingTestRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
@@ -84,10 +85,13 @@ return RectorConfig::configure()
         // ],
         SortAssociativeArrayByKeyRector::class => [
             /** @see vendor/rector/rector/src/PostRector/Rector/ */
-            __DIR__.'/src/',
+            __DIR__.'/src/Support/helpers.php',
         ],
         SortListItemOfSameScalarTypeRector::class => [
             __DIR__.'/src/Rector/Array_/UpdateRectorCodeSamplesFromFixturesRector.php',
+        ],
+        StringClassNameToClassConstantRector::class => [
+            // __DIR__.'/src/Rector/StaticCall/RenameStaticMethodRector.php',
         ],
         StringToClassConstantRector::class => [
             __DIR__.'/src/Rector/Name/RenameToConventionalCaseNameRector.php',

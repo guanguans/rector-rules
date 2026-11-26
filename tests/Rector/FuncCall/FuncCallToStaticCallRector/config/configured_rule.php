@@ -21,8 +21,8 @@ declare(strict_types=1);
  */
 
 use Guanguans\RectorRules\Rector\FuncCall\FuncCallToStaticCallRector;
+use Guanguans\RectorRules\ValueObject\FuncCallToStaticCall;
 use Rector\Config\RectorConfig;
-use Rector\Transform\ValueObject\FuncCallToStaticCall;
 
 return static function (RectorConfig $rectorConfig): void {
     // Ensure that using the default configuration is valid.

@@ -27,6 +27,7 @@ use Guanguans\RectorRulesTests\Rector\AbstractRectorTestCase;
 /**
  * @covers \Guanguans\RectorRules\Rector\AbstractProxyRector
  * @covers \Guanguans\RectorRules\Rector\FuncCall\FuncCallToStaticCallRector
+ * @covers \Guanguans\RectorRules\ValueObject\FuncCallToStaticCall
  */
 final class FuncCallToStaticCallRectorTest extends AbstractRectorTestCase
 {

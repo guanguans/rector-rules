@@ -21,6 +21,7 @@ declare(strict_types=1);
  */
 
 use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
+use Guanguans\RectorRules\ValueObject\ScalarValueToConstFetch;
 use Guanguans\RectorRulesTests\Rector\Scalar\ScalarValueToConstFetchRector\Source\ClassWithConst;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Identifier;
@@ -29,7 +30,6 @@ use PhpParser\Node\Scalar\Float_;
 use PhpParser\Node\Scalar\Int_;
 use PhpParser\Node\Scalar\String_;
 use Rector\Config\RectorConfig;
-use Rector\Transform\ValueObject\ScalarValueToConstFetch;
 
 return static function (RectorConfig $rectorConfig): void {
     // Ensure that using the default configuration is valid.
