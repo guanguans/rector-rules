@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection D */
 declare(strict_types=1);
 
 /**
@@ -121,13 +122,19 @@ final class Utils
                         static fn (string $const): \ReflectionClassConstant => new \ReflectionClassConstant($classOrIndex, $const),
                         $namespaceOrClassOrConsts
                     )
-                    : [$namespaceOrClassOrConsts]
+                    : (
+                        class_exists($namespaceOrClassOrConsts)
+                            ? (new \ReflectionClass($namespaceOrClassOrConsts))->getReflectionConstants(
+                                /* ReflectionClassConstant::IS_PUBLIC */
+                            )
+                            : [$namespaceOrClassOrConsts]
+                    )
             )
             ->groupBy(static fn ($namespaceOrClassOrRefClassConstant): string => (
-                $namespaceOrClassOrRefClassConstant instanceof \ReflectionClassConstant ? 'refClassConstants' : 'namespacesOrClasses'
+                $namespaceOrClassOrRefClassConstant instanceof \ReflectionClassConstant ? 'refClassConstants' : 'namespaces'
             ));
+        $skipNamespaces = $skipGroup->get('namespaces', collect());
         $skipRefClassConstants = $skipGroup->get('refClassConstants', collect());
-        $skipNamespacesOrClasses = $skipGroup->get('namespacesOrClasses', collect());
 
         return collect($namespacesOrClasses ?? array_keys(Arr::get(
             json_decode(file_get_contents(getcwd().\DIRECTORY_SEPARATOR.'composer.json'), true, 512, \JSON_THROW_ON_ERROR),
@@ -139,7 +146,7 @@ final class Utils
                 static fn (Collection $namespacesOrClasses, string $type): Collection => 'classes' === $type
                     ? $namespacesOrClasses->mapWithKeys(static fn (string $class): array => [$class => new \ReflectionClass($class)])
                     : classes(static fn (string $class): bool => (
-                        Str::startsWith($class, $namespacesOrClasses->all()) && !Str::startsWith($class, $skipNamespacesOrClasses->all())
+                        Str::startsWith($class, $namespacesOrClasses->all()) && !Str::startsWith($class, $skipNamespaces->all())
                     ))
             )
             // ->keys()->dd()

@@ -42,6 +42,7 @@ parameters:
 #        - vendor/rector/rector/vendor/symplify/rule-doc-generator-contracts/
     scanFiles:
         - vendor/composer/InstalledVersions.php
+        - vendor-bin/common/vendor/symplify/rule-doc-generator/vendor/symplify/rule-doc-generator-contracts/src/Contract/DocumentedRuleInterface.php
     excludePaths:
         - src/Support/RuleDefinitionPatch.php
         - src/Support/ComposerScripts.php
